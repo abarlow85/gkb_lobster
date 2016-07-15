@@ -1,0 +1,163 @@
+*{
+	padding:0.75em;
+	margin:0;
+	font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
+
+}
+
+#outerMain{
+	margin-top: 5.1em;
+}
+#header{
+	border-bottom:.2em solid rgb(0, 168, 80);
+	position: fixed;
+	width: 100%;
+	top:0;
+	display:block;
+	height: 8em;
+	background: rgba(255,255,255 ,.9);
+	z-index:1;
+}
+#header h2{
+	color: rgb(0, 168, 80);
+	display: inline-block;
+	vertical-align: top;
+	text-shadow: 0px 2px 2px rgba(0, 0, 0, .2);
+
+}
+#header img {
+	display: inline-block;
+	position: fixed;
+	right: 80px;
+	top: 0px;
+}
+
+#header-inv-page{
+	border-bottom:.2em solid rgb(0, 168, 80);
+	margin-top: -30px;
+}
+#header-inv-page h2{
+	/*display: inline-block;*/
+	color: rgb(0, 168, 80);
+	vertical-align: bottom;
+	margin-top: 70px;
+
+}
+#header-inv-page img {
+	/*display: inline-block;*/
+	/*position: absolute;*/
+	/*right: 0%;*/
+	/*top: 10px;*/
+}
+
+#label {
+		height: 100%;
+		width: 100%;
+		padding: 0px;
+		text-align: center;
+}
+
+
+#cost, .bike-info {
+	/*font-size: 100%;*/
+	margin: 0px;
+	padding: 0px;
+}
+table {
+	width: 100%;
+}
+.commit {
+	padding-left: 20px;
+	right: 0px;
+}
+.notepad {
+	background-image: url("../resources/yellowpaper.jpeg");
+	background-repeat: no-repeat;
+	height: 500px;
+	padding-left: 2.2em;
+	position: fixed;
+	right: 10px;
+	overflow-y: scroll;
+	/*word-wrap: break-word;*/
+}
+.notepad p {
+	padding: 0;
+
+}
+.info{
+	color: maroon;
+}
+.features{
+	width: 275px;
+}
+
+.commit {
+	padding-top: 0;
+}
+#labelBackBtn {
+	margin: 3em auto;
+	display: block;
+}
+
+th {
+	color: green;
+}
+
+h4 {
+	color: #00A850;
+	display: inline-block;
+}
+.checkmark {
+	height: 8%;
+}
+.check {
+	display: inline-block;
+}
+select {
+	width: 100%;
+}
+ol {
+	padding-left: 2.5em;
+}
+li {
+	padding: 0.1em;
+}
+.rider {
+	margin-left: -4em;
+}
+.blue {
+	color: blue;
+}
+@media print {
+	*{
+		/*size: 2.0in 2.0in;*/
+		margin: 0px;
+		padding: 0px;
+
+	}
+
+	body {
+		height: 56mm;
+		width: 56mm;
+	}
+	#header, #buttonBoxDiv, #optionsBox, .btn, #labelBackBtn {
+		display: none;
+	}
+	#label {
+		height: 56mm;
+		width: 56mm;
+		/*margin: -20px;*/
+		/*padding: 0px;*/
+		text-align: center;
+	}
+	#barcode {
+		/*margin-left: -20px;*/
+		/*padding: 0px;*/
+	}
+	#cost, .bike-info {
+		/*font-size: 100%;*/
+		/*margin: 0px;
+		padding: 0px;*/
+	}
+
+}

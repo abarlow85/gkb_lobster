@@ -1,0 +1,50 @@
+<div ng-controller = "componentOptionsController">
+	<div id = 'categoryPick'>
+		<div class="row">
+			<div class="col-xs-12">
+				<h4>Pick a Category</h4>
+				<div class="check" ng-if="selected.type">
+					<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
+				</div>
+			</div>
+		</div>
+		<div class="selectBox row">
+			<select ng-model = 'selected.which' size = '4'>
+				<option ng-repeat = 'item in which'>[[item]]</option>
+			</select><br>
+		</div>
+	</div>
+
+	<div id = 'itemSelect' ng-if = 'selected.which'>
+		<div class="row">
+			<div class="col-xs-12">
+				<h4>Pick a [[trim]]</h4>
+				<div class="check" ng-if="selected.type">
+					<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
+				</div>
+			</div>
+		</div>
+		<div class="selectBox row">
+			<select ng-if = 'selected.which' size = '6' ng-model='selected.item'>
+				<option ng-repeat = '(key, value) in selected.obj'>[[key]]</option>
+			</select>
+			<button class="btn btn-success" ng-click='postComponent()' ng-if = 'selected.item'>Add [[selected.item]]</button>
+		</div>
+	</div>
+	<!--
+	<div id = "bikeType">
+					<div class="row">
+						<div class="col-xs-12">
+							<h4>Select a bike</h4>
+						<div class="check" ng-if="selected.type">
+							<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
+						</div>
+					</div>
+				</div>end row 
+				<div class="selectBox row">
+					<select ng-model="selected.type" size = '5'>
+						<option ng-repeat = "(key, value) in bikeType" >[[key]]</option>
+					</select>
+				</div>
+-->
+</div>
