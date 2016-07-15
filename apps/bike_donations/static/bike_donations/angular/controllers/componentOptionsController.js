@@ -34,6 +34,7 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 	});
 
 	$scope.postComponent = function(){
+		$scope.posting = true
 		info = {
 			'type': $scope.selected.which,
 			'item': $scope.selected.item

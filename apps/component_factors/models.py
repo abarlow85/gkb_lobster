@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 class HandlebarOption(models.Model):
-	option = models.CharField(max_length=150)
+	option = models.CharField(max_length=150, unique=True)
 	price = models.DecimalField(max_digits=5, decimal_places=2)
 
 
@@ -14,7 +14,7 @@ class HandlebarOption(models.Model):
 		ordering = ['option']
 
 class SaddleOption(models.Model):
-	option = models.CharField(max_length=150)
+	option = models.CharField(max_length=150, unique=True)
 	price = models.DecimalField(max_digits=5, decimal_places=2)
 
 

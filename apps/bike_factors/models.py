@@ -5,7 +5,7 @@ from django.db import models
 # Create your models here.
 
 class BikeOption(models.Model):
-	option = models.CharField(max_length=150)
+	option = models.CharField(max_length=150, unique=True)
 	price_factor = models.DecimalField(max_digits=3, decimal_places=2)
 
 
@@ -15,8 +15,9 @@ class BikeOption(models.Model):
 	class Meta:
 		ordering = ['option']
 
+
 class BrandOption(models.Model):
-	option = models.CharField(max_length=150)
+	option = models.CharField(max_length=150, unique=True)
 	price_factor = models.DecimalField(max_digits=3, decimal_places=2)
 	requisites = models.ManyToManyField(BikeOption, verbose_name="Bike types that this feature is avalable for")
 
@@ -27,7 +28,7 @@ class BrandOption(models.Model):
 		ordering = ['option']
 
 class CosmeticOption(models.Model):
-	option = models.CharField(max_length=150)
+	option = models.CharField(max_length=150, unique=True)
 	price_factor = models.DecimalField(max_digits=3, decimal_places=2)
 	requisites = models.ManyToManyField(BikeOption, verbose_name="Bike types that this feature is avalable for")
 
@@ -38,7 +39,7 @@ class CosmeticOption(models.Model):
 		ordering = ['-price_factor']
 
 class FrameOption(models.Model):
-	option = models.CharField(max_length=150)
+	option = models.CharField(max_length=150, unique=True)
 	price_factor = models.DecimalField(max_digits=3, decimal_places=2)
 	requisites = models.ManyToManyField(BikeOption, verbose_name="Bike types that this feature is avalable for")
 
@@ -49,7 +50,7 @@ class FrameOption(models.Model):
 		ordering = ['option']
 
 class FeaturesOption(models.Model):
-	option = models.CharField(max_length=150)
+	option = models.CharField(max_length=150, unique=True)
 	price_factor = models.DecimalField(max_digits=3, decimal_places=2)
 	requisites = models.ManyToManyField(BikeOption, verbose_name="Bike types that this feature is avalable for")
 

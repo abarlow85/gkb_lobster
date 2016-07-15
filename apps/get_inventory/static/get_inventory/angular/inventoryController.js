@@ -31,8 +31,11 @@ angular.module('gkbInv').controller('inventoryController', function($scope, $loc
 	}
 
 	$scope.deleteItem = function(id){
+		$scope.deleting = true
 		inventoryFactory.deleteItem(id, function(response){
-
+			console.log(response)
+			$scope.deleting = false
+			$scope.archived = true
 		});
 	}
 

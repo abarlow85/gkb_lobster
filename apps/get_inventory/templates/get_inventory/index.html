@@ -74,6 +74,9 @@
 						<input type="submit" class="btn btn-danger" ng-if="result && !archived" ng-click="deleteItem(result.itemID)" value="Delete from Inventory">
 					</form>
 				</div>
+				<div class="row text-center">
+					<img ng-if="deleting" src="{% static 'bike_donations/resources/GKBWheel.gif' %}">
+				</div>
 			</div>
 		</div>
 	</div>

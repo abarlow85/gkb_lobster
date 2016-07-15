@@ -13,7 +13,7 @@ angular.module('gkbInv').factory('inventoryFactory', function($http){
 
 	factory.deleteItem = function(id, callback){
 		$http.post('items/delete', id).success(function(response){
-			console.log(response);
+			callback(response);
 		});
 	}
 
