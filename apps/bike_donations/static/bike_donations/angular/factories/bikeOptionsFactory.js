@@ -69,20 +69,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
                     	factory.data[object] = factory.pricedBy(response[object])
                     }
                 }
-				var cos = {};
-				var leveled = false;
-				var i = 0;
-				var cArr = ["Perfect", "Good", "Average", "Poor"]
-				while(i < cArr.length){
-					for (var level in response.cosmetic){
-						if (level == cArr[i]){
-							cos[level] = response.cosmetic[level]
-							i++;
-						}
-					}
-				}
-				factory.data.cosmetic = cos
-				callback(factory.data.bikeType)
+				
 			});
 		}
 
