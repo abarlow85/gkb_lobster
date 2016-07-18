@@ -8,12 +8,14 @@ import json
 import string
 import random
 from .api import LightspeedApi
-from .forms import BikeForm, componentForm 
+from .forms import BikeForm, componentForm
+from django.contrib.auth.decorators import login_required
 # from django.views.generic.base import TemplateView
 
 
 
 # Create your views here.
+@login_required
 def home(request):
 	return render(request, 'bike_donations/index.html')
 
@@ -107,7 +109,7 @@ def sample_post(request):
 
 	# session for label template
 	request.session['customSku'] = newBicycle['customSku']
-	
+
 	request.session['type'] = bikeoption.option
 	request.session['price'] = bikePrice
 	return JsonResponse({'success' : True})
@@ -120,7 +122,7 @@ def component_post(request):
 	componentType = ""
 
 	saddleSelect = None
-	handleSelect = None 
+	handleSelect = None
 
 	print 'made it to component post'
 	if 'saddle' in parsed_json:
@@ -150,7 +152,7 @@ def component_post(request):
 
 		#returns pythonDictionary
 		newComponent= lightspeed.create_item(descriptionString, parsed_json['price'])
-		
+
 		request.session['customSku'] = newComponent['customSku']
 
 		if saddleSelect != None:
@@ -166,14 +168,14 @@ def component_post(request):
 		print ("Not valid", form.errors.as_json())
 		return JsonResponse(form.errors.as_json(), safe=False)
 
-	
 
-	
-	
+
+
+
 
 	# session for label template
-	
-	
+
+
 
 
 def getBikePrice(optionsArray, featuresoption):
