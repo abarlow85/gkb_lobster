@@ -8,9 +8,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 			for (var iOne = 0; iOne < letteredArr.length - 1; iOne++){
 				var min = iOne;
-				if (letteredArr[iOne] == 'features'){
-					console.log("WE HAVE FEATURES FEATURES")
-				}
+				
 				for (var iTwo = iOne+1; iTwo < letteredArr.length; iTwo++){
 					if (letteredArr[iTwo][0] <letteredArr[min][0]){
 						min = iTwo;
@@ -22,7 +20,6 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 				letteredArr[min] = temp;
 			}
 
-			// console.log(letteredArr)
 			var finalObj = {};
 			for (var x = 0; x < letteredArr.length; x++){
 				var key = letteredArr[x]
@@ -38,7 +35,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 			var pricedArr = Object.keys(passObject)
 
 			function tradeIndexForPrice(index){
-				return Number(passObject[pricedArr[index]]['price_factor'])
+				return (Number(passObject[pricedArr[index]]['price_factor']))
 			}
 
 			for (var iOne = 0; iOne < pricedArr.length - 1; iOne++){
@@ -54,8 +51,16 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 				pricedArr[iOne] = pricedArr[max];
 				pricedArr[max] = temp;
 			}
+			
+			var finalObj = {};
 
-			return passObject
+			for(var index = 0; index < pricedArr.length; index++){
+				var key = pricedArr[index]
+				finalObj[key] = passObject[key]
+			};
+
+			return finalObj
+
 		}
 
 		factory.selectionData = function(callback){
@@ -70,6 +75,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
                     }
                 }
 				
+				callback(factory.data.bikeType)
 			});
 		}
 
@@ -82,30 +88,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 				}
 			}
 		}
-		factory.letterBy = function(passObject){
-		    var letteredArr = Object.keys(passObject);
-
-		    for (var iOne = 0; iOne < letteredArr.length - 1; iOne++){
-		        var min = iOne;
-		        for (var iTwo = iOne+1; iTwo < letteredArr.length; iTwo++){
-		            if (letteredArr[iTwo]<letteredArr[min]){
-		                min = iTwo;
-		            }
-		        };
-
-		        var temp = letteredArr[iOne];
-		        letteredArr[iOne] = letteredArr[min];
-		        letteredArr[min] = temp;
-		    }
-
-		    var finalObj = {};
-		    for (var x = 0; x < letteredArr.length; x++){
-		        var key = letteredArr[x]
-		        finalObj[key] = passObject[key]
-		    };
-
-		    return finalObj
-		}
+	
 
 		factory.clearHouse = function(){
 			for (var obj in this['data']){
@@ -119,8 +102,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 		factory.assembleScope = function(select){
 			var forScope = {};
-			// console.log(select)
-			console.log(this['data'][select])
+			
 
 			for (var opt in this['data'][select]){
 
@@ -140,13 +122,10 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 					if (wIndex != requiredArr.length){
 						forScope[opt] = false;
-					}else{
-						console.log("WE FINALLY FAIL PRINT");
 					}
 				}
 			};
 
-			// console.log(forScope)
 			return forScope;
 		}
 
@@ -166,6 +145,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 
 		factory.valueSelect = function(select, option){
+			console.log("we are in value select")
 			if (select != "features"){
 				this.data[select][option]["status"] = true;
 			}
