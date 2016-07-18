@@ -28,7 +28,12 @@
 			<select ng-if = 'selected.which' size = '6' ng-model='selected.item'>
 				<option ng-repeat = '(key, value) in selected.obj'>[[key]]</option>
 			</select>
+		</div>
+		<div class="row text-center">
 			<button class="btn btn-success" ng-click='postComponent()' ng-if = 'selected.item'>Add [[selected.item]]</button>
+		</div>
+		<div class="row text-center">
+			<img ng-if="posting" src="static/bike_donations/resources/GKBwheel.gif" />
 		</div>
 	</div>
 	<!--
