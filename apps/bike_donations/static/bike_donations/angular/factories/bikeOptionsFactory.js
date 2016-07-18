@@ -32,6 +32,30 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 			};
 
 			return finalObj
+		};
+
+		factory.pricedBy = function(passObject){
+			var pricedArr = Object.keys(passObject)
+
+			function tradeIndexForPrice(index){
+				return Number(passObject[pricedArr[index]]['price_factor'])
+			}
+
+			for (var iOne = 0; iOne < pricedArr.length - 1; iOne++){
+				var max = iOne;
+	
+				for (var iTwo = iOne+1; iTwo < pricedArr.length; iTwo++){
+					if (tradeIndexForPrice(iTwo) > tradeIndexForPrice(max)){
+						max = iTwo;
+					}
+				};
+
+				var temp = pricedArr[iOne];
+				pricedArr[iOne] = pricedArr[max];
+				pricedArr[max] = temp;
+			}
+
+			return passObject
 		}
 
 		factory.selectionData = function(callback){
@@ -42,7 +66,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
                 	if (object != 'cosmetic') {
                     	factory.data[object] = factory.letterBy(response[object])
                     } else {
-                    	factory.data[object] = response[object];
+                    	factory.data[object] = factory.pricedBy(response[object])
                     }
                 }
 				var cos = {};
