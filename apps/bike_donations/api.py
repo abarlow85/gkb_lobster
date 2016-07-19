@@ -4,22 +4,23 @@ import string
 import random
 
 class LightspeedApi(object):
-	auth = ('22dabb44da10a0d29347905309fd40dc5ad88bc3683927bb6be0d2142ba7c90b', 'apikey')
+	acnt = '132944'
+	auth = ('18aac7b75d65b454ce0653bd60873ea4c1eae65fa7754209378eb42b745b3830', 'apikey')
 
 	def get_inventory(self):
-		url = 'https://api.merchantos.com/API/Account/132193/Item.json'
+		url = 'https://api.merchantos.com/API/Account/'+self.acnt+'/Item.json'
 
 		response = requests.get(url, auth=self.auth)
 		return response.content
 
 	def get_item(self, customSku):
-		url = 'https://api.merchantos.com/API/Account/132193/Item/'+customSku+'.json'
+		url = 'https://api.merchantos.com/API/Account/'+self.acnt+'/Item/'+customSku+'.json'
 
 		response = requests.get(url, auth=self.auth)
 		return response.content
 
 	def delete_item(self, id):
-		url = 'https://api.merchantos.com/API/Account/132193/Item/'+id+'.json'
+		url = 'https://api.merchantos.com/API/Account/'+self.acnt+'/Item/'+id+'.json'
 		response = requests.delete(url, auth=self.auth)
 		print response
 		return response.content
@@ -29,7 +30,7 @@ class LightspeedApi(object):
 		sku = "GKBD"
 		for _ in range(8):
 			sku += random.choice(sku_chars)
-		url = 'https://api.merchantos.com/API/Account/132193/Item.json'
+		url = 'https://api.merchantos.com/API/Account/'+self.acnt+'/Item.json'
 		pythonDictionary = {}
 		pythonDictionary["description"] = description
 		pythonDictionary["customSku"] = sku

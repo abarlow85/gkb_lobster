@@ -89,17 +89,6 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 			}
 		}
 
-
-		factory.clearHouse = function(){
-			for (var obj in this['data']){
-				if (obj != 'bikeType'){
-					for (var item in this['data'][obj]){
-						this['data'][obj][item]['status'] = false;
-					}
-				}
-			}
-		}
-
 		factory.assembleScope = function(select){
 			var forScope = {};
 

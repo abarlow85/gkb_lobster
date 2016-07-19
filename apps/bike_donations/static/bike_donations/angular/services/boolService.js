@@ -10,6 +10,23 @@ angular.module('bikeSelect').service('boolService', function(){
 
 	var service = {};
 
+	service.forceSelect = function(item, timeout){
+		if (select[item] && part == 'product'){
+			select[item]['status'] = true;
+		}else{
+			console.log('thisShouldBeCalled')
+			select[item] = true
+		}
+
+		for (var part in select){
+			if (part != item && part == 'product'){
+				select[part]['status'] = false;
+			}else if (part != item){
+				select[part] = false;
+			}
+		}
+	};
+
 	service.toggleSelect = function(item){
 		for (var part in select){
 			if (part == item && !select[item]){

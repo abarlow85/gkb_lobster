@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect
 from .models import Bike, Component
-from ..component_factors.models import HandlebarOption, SaddleOption
+from ..component_factors.models import HandlebarOption, SaddleOption, CategoryOption, ItemOption
 from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption
 import requests
 import json
@@ -18,6 +18,9 @@ from django.contrib.auth import logout
 # Create your views here.
 @login_required(login_url = '/login')
 def home(request):
+	if request.user.is_superuser:
+		logout(request)
+		return HttpResponseRedirect('/login')
 	return render(request, 'bike_donations/index.html')
 
 @login_required(login_url = '/login')
@@ -29,7 +32,6 @@ def form_data(request):
 		'frame' : serialize_selections(FrameOption.objects.all()),
 		'features' : serialize_selections(FeaturesOption.objects.all())
 	}
-	print FeaturesOption.objects.all()
 	return JsonResponse(context)
 
 
@@ -114,66 +116,28 @@ def donateBike_post(request):
 @login_required(login_url = '/login')
 def component_post(request):
 	parsed_json = json.loads(request.body)
-	optionsArray = []
 
-	descriptionString = ""
-	componentType = ""
+	categorySelect = CategoryOption.objects.get(option=parsed_json['category'])
+	itemSelect = ItemOption.objects.get(option=parsed_json['item'])
+	descriptionString = parsed_json['item'] + " " + parsed_json['category']
+	itemType = parsed_json['category']
 
-	saddleSelect = None
-	handleSelect = None
-
-	print 'made it to component post'
-	if 'saddle' in parsed_json:
-		saddleSelect = SaddleOption.objects.get(option=parsed_json['saddle'])
-		optionsArray.append(saddleSelect)
-
-		parsed_json['saddle'] = saddleSelect.id
-		parsed_json['handlebar'] = None
-
-		descriptionString = str(saddleSelect.option + " saddle")
-		componentType = 'Saddle'
-
-	elif 'handlebar' in parsed_json:
-		handleSelect = HandlebarOption.objects.get(option=parsed_json['handlebar'])
-		optionsArray.append(handleSelect)
-
-		parsed_json['handlebar'] = handleSelect.id
-		parsed_json['saddle'] = None
-
-		descriptionString = str(handleSelect.option + " handlebar")
-		componentType = 'Handlebar'
-
+	parsed_json['item'] = itemSelect.id
+	parsed_json['category'] = categorySelect.id
 	form = componentForm(parsed_json)
 
 	if form.is_valid():
 		lightspeed = LightspeedApi()
-
-		#returns pythonDictionary
-		newComponent= lightspeed.create_item(descriptionString, parsed_json['price'])
-
+		newComponent = lightspeed.create_item(descriptionString, int(parsed_json['price']))
 		request.session['customSku'] = newComponent['customSku']
-
-		if saddleSelect != None:
-			request.session['brand'] = saddleSelect.option
-		elif handleSelect != None:
-			request.session['brand'] = handleSelect.option
-
 		request.session['price'] = parsed_json['price']
-		request.session['type'] = None
+		request.session['type'] = itemType
+
 		return JsonResponse({'success' : True})
 
 	else:
 		print ("Not valid", form.errors.as_json())
 		return JsonResponse(form.errors.as_json(), safe=False)
-
-
-
-
-
-
-	# session for label template
-
-
 
 
 def getBikePrice(optionsArray, featuresoption):
@@ -204,20 +168,23 @@ def print_label(request):
 
 @login_required(login_url = '/login')
 def component_data(request):
-	context = {
-		'Handlebars' : serialize_componentFactor(HandlebarOption.objects.all()),
-		'Saddles' : serialize_componentFactor(SaddleOption.objects.all()),
-	}
-
-	return JsonResponse(context)
+	components = serialize_componentFactor(ItemOption.objects.all())
+	print "printing components"
+	print components
+	return JsonResponse(components)
 
 def serialize_componentFactor(query_set):
 	comp = {}
 
+	print query_set
 	for obj in query_set:
-		comp[obj.option] = {'status': False, 'price': obj.price}
-
-	print comp
+		category = str(obj.requisites)
+		if  category in comp:
+	
+			comp[category].append({"item":obj.option,"price":obj.price})
+		else:
+			comp[category] = [{"item":obj.option,"price":obj.price}]
+		
 	return comp
 
 @login_required(login_url = '/login')
