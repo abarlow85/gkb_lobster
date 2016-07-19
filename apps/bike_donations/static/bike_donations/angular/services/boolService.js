@@ -16,13 +16,12 @@ angular.module('bikeSelect').service('boolService', function(){
 		}else{
 			console.log('thisShouldBeCalled')
 			select[item] = true
-			console.log(select)
 		}
 
 		for (var part in select){
 			if (part != item && part == 'product'){
 				select[part]['status'] = false;
-			}else if (part != select){
+			}else if (part != item){
 				select[part] = false;
 			}
 		}

@@ -21,9 +21,9 @@ angular.module('bikeSelect').factory('componentOptionsFactory', function($http){
 	factory.sendComponentToServer = function(callback){
 		var info = factory.componentProduct;
 		if (Object.keys(info).length != 0) {
-			// $http.post('/componentPost/', info).success(function(response){
-			callback(info);
-			// });
+			$http.post('/componentPost/', info).success(function(response){
+				callback(response);
+			});
 		}else{
 			console.log("no component product in factory");
 		}

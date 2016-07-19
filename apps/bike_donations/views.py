@@ -114,52 +114,24 @@ def sample_post(request):
 
 def component_post(request):
 	parsed_json = json.loads(request.body)
-	optionsArray = []
 
-	descriptionString = ""
-	componentType = ""
+	categorySelect = CategoryOption.objects.get(option=parsed_json['category'])
+	itemSelect = ItemOption.objects.get(option=parsed_json['item'])
+	descriptionString = parsed_json['item'] + " " + parsed_json['category']
+	itemType = parsed_json['category']
 
-	saddleSelect = None
-	handleSelect = None 
-
-	print 'made it to component post'
-	if 'saddle' in parsed_json:
-		saddleSelect = SaddleOption.objects.get(option=parsed_json['saddle'])
-		optionsArray.append(saddleSelect)
-
-		parsed_json['saddle'] = saddleSelect.id
-		parsed_json['handlebar'] = None
-
-		descriptionString = str(saddleSelect.option + " saddle")
-		componentType = 'Saddle'
-
-	elif 'handlebar' in parsed_json:
-		handleSelect = HandlebarOption.objects.get(option=parsed_json['handlebar'])
-		optionsArray.append(handleSelect)
-
-		parsed_json['handlebar'] = handleSelect.id
-		parsed_json['saddle'] = None
-
-		descriptionString = str(handleSelect.option + " handlebar")
-		componentType = 'Handlebar'
-
+	parsed_json['item'] = itemSelect.id
+	parsed_json['category'] = categorySelect.id
 	form = componentForm(parsed_json)
 
 	if form.is_valid():
 		lightspeed = LightspeedApi()
-
-		#returns pythonDictionary
-		newComponent = lightspeed.create_item(descriptionString, parsed_json['price'])
+		newComponent = lightspeed.create_item(descriptionString, int(parsed_json['price']))
 		
 		request.session['customSku'] = newComponent['customSku']
-
-		if saddleSelect != None:
-			request.session['brand'] = saddleSelect.option
-		elif handleSelect != None:
-			request.session['brand'] = handleSelect.option
-
 		request.session['price'] = parsed_json['price']
-		request.session['type'] = None
+		request.session['type'] = itemType
+
 		return JsonResponse({'success' : True})
 
 	else:

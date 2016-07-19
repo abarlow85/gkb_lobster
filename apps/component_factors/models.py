@@ -12,7 +12,7 @@ class CategoryOption(models.Model):
 class ItemOption(models.Model):
 	option = models.CharField(max_length=150, unique=True)
 	price = models.DecimalField(max_digits=6, decimal_places=2)
-	requisites = models.ForeignKey(CategoryOption, verbose_name="Bike types that this feature is avalable for")
+	requisites = models.ForeignKey(CategoryOption, verbose_name="Category:")
 
 	def __str__(self):
 		return self.option

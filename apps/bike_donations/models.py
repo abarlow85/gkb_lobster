@@ -15,7 +15,7 @@ class Bike(models.Model):
 	price = models.DecimalField(max_digits=6, decimal_places=2, default=200.00)
 
 class Component(models.Model):
-	saddleSelect = models.ForeignKey(SaddleOption, null=True, blank=True)
-	handleSelect = models.ForeignKey(HandlebarOption, null = True, blank=True)
+	category = models.ForeignKey(CategoryOption, null=True, blank=True)
+	item = models.ForeignKey(ItemOption, null = True, blank=True)
 	price = models.DecimalField(max_digits=6, decimal_places = 2)
 

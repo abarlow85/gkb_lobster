@@ -39,14 +39,14 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 
 	$scope.$watch('selected.item',function(){
 		var scope_array = [$scope.selected.which, $scope.selected.item, $scope.selected.obj];
-		var typeArr = ['type', 'item', 'price'];
+		var typeArr = ['category', 'item', 'price'];
 		var info = {};
 
 		for(var idx = 0; idx < typeArr.length; idx++){
 			if (scope_array[idx] && idx < typeArr.length - 1){
 				info[typeArr[idx]] = scope_array[idx];
-			}else{
-				info[typeArr[idx]] = $scope.selected.obj[$scope.selected.item]
+			}else if (scope_array[idx]){
+				info[typeArr[idx]] = Number($scope.selected.obj[$scope.selected.item])
 			}
 		}
 		
@@ -57,13 +57,10 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 	$scope.postComponent = function(){
 		$scope.posting = true
 				
-		
-		// console.log(selected.item);
 		componentOptionsFactory.sendComponentToServer(function(response){
-			// if (response.success){
-			// 	$window.location = "/print/"
-			// }
-			console.log(response);
+			if (response.success == true) {
+				$window.location = "/print/"
+			}
 		});
 
 	}

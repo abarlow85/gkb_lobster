@@ -1,47 +1,54 @@
-angular.module('bikeSelect').controller('omniOptionsController',function($scope, $location, bikeOptionsFactory, boolService){
-	$scope.bikeOption = boolService.returnSelect('bike');
-	$scope.componentOption = boolService.returnSelect('component');
-	$scope.otherOption = boolService.returnSelect('other');
+angular.module('bikeSelect').controller('omniOptionsController',function($scope, $location, $rootScope, bikeOptionsFactory, boolService){
+	$scope.headerText = "Add To Inventory"
 
 	function determineUrl(){
-		var urlArray = ['/addBike', '/addComponent', '/find']
-		var headerArray = ["Add A Bike", "Add A Component", "Find Item in Inventory"]
-		var bool = true
-		for (var i = 0; i < urlArray.length; i++){
-			if (urlArray[i] == $location.url()){
-				$scope.headerText = headerArray[i]
-				break;
+		var urlType = [
+			{
+				'type': 'bike',
+				'path': '/addBike',
+				'message': "Add A Bike"
+			},{
+				'type': 'component',
+				'path': '/addComponent',
+				'message': "Add A Component"
+			},{
+				'type': 'other',
+				'path': '/find',
+				'message': "Find Item in Inventory"
+			}
+		];
+
+		var urlObj;
+		var element;
+		var atHome = true;
+		
+		for (var i = 0; i < urlType.length; i++){
+			urlObj = urlType[i];
+			element = urlObj['type'];
+
+			if (urlObj.path == $location.url()){
+				$scope.headerText = urlObj.message;
+				document.getElementById(element).disabled = true;
+
+				atHome = false;
+			}else{
+				document.getElementById(element).disabled = false;
 			}
 		}
 
-		if (i == urlArray.length){
+		if (atHome){
 			$scope.headerText = "Add To Inventory"
 		}
 	}
 
-	determineUrl()
-
-
-	$scope.$watch(function() {
-		return boolService.returnSelect('bike');
-	}, function(newValue, oldValue) {
-		$scope.bikeOption = newValue;
-		document.getElementById('bike').disabled = newValue;
-	});
-
-	$scope.$watch(function() {
-		return boolService.returnSelect('component');
-	}, function(newValue, oldValue) {
-		$scope.componentOption = newValue;
-		document.getElementById('component').disabled = newValue;
-	});
-
-	$scope.$watch(function() {
-		return boolService.returnSelect('other');
-	}, function(newValue, oldValue) {
-		$scope.otherOption = newValue;
-		document.getElementById('other').disabled = newValue;
-	});
+	$rootScope.$watch(function() { 
+   		return $location.path();
+   	},  
+   	function(newValue, oldValue) {  
+      if (newValue != oldValue) { 
+      	determineUrl()
+      }
+   	},true);
 
 	$scope.buttonClicked = function(selection){
 		boolService.toggleSelect(selection);

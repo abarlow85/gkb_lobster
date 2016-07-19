@@ -16,7 +16,6 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	$scope.$watch(function() {
 		return boolService.returnSelect('bike');
 	}, function(newValue, oldValue) {
-		console.log('Why not different')
 		$scope.bikeOption = newValue;
 	});
 
