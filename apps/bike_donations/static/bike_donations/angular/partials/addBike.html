@@ -31,7 +31,7 @@
 							<option ng-repeat = "(key, value) in brand">[[key]]</option>
 						</select>
 					</div>
-				</div> 
+				</div>
 
 				<div id="cosmetic" ng-if = "selected.brand && cosmetic" class="row">
 					<div class="col-xs-12">
@@ -98,10 +98,13 @@
 					<button ng-click="goBack()" ng-if="!posted" class="btn btn-danger">Restart</button>
 				</div>
 			</form>
-			<div class="afterPosting" ng-if="posted">
+			<div class="afterPosting" ng-if="posted && !error">
 				<p>Please wait!</p>
 				<p>Adding to inventory!</p>
 				<img class="rider" src="static/bike_donations/resources/riding.gif" />
+			</div>
+			<div class="errorsPosting text-danger" ng-if="error">
+				<p ng-bind="error">	</p>
 			</div>
 
 		</div><!-- ends notepad-->

@@ -2,6 +2,7 @@ import requests
 import json
 import string
 import random
+from .api_errors import errorsDictionary
 
 class LightspeedApi(object):
 	acnt = '132944'
@@ -44,13 +45,13 @@ class LightspeedApi(object):
 		pythonDictionary['Prices']['ItemPrice']['useType'] = "Default"
 		pythonDictionary['Prices']['ItemPrice']['useTypeID'] = 1
 		#bad stuff, trying to break it
-		pythonDictionary['Tags'] = []
-		pythonDictionary['Tags'].append("squiddy")
+		# pythonDictionary['Tags'] = []
+		# pythonDictionary['Tags'].append("squiddy")
 		# done trying to break it
 		#trying to add tags -- the good stuff
-		# pythonDictionary['Tags'] = {}
-		# pythonDictionary['Tags']['@attributes'] = {"count":1}
-		# pythonDictionary['Tags']['tag'] = username
+		pythonDictionary['Tags'] = {}
+		pythonDictionary['Tags']['@attributes'] = {"count":1}
+		pythonDictionary['Tags']['tag'] = username
 
 
 		#done adding tags == the good stuff
@@ -59,7 +60,10 @@ class LightspeedApi(object):
 		print response.reason
 		print dir(response)
 		print ("Status code", response.status_code)
-		finalResult = {'success': response.status_code, 'bikeAdded': pythonDictionary}
+		if response.status_code != 200:
+			finalResult = {'status': errorsDictionary[response.status_code]}
+			return finalResult
+		finalResult = {'status': response.status_code, 'bikeAdded': pythonDictionary}
 		print ("Here's the final result", finalResult)
 		# return pythonDictionary
 		return finalResult

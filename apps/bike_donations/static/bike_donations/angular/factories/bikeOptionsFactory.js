@@ -124,13 +124,14 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 			});
 		}
 
-		factory.postBike = function(bikeObject){
+		factory.postBike = function(bikeObject, callback){
 			$http.post('/donateBikePost/',bikeObject).success(function(response){
 				if (response.success == true) {
 					$window.location = "/print/"
 				}
 				else {
 					console.log("Ohhh a failure")
+					callback(response.error)
 				}
 			});
 		}
