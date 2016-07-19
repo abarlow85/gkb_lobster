@@ -5,8 +5,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 
 	bikeOptionsFactory.selectionData(function(data){
-		console.log('selection data')
-		console.log(data)
+		
 		for (var key in data){
 			$scope.bikeType[key] = data[key]['status']
 		}

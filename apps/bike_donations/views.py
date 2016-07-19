@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Bike, Component
-from ..component_factors.models import HandlebarOption, SaddleOption
+from ..component_factors.models import HandlebarOption, SaddleOption, CategoryOption, ItemOption
 from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption
 import requests
 import json
@@ -149,7 +149,7 @@ def component_post(request):
 		lightspeed = LightspeedApi()
 
 		#returns pythonDictionary
-		newComponent= lightspeed.create_item(descriptionString, parsed_json['price'])
+		newComponent = lightspeed.create_item(descriptionString, parsed_json['price'])
 		
 		request.session['customSku'] = newComponent['customSku']
 
@@ -202,20 +202,23 @@ def print_label(request):
 	return render(request, 'bike_donations/barcode.html', label)
 
 def component_data(request):
-	context = {
-		'Handlebars' : serialize_componentFactor(HandlebarOption.objects.all()),
-		'Saddles' : serialize_componentFactor(SaddleOption.objects.all()),
-	}
-
-	return JsonResponse(context)
+	components = serialize_componentFactor(ItemOption.objects.all())
+	print "printing components"
+	print components
+	return JsonResponse(components)
 
 def serialize_componentFactor(query_set):
 	comp = {}
 
+	print query_set
 	for obj in query_set:
-		comp[obj.option] = {'status': False, 'price': obj.price}
-
-	print comp
+		category = str(obj.requisites)
+		if  category in comp:
+	
+			comp[category].append({"item":obj.option,"price":obj.price})
+		else:
+			comp[category] = [{"item":obj.option,"price":obj.price}]
+		
 	return comp
 
 

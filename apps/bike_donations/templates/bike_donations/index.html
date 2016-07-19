@@ -44,12 +44,12 @@
 <body>
 <div class="container">
 
-	<div id = "header" class="row">
-		<h2 class="col-xs-8">Add To Inventory Demo</h2>
-		<img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
-	</div>
 	<div id = "outerMain">
 	<div ng-controller = "omniOptionsController" id="buttonBoxDiv" class="row">
+		<div id = "header" class="row">
+		<h2 class="col-xs-8">[[headerText]]</h2>
+		<img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
+	</div>
 		<div id="buttonBox" class="row">
 		<div ng-controller = "omniOptionsController" id="buttonBoxDiv">
 			<div id="buttonBox" class="row">

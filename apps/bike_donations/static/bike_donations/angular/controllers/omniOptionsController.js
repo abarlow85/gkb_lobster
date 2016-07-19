@@ -3,10 +3,17 @@ angular.module('bikeSelect').controller('omniOptionsController',function($scope,
 	$scope.componentOption = boolService.returnSelect('component');
 	$scope.otherOption = boolService.returnSelect('other');
 
+	function changeHeader(newValue, messageString){
+		if (newValue){
+			$scope.headerText = messageString
+		}
+	}
+
 	$scope.$watch(function() {
 		return boolService.returnSelect('bike');
 	}, function(newValue, oldValue) {
 		$scope.bikeOption = newValue;
+		changeHeader(newValue, "Add a Bike")
 		document.getElementById('bike').disabled = newValue;
 	});
 
@@ -14,6 +21,7 @@ angular.module('bikeSelect').controller('omniOptionsController',function($scope,
 		return boolService.returnSelect('component');
 	}, function(newValue, oldValue) {
 		$scope.componentOption = newValue;
+		changeHeader(newValue, "Add a Component")
 		document.getElementById('component').disabled = newValue;
 	});
 
@@ -21,6 +29,7 @@ angular.module('bikeSelect').controller('omniOptionsController',function($scope,
 		return boolService.returnSelect('other');
 	}, function(newValue, oldValue) {
 		$scope.otherOption = newValue;
+		changeHeader(newValue, "Find an Item")
 		document.getElementById('other').disabled = newValue;
 	});
 
