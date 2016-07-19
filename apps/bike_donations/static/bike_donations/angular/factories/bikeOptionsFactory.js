@@ -8,7 +8,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 			for (var iOne = 0; iOne < letteredArr.length - 1; iOne++){
 				var min = iOne;
-				
+
 				for (var iTwo = iOne+1; iTwo < letteredArr.length; iTwo++){
 					if (letteredArr[iTwo][0] <letteredArr[min][0]){
 						min = iTwo;
@@ -40,7 +40,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 			for (var iOne = 0; iOne < pricedArr.length - 1; iOne++){
 				var max = iOne;
-	
+
 				for (var iTwo = iOne+1; iTwo < pricedArr.length; iTwo++){
 					if (tradeIndexForPrice(iTwo) > tradeIndexForPrice(max)){
 						max = iTwo;
@@ -51,7 +51,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 				pricedArr[iOne] = pricedArr[max];
 				pricedArr[max] = temp;
 			}
-			
+
 			var finalObj = {};
 
 			for(var index = 0; index < pricedArr.length; index++){
@@ -74,7 +74,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
                     	factory.data[object] = factory.pricedBy(response[object])
                     }
                 }
-				
+
 				callback(factory.data.bikeType)
 			});
 		}
@@ -91,7 +91,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 		factory.assembleScope = function(select){
 			var forScope = {};
-			
+
 
 			for (var opt in this['data'][select]){
 
@@ -125,7 +125,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 		}
 
 		factory.postBike = function(bikeObject){
-			$http.post('/samplePost/',bikeObject).success(function(response){
+			$http.post('/donateBikePost/',bikeObject).success(function(response){
 				if (response.success == true) {
 					$window.location = "/print/"
 				}

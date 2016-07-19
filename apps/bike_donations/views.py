@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from .models import Bike, Component
 from ..component_factors.models import HandlebarOption, SaddleOption, CategoryOption, ItemOption
 from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption
@@ -8,15 +8,19 @@ import json
 import string
 import random
 from .api import LightspeedApi
-from .forms import BikeForm, componentForm 
+from .forms import BikeForm, componentForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 # from django.views.generic.base import TemplateView
 
 
 
 # Create your views here.
+@login_required(login_url = '/login')
 def home(request):
 	return render(request, 'bike_donations/index.html')
 
+@login_required(login_url = '/login')
 def form_data(request):
 	context = {
 		'bikeType' : serialize_selections(BikeOption.objects.all()),
@@ -25,7 +29,6 @@ def form_data(request):
 		'frame' : serialize_selections(FrameOption.objects.all()),
 		'features' : serialize_selections(FeaturesOption.objects.all())
 	}
-	print FeaturesOption.objects.all()
 	return JsonResponse(context)
 
 
@@ -45,20 +48,10 @@ def serialize_selections(query_set):
 
 	return data
 
-def get_inv(request):
-	lightspeed = LightspeedApi()
-	inventory = lightspeed.get_inventory()
-	return JsonResponse(inventory, safe=False)
-
-def create_category(request):
-	print ("IN the views with AMERICA", request)
-
-	lightspeed = LightspeedApi()
-	category = lightspeed.create_category()
-
-	return render(request, 'bike_donations/index.html')
-
-def sample_post(request):
+@login_required(login_url = '/login')
+def donateBike_post(request):
+	print("user", request.user.username)
+	username = request.user.username
 	parsed_json = json.loads(request.body)
 	optionsArray = []
 
@@ -103,15 +96,16 @@ def sample_post(request):
 	lightspeed = LightspeedApi()
 
 	#returns pythonDictionary
-	newBicycle = lightspeed.create_item(descriptionString, bikePrice)
+	newBicycle = lightspeed.create_item(descriptionString, bikePrice, username)
 
 	# session for label template
 	request.session['customSku'] = newBicycle['customSku']
-	
+
 	request.session['type'] = bikeoption.option
 	request.session['price'] = bikePrice
 	return JsonResponse({'success' : True})
 
+@login_required(login_url = '/login')
 def component_post(request):
 	parsed_json = json.loads(request.body)
 
@@ -127,7 +121,6 @@ def component_post(request):
 	if form.is_valid():
 		lightspeed = LightspeedApi()
 		newComponent = lightspeed.create_item(descriptionString, int(parsed_json['price']))
-		
 		request.session['customSku'] = newComponent['customSku']
 		request.session['price'] = parsed_json['price']
 		request.session['type'] = itemType
@@ -137,15 +130,6 @@ def component_post(request):
 	else:
 		print ("Not valid", form.errors.as_json())
 		return JsonResponse(form.errors.as_json(), safe=False)
-
-	
-
-	
-	
-
-	# session for label template
-	
-	
 
 
 def getBikePrice(optionsArray, featuresoption):
@@ -161,6 +145,7 @@ def getBikePrice(optionsArray, featuresoption):
 	print ("price factor", price_factor, basePrice * float(price_factor) * nego_factor)
 	return format(basePrice * float(price_factor) * nego_factor, '.2f')
 
+@login_required(login_url = '/login')
 def print_label(request):
 	label = {
 		'customSku' : request.session['customSku'],
@@ -173,6 +158,7 @@ def print_label(request):
 
 	return render(request, 'bike_donations/barcode.html', label)
 
+@login_required(login_url = '/login')
 def component_data(request):
 	components = serialize_componentFactor(ItemOption.objects.all())
 	print "printing components"
@@ -192,6 +178,12 @@ def serialize_componentFactor(query_set):
 			comp[category] = [{"item":obj.option,"price":obj.price}]
 		
 	return comp
+
+@login_required(login_url = '/login')
+def loggingout(request):
+	logout(request)
+	return HttpResponseRedirect('/login')
+
 
 
 
