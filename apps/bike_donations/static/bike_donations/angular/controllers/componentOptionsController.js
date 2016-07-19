@@ -1,6 +1,9 @@
 angular.module('bikeSelect').controller('componentOptionsController', function($scope, $location, $window, componentOptionsFactory, scrollService, boolService){
 	$scope.which = [];
 	$scope.bikeOptions
+
+	boolService.forceSelect('component');
+
 	componentOptionsFactory.getAllComponents(function(response){
 		console.log('init response')
 		console.log(response)

@@ -3,6 +3,8 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	$scope.features = [];
 	$scope.assembled_bike = {};
 
+	boolService.forceSelect('bike', 10)
+
 
 	bikeOptionsFactory.selectionData(function(data){
 		
@@ -14,6 +16,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	$scope.$watch(function() {
 		return boolService.returnSelect('bike');
 	}, function(newValue, oldValue) {
+		console.log('Why not different')
 		$scope.bikeOption = newValue;
 	});
 
