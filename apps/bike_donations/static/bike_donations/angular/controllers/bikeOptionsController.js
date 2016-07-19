@@ -119,6 +119,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	$scope.getBike = function(){
 
 		// event.preventDefault();
+		
 		$scope.posted = true
 		bikeOptionsFactory.assembleBike(function(bike){
 			$scope.bike_info = bike;

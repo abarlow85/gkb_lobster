@@ -80,6 +80,7 @@
 		</div><!-- end of #optionsBox -->
 
 		<div class="col-xs-4 notepad pull-right" id="notetaking">
+
 			<h4 class="info">Bike Information</h4>
 			<p><u>Model:</u><span ng-if="selected.type" ng-bind="selected.type" ng-click="editJump('bikeType')" class="blue"></span></p>
 			<p ng-hide="selected.type == 'Kids 12inch wheels' "><u>Brand:</u><span ng-if="selected.brand" ng-bind="selected.brand" ng-click="editJump('brand')" class="blue"></span></p>
@@ -93,6 +94,9 @@
 				</ol>
 			</p>
 			<form ng-if="selected.frame && features">
+
+				<p><u>Quantity:</u><input ng-model="quantity" class= "number-box" type="number" name="quantity" min="1" max="20"></p>
+
 				<div class="commit">
 					<button ng-click="getBike()" class="btn btn-success">All Done</button>
 					<button ng-click="goBack()" ng-if="!posted" class="btn btn-danger">Restart</button>
