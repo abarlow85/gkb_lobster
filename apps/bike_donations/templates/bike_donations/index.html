@@ -44,6 +44,7 @@
 <body>
 <div class="container">
 
+
 	<div id = "header" class="row">
 		<h2 class="col-xs-8">Add To Inventory Demo</h2>
 		<img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
@@ -58,16 +59,19 @@
 				<a href="/find" id = 'other' class="btn btn-danger col-xs-4">Find a Donation</a>
 				<!-- <button id = 'other' ng-click = "buttonClicked('other')" class="btn btn-danger  col-xs-4">Other</button> -->
 			</div>
+			<div>
+				<a class="btn" href="/logout">Logout</a>
+			</div>
 			<form>{% csrf_token %}
 				<div ng-view="">
-					
+
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
 
-	
+
 		<!--<div id = "optionsBox">
 			<div ng-controller = "bikeOptionsController">
 				<form>
@@ -243,7 +247,7 @@
 							<button ng-click="goBack()">Go Back</button>
 						</form>
 				</div>
-	</div> 
+	</div>
 	</div>
 	</div>
 </div>
@@ -262,8 +266,8 @@
 		    <button>Print Label</print>
 				<script type="text/javascript">
 					JsBarcode('#barcode').init()
-				</script> 
-		</div>  <a href=""></a> 
+				</script>
+		</div>  <a href=""></a>
 
 
 </div>
@@ -336,9 +340,9 @@
 			-->		<!--	<button ng-click="goBack()">Go Back</button>
 					</form>
 			</div>-->
-	<!--</div> --><!-- end of #optionsBox --> 
+	<!--</div> --><!-- end of #optionsBox -->
 
-<!--</div> end of bikeOptionsController 
+<!--</div> end of bikeOptionsController
 =======
 	<div ng-controller = "bikeOptionsController" >
 		<div class="row">
@@ -357,14 +361,14 @@
 											<img class="checkmark" src = "{% static 'bike_donations/resources/lilcheck.png' %}">
 									</div>
 								</div>
-							</div> 
+							</div>
 							<div class="selectBox row">
 								<select ng-model="selected.type" size="5">
 									<option ng-repeat = "(key, value) in bikeType" >[[key]]</option>
 								</select>
 							</div>end selectBox row-->
 						<!--
-						</div> 
+						</div>
 
 						<div id="brand" ng-if="selected.type && brand" class="row">
 							<div class="col-xs-12">
@@ -378,7 +382,7 @@
 									<option ng-repeat = "(key, value) in brand">[[key]]</option>
 								</select>
 							</div>
-						</div> closes brand 
+						</div> closes brand
 
 						<div id="cosmetic" ng-if = "selected.brand && cosmetic" class="row">
 							<div class="col-xs-12">
@@ -427,7 +431,7 @@
 <!--
 			</form>
 <<<<<<< HEAD
-		</div> end of #optionsBox 
+		</div> end of #optionsBox
 		<div class="col-xs-4 notepad">
 =======
 		</div> <!-- end of #optionsBox -->

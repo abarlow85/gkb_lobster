@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from .models import Bike, Component
 from ..component_factors.models import HandlebarOption, SaddleOption
 from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption
@@ -10,15 +10,17 @@ import random
 from .api import LightspeedApi
 from .forms import BikeForm, componentForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 # from django.views.generic.base import TemplateView
 
 
 
 # Create your views here.
-@login_required
+@login_required(login_url = '/login')
 def home(request):
 	return render(request, 'bike_donations/index.html')
 
+@login_required(login_url = '/login')
 def form_data(request):
 	context = {
 		'bikeType' : serialize_selections(BikeOption.objects.all()),
@@ -47,20 +49,9 @@ def serialize_selections(query_set):
 
 	return data
 
-def get_inv(request):
-	lightspeed = LightspeedApi()
-	inventory = lightspeed.get_inventory()
-	return JsonResponse(inventory, safe=False)
-
-def create_category(request):
-	print ("IN the views with AMERICA", request)
-
-	lightspeed = LightspeedApi()
-	category = lightspeed.create_category()
-
-	return render(request, 'bike_donations/index.html')
-
+@login_required(login_url = '/login')
 def sample_post(request):
+	print("user", request.user.username)
 	parsed_json = json.loads(request.body)
 	optionsArray = []
 
@@ -114,6 +105,7 @@ def sample_post(request):
 	request.session['price'] = bikePrice
 	return JsonResponse({'success' : True})
 
+@login_required(login_url = '/login')
 def component_post(request):
 	parsed_json = json.loads(request.body)
 	optionsArray = []
@@ -191,6 +183,7 @@ def getBikePrice(optionsArray, featuresoption):
 	print ("price factor", price_factor, basePrice * float(price_factor) * nego_factor)
 	return format(basePrice * float(price_factor) * nego_factor, '.2f')
 
+@login_required(login_url = '/login')
 def print_label(request):
 	label = {
 		'customSku' : request.session['customSku'],
@@ -203,6 +196,7 @@ def print_label(request):
 
 	return render(request, 'bike_donations/barcode.html', label)
 
+@login_required(login_url = '/login')
 def component_data(request):
 	context = {
 		'Handlebars' : serialize_componentFactor(HandlebarOption.objects.all()),
@@ -219,6 +213,12 @@ def serialize_componentFactor(query_set):
 
 	print comp
 	return comp
+
+@login_required(login_url = '/login')
+def loggingout(request):
+	logout(request)
+	return HttpResponseRedirect('/login')
+
 
 
 

@@ -4,18 +4,22 @@ from django.http import JsonResponse
 from django.views.generic import View
 from .forms import CustomSkuForm
 from ..bike_donations.api import LightspeedApi
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import logout
 
 
 # Create your views here.
 
-class Home(View):
+class Home(LoginRequiredMixin, View):
+	login_url = '/login'
 	form = CustomSkuForm()
 
 	def get(self, request):
 		return render(request, 'get_inventory/index.html', {'form' : self.form})
 
-class Search(View):
-
+class Search(LoginRequiredMixin, View):
+	login_url = '/login'
 	def get(self, request, sku):
 		print sku
 		form = CustomSkuForm({'customSku': sku})
@@ -29,10 +33,9 @@ class Search(View):
 			return render(request, 'get_inventory/index.html', {'form':form})
 
 @csrf_exempt
+@login_required(login_url = '/login')
 def delete_item(request):
 
 	api = LightspeedApi()
 	confirm = api.delete_item(request.body)
 	return JsonResponse({'status':True})
-
-
