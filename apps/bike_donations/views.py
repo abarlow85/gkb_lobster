@@ -139,9 +139,10 @@ def component_post(request):
 		newComponent = lightspeed.create_item(descriptionString, int(parsed_json['price']), request.user.username)
 
 		if newComponent['status'] == 200:
-			request.session['customSku'] = newComponent['customSku']
+			request.session['customSku'] = newComponent['bikeAdded']['customSku']
 			request.session['price'] = parsed_json['price']
-			request.session['type'] = itemType
+			request.session['type'] = None
+			request.session['brand'] = itemSelect.option
 			return JsonResponse({'status' : True})
 		else:
 			return JsonResponse({'status' : False, 'error' : newComponent['status']})

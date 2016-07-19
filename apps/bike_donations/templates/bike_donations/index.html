@@ -37,6 +37,8 @@
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/bikeOptionsController.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/confirmationController.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/componentOptionsController.js' %}"></script>
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/inventoryController.js' %}"></script>
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/inventoryFactory.js' %}"></script>
 
 </head>
 
@@ -52,15 +54,18 @@
 		<div id="buttonBox" class="row">
 			<div id="buttonBoxDiv">
 				<div id="buttonBox" class="row">
-					<button id = 'bike' ng-click = "buttonClicked('bike')" class="btn btn-success col-xs-4">Bike</button>
-					<button id = 'component' ng-click = "buttonClicked('component')" class="btn btn-warning col-xs-4">Component</button>
-					<a href="/find" id = 'other' class="btn btn-danger col-xs-4">Find a Donation</a>
-					<!-- <button id = 'other' ng-click = "buttonClicked('other')" class="btn btn-danger  col-xs-4">Other</button> -->
+					<button id = 'bike' ng-click = "buttonClicked('bike')" class="btn btn-success col-xs-4 btn-lg">Bike</button>
+					<button id = 'component' ng-click = "buttonClicked('component')" class="btn btn-warning col-xs-4 btn-lg">Component</button>
+					<!-- <a href="/find" id = 'other' class="btn btn-danger col-xs-4">Find a Donation</a> -->
+					<button id = 'find' ng-click = "buttonClicked('find')" class="btn btn-danger col-xs-4 btn-lg">Find a Donation</button>
 				</div>
 				<div>
 					<a class="btn" href="/logout">Logout</a>
 				</div>
 				<form>{% csrf_token %}
+					<div id="findDonationPartial" ng-if="loadFindPartial">
+						{% include 'get_inventory/index.html' %}
+					</div>
 					<div ng-view="">
 
 					</div>
