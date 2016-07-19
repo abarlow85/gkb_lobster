@@ -44,13 +44,13 @@ class LightspeedApi(object):
 		pythonDictionary['Prices']['ItemPrice']['useType'] = "Default"
 		pythonDictionary['Prices']['ItemPrice']['useTypeID'] = 1
 		#bad stuff, trying to break it
-		pythonDictionary['Tags'] = []
-		pythonDictionary['Tags'].append("squiddy")
+		# pythonDictionary['Tags'] = []
+		# pythonDictionary['Tags'].append("squiddy")
 		# done trying to break it
 		#trying to add tags -- the good stuff
-		# pythonDictionary['Tags'] = {}
-		# pythonDictionary['Tags']['@attributes'] = {"count":1}
-		# pythonDictionary['Tags']['tag'] = username
+		pythonDictionary['Tags'] = {}
+		pythonDictionary['Tags']['@attributes'] = {"count":1}
+		pythonDictionary['Tags']['tag'] = username
 
 
 		#done adding tags == the good stuff
