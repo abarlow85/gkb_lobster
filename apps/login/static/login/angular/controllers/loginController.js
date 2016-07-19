@@ -13,9 +13,6 @@ angular.module('login').controller('loginController', function($scope, $window){
       $scope.loginSelection = "Youth";
     }
   }
-  $scope.verify=function(secret){
-    console.log("Secret", $scope.secretWord)
-    console.log($scope.loginSelection);
-  }
+
 
 })

@@ -50,8 +50,9 @@ def serialize_selections(query_set):
 	return data
 
 @login_required(login_url = '/login')
-def sample_post(request):
+def donateBike_post(request):
 	print("user", request.user.username)
+	username = request.user.username
 	parsed_json = json.loads(request.body)
 	optionsArray = []
 
@@ -96,7 +97,7 @@ def sample_post(request):
 	lightspeed = LightspeedApi()
 
 	#returns pythonDictionary
-	newBicycle = lightspeed.create_item(descriptionString, bikePrice)
+	newBicycle = lightspeed.create_item(descriptionString, bikePrice, username)
 
 	# session for label template
 	request.session['customSku'] = newBicycle['customSku']

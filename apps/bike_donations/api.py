@@ -24,20 +24,7 @@ class LightspeedApi(object):
 		print response
 		return response.content
 
-
-	def create_category(self):
-		url = 'https://api.merchantos.com/API/Account/132193/Item.json'
-		json_data = '{"@attributes":{"count":"1"},"customSku":"12345678902224","description":"Tibetan steel frame Huffy mountain bike average", "manufacturerID":"2","ItemShops":{"ItemShop":[{"qoh":"1","shopID":"1"}]}, "Prices":{"ItemPrice":[{"amount": "230", "useType":"Default", "useTypeID":"1"}]}}'
-		print "This is json_data"
-		print json_data
-		response = requests.post(url, auth=self.auth, data=json_data)
-		print dir(response)
-		print response.reason
-		return True
-
-
-
-	def create_item(self, description, price):
+	def create_item(self, description, price, username):
 		sku_chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
 		sku = "GKBD"
 		for _ in range(8):
@@ -55,6 +42,13 @@ class LightspeedApi(object):
 		pythonDictionary['Prices']['ItemPrice']['amount'] = price
 		pythonDictionary['Prices']['ItemPrice']['useType'] = "Default"
 		pythonDictionary['Prices']['ItemPrice']['useTypeID'] = 1
+		#trying to add tags
+		pythonDictionary['Tags'] = {}
+		pythonDictionary['Tags']['@attributes'] = {"count":1}
+		pythonDictionary['Tags']['tag'] = username
+
+
+		#done adding tags
 		json_data = json.dumps(pythonDictionary)
 		response = requests.post(url, auth=self.auth, data=json_data)
 		print response.reason
