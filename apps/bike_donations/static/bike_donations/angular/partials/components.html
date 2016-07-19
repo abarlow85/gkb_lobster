@@ -33,7 +33,8 @@
 			<button class="btn btn-success" ng-click='postComponent()' ng-if = 'selected.item'>Add [[selected.item]]</button>
 		</div>
 		<div class="row text-center">
-			<img ng-if="posting" src="static/bike_donations/resources/GKBwheel.gif" />
+			<img ng-if="posting && !error" src="static/bike_donations/resources/GKBwheel.gif" />
+			<p class="text-danger" ng-if="error" ng-bind="error"></p>
 		</div>
 	</div>
 	<!--

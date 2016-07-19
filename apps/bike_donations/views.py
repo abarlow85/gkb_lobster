@@ -136,12 +136,15 @@ def component_post(request):
 
 	if form.is_valid():
 		lightspeed = LightspeedApi()
-		newComponent = lightspeed.create_item(descriptionString, int(parsed_json['price']))
-		request.session['customSku'] = newComponent['customSku']
-		request.session['price'] = parsed_json['price']
-		request.session['type'] = itemType
+		newComponent = lightspeed.create_item(descriptionString, int(parsed_json['price']), request.user.username)
 
-		return JsonResponse({'success' : True})
+		if newComponent['status'] == 200:
+			request.session['customSku'] = newComponent['customSku']
+			request.session['price'] = parsed_json['price']
+			request.session['type'] = itemType
+			return JsonResponse({'status' : True})
+		else:
+			return JsonResponse({'status' : False, 'error' : newComponent['status']})
 
 	else:
 		print ("Not valid", form.errors.as_json())
