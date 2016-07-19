@@ -91,7 +91,16 @@ def donateBike_post(request):
 
 	if form.is_valid():
 		print ("In the forms", form["bikeType"].value())
-		parsed_json["djangoPrice"] = getBikePrice(optionsArray, featuresoption)
+		price = getBikePrice(optionsArray, featuresoption)
+		if float(price) > 100.00:
+			print "printing price"
+			print price
+			parsed_json["djangoPrice"] = price
+		else:
+			print "under $100"
+			parsed_json["djangoPrice"] = "Program"
+
+
 	else:
 		print ("Not valid", form.errors.as_json())
 	descriptionString = str(bikeoption.option + " " + request.session['brand'] + " " + cosmeticoption.option)
@@ -106,7 +115,6 @@ def donateBike_post(request):
 
 	# session for label template
 		request.session['customSku'] = newBicycle['bikeAdded']['customSku']
-
 		request.session['type'] = bikeoption.option
 		request.session['price'] = bikePrice
 		return JsonResponse({'success' : True})
@@ -157,9 +165,14 @@ def getBikePrice(optionsArray, featuresoption):
 def print_label(request):
 	label = {
 		'customSku' : request.session['customSku'],
-		'brand' : request.session['brand'],
-		'price' : request.session['price'],
+		'brand' : request.session['brand']
+		
 	}
+
+	if request.session['price'] == "Program":
+		label['Program'] = True
+	else: 
+		label['price'] = request.session['price']
 
 	if request.session['type'] is not None:
 		label['type'] = request.session['type']

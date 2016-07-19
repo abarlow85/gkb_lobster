@@ -25,7 +25,15 @@
 			jsbarcode-height="40"
 			jsbarcode-width="1"
 		></img>
-		<h2 id="cost">${{price}}</h2>
+
+		<h2 id="cost">
+			{% if Program %}
+				Program
+			{% elif price%}
+				${{price}}
+			{% endif %}
+		</h2>
+
 	    <h2 class="bike-info">{{type}}</h2>
 	    <h2 class="bike-info">{{brand}}</h2>
 	    <button class="btn btn-success btn-lg" onclick="window.print()">Print Label</button>
