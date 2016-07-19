@@ -57,7 +57,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 				var pIndex = selectArr.indexOf(prep)
 				while(pIndex < selectArr.length){
-					
+
 					var nObject = bikeOptionsFactory.assembleScope(selectArr[pIndex])
 					if (Object.keys(nObject).length != 0){
 						$scope[selectArr[pIndex]] = nObject;
@@ -121,7 +121,10 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 		$scope.posted = true
 		bikeOptionsFactory.assembleBike(function(bike){
 			$scope.bike_info = bike;
-			bikeOptionsFactory.postBike(bike)
+			bikeOptionsFactory.postBike(bike, function(data){
+				$scope.error = data;
+				console.log(data);
+			})
 		});
 
 	};

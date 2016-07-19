@@ -2,6 +2,7 @@ import requests
 import json
 import string
 import random
+from .api_errors import errorsDictionary
 
 class LightspeedApi(object):
 	auth = ('22dabb44da10a0d29347905309fd40dc5ad88bc3683927bb6be0d2142ba7c90b', 'apikey')
@@ -58,7 +59,10 @@ class LightspeedApi(object):
 		print response.reason
 		print dir(response)
 		print ("Status code", response.status_code)
-		finalResult = {'success': response.status_code, 'bikeAdded': pythonDictionary}
+		if response.status_code != 200:
+			finalResult = {'status': errorsDictionary[response.status_code]}
+			return finalResult
+		finalResult = {'status': response.status_code, 'bikeAdded': pythonDictionary}
 		print ("Here's the final result", finalResult)
 		# return pythonDictionary
 		return finalResult

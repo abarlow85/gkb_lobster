@@ -99,8 +99,8 @@ def donateBike_post(request):
 	#let's not return pythonDictionary, instead let's return
 	# finalResult = {'success': response.reason, 'bikeAdded': pythonDictionary}
 	newBicycle = lightspeed.create_item(descriptionString, bikePrice, username)
-	print ("submitted new Bicycle", newBicycle['bikeAdded'], "done")
-	if newBicycle['success'] == 200:
+
+	if newBicycle['status'] == 200:
 
 	# session for label template
 		request.session['customSku'] = newBicycle['bikeAdded']['customSku']
@@ -109,7 +109,7 @@ def donateBike_post(request):
 		request.session['price'] = bikePrice
 		return JsonResponse({'success' : True})
 	else:
-		return JsonResponse({'success' : False})
+		return JsonResponse({'success' : False, 'error' : newBicycle['status']})
 
 @login_required(login_url = '/login')
 def component_post(request):
