@@ -129,6 +129,9 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 				if (response.success == true) {
 					$window.location = "/print/"
 				}
+				else {
+					console.log("Ohhh a failure")
+				}
 			});
 		}
 
