@@ -5,8 +5,9 @@ angular.module('bikeSelect').factory('inventoryFactory', function($http){
 	factory.getItem = function(sku, callback){
 		if (sku){
 			$http.get('find/items/'+sku).success(function(response){
-				data = JSON.parse(response);
-				callback(data.Item);
+				console.log(response);
+				data = response;
+				callback(data);
 			});
 		}
 	}

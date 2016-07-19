@@ -12,7 +12,7 @@ angular.module('bikeSelect').controller('omniOptionsController',function($scope,
 				'path': '/addComponent',
 				'message': "Add A Component"
 			},{
-				'type': 'other',
+				'type': 'find',
 				'path': '/find',
 				'message': "Find Item in Inventory"
 			}
@@ -53,9 +53,14 @@ angular.module('bikeSelect').controller('omniOptionsController',function($scope,
 	$scope.buttonClicked = function(selection){
 		boolService.toggleSelect(selection);
 		if (selection == 'bike'){
+			$scope.loadFindPartial = false
 			$location.path('/addBike')
 		}else if (selection == 'component'){
+			$scope.loadFindPartial = false
 			$location.path('/addComponent')
+		} else if (selection == 'find'){
+			$scope.loadFindPartial = true
+			$location.path('/find')
 		}
 	};
 
