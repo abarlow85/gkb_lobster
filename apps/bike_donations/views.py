@@ -18,6 +18,9 @@ from django.contrib.auth import logout
 # Create your views here.
 @login_required(login_url = '/login')
 def home(request):
+	if request.user.is_superuser:
+		logout(request)
+		return HttpResponseRedirect('/login')
 	return render(request, 'bike_donations/index.html')
 
 @login_required(login_url = '/login')
@@ -104,17 +107,22 @@ def donateBike_post(request):
 	bikePrice = parsed_json['djangoPrice']
 	lightspeed = LightspeedApi()
 
-	#returns pythonDictionary
+	#let's not return pythonDictionary, instead let's return
+	# finalResult = {'success': response.reason, 'bikeAdded': pythonDictionary}
 	newBicycle = lightspeed.create_item(descriptionString, bikePrice, username)
+	print ("submitted new Bicycle", newBicycle['bikeAdded'], "done")
+	if newBicycle['success'] == 200:
 
 	# session for label template
-	request.session['customSku'] = newBicycle['customSku']
+		request.session['customSku'] = newBicycle['bikeAdded']['customSku']
+
 
 	request.session['type'] = bikeoption.option
 	
 	request.session['price'] = bikePrice
 	
 	return JsonResponse({'success' : True})
+
 
 @login_required(login_url = '/login')
 def component_post(request):
