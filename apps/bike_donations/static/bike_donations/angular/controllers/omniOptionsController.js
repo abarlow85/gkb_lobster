@@ -1,53 +1,15 @@
-angular.module('bikeSelect').controller('omniOptionsController',function($scope, $location, $rootScope, bikeOptionsFactory, boolService){
-	$scope.headerText = "Add To Inventory"
-
-	function determineUrl(){
-		var urlType = [
-			{
-				'type': 'bike',
-				'path': '/addBike',
-				'message': "Add A Bike"
-			},{
-				'type': 'component',
-				'path': '/addComponent',
-				'message': "Add A Component"
-			},{
-				'type': 'other',
-				'path': '/find',
-				'message': "Find Item in Inventory"
-			}
-		];
-
-		var urlObj;
-		var element;
-		var atHome = true;
-		
-		for (var i = 0; i < urlType.length; i++){
-			urlObj = urlType[i];
-			element = urlObj['type'];
-
-			if (urlObj.path == $location.url()){
-				$scope.headerText = urlObj.message;
-				document.getElementById(element).disabled = true;
-
-				atHome = false;
-			}else{
-				document.getElementById(element).disabled = false;
-			}
-		}
-
-		if (atHome){
-			$scope.headerText = "Add To Inventory"
-		}
+angular.module('bikeSelect').controller('omniOptionsController',function($scope, $location, $rootScope, headerService, bikeOptionsFactory, boolService){
+	if (!$scope.headerText){
+		$scope.headerText = "Add To Inventory"
 	}
 
 	$rootScope.$watch(function() { 
    		return $location.path();
    	},  
    	function(newValue, oldValue) {  
-      if (newValue != oldValue) { 
-      	determineUrl()
-      }
+      	headerService.determineUrl(function(newHeader){
+      		$scope.headerText = newHeader
+      	});
    	},true);
 
 	$scope.buttonClicked = function(selection){
