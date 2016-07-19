@@ -52,7 +52,6 @@ class LightspeedApi(object):
 		# pythonDictionary['Tags']['@attributes'] = {"count":1}
 		# pythonDictionary['Tags']['tag'] = username
 
-
 		#done adding tags == the good stuff
 		json_data = json.dumps(pythonDictionary)
 		response = requests.post(url, auth=self.auth, data=json_data)
