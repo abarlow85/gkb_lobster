@@ -12,19 +12,22 @@ angular.module('bikeSelect').controller('inventoryController', function($scope, 
 			$scope.searching = true;
 			
 			inventoryFactory.getItem($scope.item.sku, function(data){
-				try {
-
+				if (data.status == true) {
 					$scope.searching = false;
-					$scope.result = data;
-					$scope.price = data.Prices.ItemPrice[0].amount
-					if (data.archived == "true") {
+					result = JSON.parse(data.item)
+					$scope.result = result.Item
+					$scope.price = $scope.result.Prices.ItemPrice[0].amount
+					if ($scope.price == '0') {
+						$scope.price = 'Program'
+					}
+					if ($scope.result.archived == "true") {
 						$scope.archived = true;
 						
 					}
-				} catch (err) {
-					$scope.notFound = "This item could not be found"
+				} else {
 					$scope.searching = false;
-				} 
+					$scope.notFound = data.error
+				}
 			});
 
 		}
@@ -33,7 +36,6 @@ angular.module('bikeSelect').controller('inventoryController', function($scope, 
 	$scope.deleteItem = function(id){
 		$scope.deleting = true
 		inventoryFactory.deleteItem(id, function(response){
-			console.log(response)
 			$scope.deleting = false
 			$scope.archived = true
 		});

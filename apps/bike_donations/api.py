@@ -18,13 +18,30 @@ class LightspeedApi(object):
 		url = 'https://api.merchantos.com/API/Account/'+self.acnt+'/Item/'+customSku+'.json'
 
 		response = requests.get(url, auth=self.auth)
-		return response.content
+		if response.status_code != 200:
+			if response.status_code == 404:
+				finalResult = {'status': 'Item could not be found'}
+			else:
+				finalResult = {'status': errorsDictionary[response.status_code]}
+		else:
+			finalResult = {'status': response.status_code, 'content':response.content}
+
+		return finalResult
 
 	def delete_item(self, id):
 		url = 'https://api.merchantos.com/API/Account/'+self.acnt+'/Item/'+id+'.json'
 		response = requests.delete(url, auth=self.auth)
-		print response
-		return response.content
+
+		if response.status_code != 200:
+			print type(response.status_code)
+			if response.status_code == 404:
+				finalResult = {'status': 'Item could not be found'}
+			else:
+				finalResult = {'status': errorsDictionary[response.status_code]}
+		else:
+			finalResult = {'status': response.status_code, 'content':response.content}
+			
+		return finalResult
 
 	def create_item(self, description, price, username):
 		sku_chars = string.ascii_lowercase + string.ascii_uppercase + string.digits

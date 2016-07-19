@@ -27,12 +27,14 @@ class Search(LoginRequiredMixin, View):
 		if form.is_valid():
 			api = LightspeedApi()
 			item = api.get_item(form.cleaned_data['customSku'])
-			print item
-			return JsonResponse(item, safe=False)
+			if item['status'] == 200:
+				return JsonResponse({'status': True, 'item': item['content']}, safe=False)
+			else:
+				return JsonResponse({'status': False, 'error': item['status']})
+
 		else:
 			return render(request, 'get_inventory/index.html', {'form':form})
 
-@csrf_exempt
 @login_required(login_url = '/login')
 def delete_item(request):
 

@@ -56,10 +56,14 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 
 	$scope.postComponent = function(){
 		$scope.posting = true
+		$scope.error = false
 				
 		componentOptionsFactory.sendComponentToServer(function(response){
-			if (response.success == true) {
+			console.log(response);
+			if (response.status == true) {
 				$window.location = "/print/"
+			} else {
+				$scope.error = response.error
 			}
 		});
 
