@@ -18,6 +18,9 @@ from django.contrib.auth import logout
 # Create your views here.
 @login_required(login_url = '/login')
 def home(request):
+	if request.user.is_superuser:
+		logout(request)
+		return HttpResponseRedirect('/login')
 	return render(request, 'bike_donations/index.html')
 
 @login_required(login_url = '/login')
