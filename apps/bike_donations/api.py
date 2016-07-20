@@ -40,7 +40,7 @@ class LightspeedApi(object):
 				finalResult = {'status': response.status_code, 'error': errorsDictionary[response.status_code]}
 		else:
 			finalResult = {'status': response.status_code, 'content':response.content}	
-		
+
 		return finalResult
 
 	def create_item(self, description, price, username):
@@ -68,10 +68,7 @@ class LightspeedApi(object):
 		#trying to add tags -- the good stuff
 		pythonDictionary['Tags'] = {}
 		pythonDictionary['Tags']['@attributes'] = {"count":1}
-		if price == 'Program':
-			pythonDictionary['Tags']['tag'] = username+',Program'
-		else:
-			pythonDictionary['Tags']['tag'] = username
+		pythonDictionary['Tags']['tag'] = username
 
 
 		#done adding tags == the good stuff
