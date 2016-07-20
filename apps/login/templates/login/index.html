@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="login">
+<html ng-app="login" class="loginPageHTML">
   <head >
     {% load staticfiles %}
 
@@ -16,7 +16,7 @@
     <script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script type = "text/javascript" src = "https:ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'login/styles/styles.css' %}">
     <script type = "text/javascript" src = "{% static 'login/angular/app.js' %}"></script>
     <script type='text/javascript' src="{% static 'login/angular/controllers/loginController.js' %}"></script>
 
@@ -24,28 +24,65 @@
     <meta charset="utf-8">
     <title>Login</title>
   </head>
-  <body>
-    <div ng-controller="loginController">
-      <button ng-click="buttonClicked('Staff')">Staff</button>
-      <button ng-click="buttonClicked('Volunteer')">Volunteer</button>
-      <button ng-click="buttonClicked('Youth')">Youth</button>
+  <body class="login">
 
+    <div ng-controller="loginController" class="container">
+
+      <h1 class="centered" id="goodkarma">Good Karma Bikes</h1>
+
+
+
+      <div class="buttonControl text-center row">
+        <button onclick="staffColorChange()" id="staffbtn" class="btn btn-lg" ng-click="buttonClicked('Staff')">Staff</button>
+        <button onclick="volColorChange()" id="volbtn" class="btn btn-lg" ng-click="buttonClicked('Volunteer')">Volunteer</button>
+        <button onclick="youthColorChange()" id="youthbtn" class="btn btn-lg" ng-click="buttonClicked('Youth')">Youth</button>
+      </div>
 
       {% if error %}
-      <p ng-if = "!loginSelection">
+      <p ng-if = "!loginSelection" class="centered">
         {{error}}
       </p>
       {% endif %}
 
-      <form ng-if="loginSelection" action="{% url 'auth' %}" method="post">
+
+      <form class="centered" id="passwords" ng-if="loginSelection" action="{% url 'auth' %}" method="post">
         {% csrf_token %}
-        <h3 ng-bind="loginSelection"></h3>
+        <h3 class="centered" ng-bind="loginSelection"></h3>
         <input type="hidden" name="userType" value="[[loginSelection]]" />
-        <label for="password">Password:</label>
-        <input name="password" ng-model="secretWord" type="password" />
-        <input type="submit"></input>
+        <div class="input-group">
+          <input class="form-control input-lg" name="password" ng-model="secretWord" type="password" placeholder="Password" />
+          <div class="input-group-addon">
+              <input type="submit" id="submitPassword" class="btn btn-lg"></input>
+          </div>
+
+        </div>
+
       </form>
 
     </div>
+
+    <script>
+    function staffColorChange(){
+      document.getElementById("staffbtn").style.background = "#116F3A";
+      document.getElementById("staffbtn").style.color = "white";
+      document.getElementById("volbtn").style.background = "transparent";
+      document.getElementById("youthbtn").style.background = "transparent";
+    }
+    function volColorChange(){
+      document.getElementById("volbtn").style.background = "#116F3A";
+      document.getElementById("volbtn").style.color = "white";
+      document.getElementById("staffbtn").style.background = "transparent";
+      document.getElementById("youthbtn").style.background = "transparent";
+    }
+    function youthColorChange(){
+      document.getElementById("youthbtn").style.background = "#116F3A";
+      document.getElementById("youthbtn").style.color = "white";
+      document.getElementById("staffbtn").style.background = "transparent";
+      document.getElementById("volbtn").style.background = "transparent";
+    }
+
+    </script>
+
+
   </body>
 </html>
