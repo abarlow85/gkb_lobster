@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'apps.bike_donations',
     'apps.bike_factors',
     'apps.login',
+    'apps.donation_menu',
     'apps.component_factors',
     'apps.get_inventory',
 ]

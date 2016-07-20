@@ -1,5 +1,11 @@
 angular.module('bikeSelect').controller('omniOptionsController',function($scope, $location, $rootScope, bikeOptionsFactory, boolService){
 	$scope.headerText = "Add To Inventory"
+	var location = document.getElementById('controllerSelect')
+	if (location.getAttribute('data') == 'bikeOptionsController') {
+		$location.path('/addBike');
+	} else {
+		$location.path('/addComponent');
+	}
 
 	function determineUrl(){
 		var urlType = [
