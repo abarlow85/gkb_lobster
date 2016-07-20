@@ -11,14 +11,13 @@ from django.contrib.auth import logout
 # Create your views here.
 
 class Home(LoginRequiredMixin, View):
-	login_url = '/login'
-	form = CustomSkuForm()
+	
 
 	def get(self, request):
-		return render(request, 'get_inventory/index.html', {'form' : self.form})
+		return render(request, 'get_inventory/index.html')
 
 class Search(LoginRequiredMixin, View):
-	login_url = '/login'
+	
 	def get(self, request, sku):
 		print sku
 		form = CustomSkuForm({'customSku': sku})
@@ -34,7 +33,7 @@ class Search(LoginRequiredMixin, View):
 		else:
 			return render(request, 'get_inventory/index.html', {'form':form})
 
-@login_required(login_url = '/login')
+@login_required()
 def delete_item(request):
 
 	api = LightspeedApi()

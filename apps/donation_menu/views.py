@@ -7,7 +7,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 class Home(LoginRequiredMixin, View):
-	login_url = '/login'
 
 	def get(self,request):
 		if 'selection' in request.session:
@@ -17,7 +16,6 @@ class Home(LoginRequiredMixin, View):
 		return render(request, 'donation_menu/index.html')
 
 class Bike(LoginRequiredMixin, View):
-	login_url = '/login'
 
 	def get(self,request):
 		request.session['selection'] = 'bikeOptionsController'
@@ -25,7 +23,6 @@ class Bike(LoginRequiredMixin, View):
 		return HttpResponseRedirect('/')
 
 class Other(LoginRequiredMixin, View):
-	login_url = '/login'
 
 	def get(self,request):
 		request.session['selection'] = 'componentOptionsController'
@@ -33,7 +30,6 @@ class Other(LoginRequiredMixin, View):
 		return HttpResponseRedirect('/')
 
 class Find(LoginRequiredMixin, View):
-	login_url = '/login'
 
 	def get(self,request):
 		return HttpResponseRedirect('/find')

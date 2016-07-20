@@ -4,17 +4,9 @@
 	{% load staticfiles %}
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title></title>
-	<link rel="stylesheet" href="">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-		<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	<script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+	<title>Find a Donation</title>
+	{% include 'bike_donations/dependencies.html' %}
+	
 
 	<link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
 	<script src="{% static 'get_inventory/angular/app.js' %}"></script>
@@ -31,13 +23,14 @@
 		</div>
 		<div class="row">
 			<div class="row">
-			<a href="/" class="btn btn-warning col-xs-12">Go Back</a>
+			<a href="/menu" class="btn btn-warning col-xs-12">Back to Menu</a>
 			</div>
 		</div>
 		<div ng-controller = 'inventoryController'>
 			<form>
+				{% csrf_token %}
 				<div class="form-group">
-					{{form.customSku.label_tag}}
+					<label for="customSku" class="control-label">Scan or type barcode</label>
 					<input type="text" class="form-control" name="customSku" ng-model="item.sku" minlength="12" maxlength="12">
 				</div>
 				<div class="form-group text-center">

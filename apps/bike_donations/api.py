@@ -68,7 +68,10 @@ class LightspeedApi(object):
 		#trying to add tags -- the good stuff
 		pythonDictionary['Tags'] = {}
 		pythonDictionary['Tags']['@attributes'] = {"count":1}
-		pythonDictionary['Tags']['tag'] = username
+		if price == 'Program':
+			pythonDictionary['Tags']['tag'] = username+',Program'
+		else:
+			pythonDictionary['Tags']['tag'] = username
 
 
 		#done adding tags == the good stuff

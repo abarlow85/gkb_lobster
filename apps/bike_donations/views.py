@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect
 from .models import Bike, Component
-from ..component_factors.models import HandlebarOption, SaddleOption, CategoryOption, ItemOption
+from ..component_factors.models import CategoryOption, ItemOption
 from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption
 import requests
 import json
@@ -16,14 +16,14 @@ from django.contrib.auth import logout
 
 
 # Create your views here.
-@login_required(login_url = '/login')
+@login_required()
 def home(request):
 	if request.user.is_superuser:
 		logout(request)
 		return HttpResponseRedirect('/login')
 	return render(request, 'bike_donations/index.html')
 
-@login_required(login_url = '/login')
+@login_required()
 def form_data(request):
 	context = {
 		'bikeType' : serialize_selections(BikeOption.objects.all()),
@@ -51,7 +51,7 @@ def serialize_selections(query_set):
 
 	return data
 
-@login_required(login_url = '/login')
+@login_required()
 def donateBike_post(request):
 	print("user", request.user.username)
 	username = request.user.username
@@ -90,14 +90,10 @@ def donateBike_post(request):
 	form = BikeForm(parsed_json)
 
 	if form.is_valid():
-		print ("In the forms", form["bikeType"].value())
 		price = getBikePrice(optionsArray, featuresoption)
 		if float(price) > 100.00:
-			print "printing price"
-			print price
 			parsed_json["djangoPrice"] = price
 		else:
-			print "under $100"
 			parsed_json["djangoPrice"] = "Program"
 
 
@@ -121,7 +117,7 @@ def donateBike_post(request):
 	else:
 		return JsonResponse({'success' : False, 'error' : newBicycle['status']})
 
-@login_required(login_url = '/login')
+@login_required()
 def component_post(request):
 	parsed_json = json.loads(request.body)
 
@@ -157,15 +153,12 @@ def getBikePrice(optionsArray, featuresoption):
 	price_factor = 1
 	nego_factor = 1.05
 	for option in optionsArray:
-		print option, option.price_factor
 		price_factor *= option.price_factor
 	for feature in featuresoption:
-		print feature, feature.price_factor
 		price_factor *= feature.price_factor
-	print ("price factor", price_factor, basePrice * float(price_factor) * nego_factor)
 	return format(basePrice * float(price_factor) * nego_factor, '.2f')
 
-@login_required(login_url = '/login')
+@login_required()
 def print_label(request):
 	label = {
 		'customSku' : request.session['customSku'],
@@ -183,17 +176,13 @@ def print_label(request):
 
 	return render(request, 'bike_donations/barcode.html', label)
 
-@login_required(login_url = '/login')
+@login_required()
 def component_data(request):
 	components = serialize_componentFactor(ItemOption.objects.all())
-	print "printing components"
-	print components
 	return JsonResponse(components)
 
 def serialize_componentFactor(query_set):
 	comp = {}
-
-	print query_set
 	for obj in query_set:
 		category = str(obj.requisites)
 		if  category in comp:
@@ -204,19 +193,8 @@ def serialize_componentFactor(query_set):
 		
 	return comp
 
-@login_required(login_url = '/login')
+@login_required()
 def loggingout(request):
 	logout(request)
 	return HttpResponseRedirect('/login')
 
-
-
-
-
-
-
-
-# def getBike(request):
-# 	print (request.body)
-# 	print request
-# 	return render(request, 'bike_donations/confirmation.html')
