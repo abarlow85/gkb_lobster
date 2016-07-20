@@ -37,10 +37,10 @@ class LightspeedApi(object):
 			if response.status_code == 404:
 				finalResult = {'status': 'Item could not be found'}
 			else:
-				finalResult = {'status': errorsDictionary[response.status_code]}
+				finalResult = {'status': response.status_code, 'error': errorsDictionary[response.status_code]}
 		else:
-			finalResult = {'status': response.status_code, 'content':response.content}
-			
+			finalResult = {'status': response.status_code, 'content':response.content}	
+		
 		return finalResult
 
 	def create_item(self, description, price, username):

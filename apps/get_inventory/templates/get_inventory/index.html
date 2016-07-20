@@ -39,7 +39,7 @@
 			</form>
 			<div class="row text-center">
 				<img src="{% static 'bike_donations/resources/GKBWheel.gif' %}" alt="riding a bike" ng-if="searching">
-				<h2 ng-if="notFound" ng-bind="notFound"></h2>
+				
 			</div>
 			<div class="row">
 				<table class="table table-bordered table-striped table-responsive" ng-if="result">
@@ -68,6 +68,7 @@
 					</form>
 				</div>
 				<div class="row text-center">
+					<h2 ng-if="notFound" ng-bind="notFound"></h2>
 					<img ng-if="deleting" src="{% static 'bike_donations/resources/GKBWheel.gif' %}">
 				</div>
 			</div>

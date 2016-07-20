@@ -12,14 +12,12 @@ from django.contrib.auth import logout
 
 class Home(LoginRequiredMixin, View):
 	
-
 	def get(self, request):
 		return render(request, 'get_inventory/index.html')
 
 class Search(LoginRequiredMixin, View):
 	
 	def get(self, request, sku):
-		print sku
 		form = CustomSkuForm({'customSku': sku})
 
 		if form.is_valid():
@@ -38,4 +36,7 @@ def delete_item(request):
 
 	api = LightspeedApi()
 	confirm = api.delete_item(request.body)
-	return JsonResponse({'status':True})
+	if confirm['status'] == 200:
+		return JsonResponse({'status':True})
+	else:
+		return JsonResponse({'status':False, 'error': confirm['error']})
