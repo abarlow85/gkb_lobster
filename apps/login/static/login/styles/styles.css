@@ -75,3 +75,8 @@ h1, h3 {
 .submit {
 	color: #474749;
 }
+form {
+  margin-top: 5vh;
+  height: 10vh;
+  margin-bottom: 5vh;
+}
