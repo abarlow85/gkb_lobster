@@ -43,7 +43,7 @@ class LightspeedApi(object):
 			
 		return finalResult
 
-	def create_item(self, description, price, username):
+	def create_item(self, description, price, username,quantity):
 		sku_chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
 		sku = "GKBD"
 		for _ in range(8):
@@ -54,7 +54,7 @@ class LightspeedApi(object):
 		pythonDictionary["customSku"] = sku
 		pythonDictionary['ItemShops'] = {}
 		pythonDictionary['ItemShops']['ItemShop'] = {}
-		pythonDictionary['ItemShops']['ItemShop']['qoh'] = 1
+		pythonDictionary['ItemShops']['ItemShop']['qoh'] = quantity
 		pythonDictionary['ItemShops']['ItemShop']['shopID'] = 1
 		pythonDictionary['Prices'] = {}
 		pythonDictionary['Prices']['ItemPrice']={}

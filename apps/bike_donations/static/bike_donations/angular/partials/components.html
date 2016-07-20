@@ -29,6 +29,11 @@
 				<option ng-repeat = '(key, value) in selected.obj'>[[key]]</option>
 			</select>
 		</div>
+
+		<div class="selectBox row" ng-if="selected.item">
+			<p><u>Quantity:</u><input ng-model="selected.quantity" class= "number-box" type="number" name="quantity" min="1" max="20" ></p>
+		</div>
+
 		<div class="row text-center">
 			<button class="btn btn-success btn-lg" ng-click='postComponent()' ng-if = 'selected.item'>Add [[selected.item]]</button>
 		</div>

@@ -84,9 +84,16 @@ def donateBike_post(request):
 	else:
 		parsed_json['frame'] = None
 
+	if "quantity" in parsed_json:
+		parsed_json["quantity"] = int(parsed_json["quantity"])
+		quantity = parsed_json["quantity"]
+	else:
+		quantity = 1
+
 	parsed_json["features"]=[obj.id for obj in featuresoption]
 	parsed_json["cosmetic"]=cosmeticoption.id
 	parsed_json["bikeType"] = bikeoption.id
+
 	form = BikeForm(parsed_json)
 
 	if form.is_valid():
@@ -109,7 +116,7 @@ def donateBike_post(request):
 
 	#let's not return pythonDictionary, instead let's return
 	# finalResult = {'success': response.reason, 'bikeAdded': pythonDictionary}
-	newBicycle = lightspeed.create_item(descriptionString, bikePrice, username)
+	newBicycle = lightspeed.create_item(descriptionString, bikePrice, username, quantity)
 
 	if newBicycle['status'] == 200:
 
@@ -133,11 +140,17 @@ def component_post(request):
 
 	parsed_json['item'] = itemSelect.id
 	parsed_json['category'] = categorySelect.id
+	quantity = 1
+	if "quantity" in parsed_json:
+		parsed_json["quantity"] = int(parsed_json["quantity"])
+		quantity = parsed_json["quantity"]
+	
+
 	form = componentForm(parsed_json)
 
 	if form.is_valid():
 		lightspeed = LightspeedApi()
-		newComponent = lightspeed.create_item(descriptionString, int(parsed_json['price']), request.user.username)
+		newComponent = lightspeed.create_item(descriptionString, int(parsed_json['price']), request.user.username, quantity)
 
 		if newComponent['status'] == 200:
 			request.session['customSku'] = newComponent['bikeAdded']['customSku']
