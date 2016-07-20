@@ -18,8 +18,9 @@ angular.module('bikeSelect').factory('componentOptionsFactory', function($http){
 		});
 	};
 
-	factory.sendComponentToServer = function(callback){
+	factory.sendComponentToServer = function(quantity,callback){
 		var info = factory.componentProduct;
+		info["quantity"] = quantity;
 		if (Object.keys(info).length != 0) {
 			$http.post('/componentPost/', info).success(function(response){
 				
