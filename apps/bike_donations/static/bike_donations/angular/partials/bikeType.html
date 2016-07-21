@@ -1,0 +1,6 @@
+<div ng-controller = 'bikeOptionsController'>
+	<div class="selectBox row" ng-repeat = "(key, value) in bikeType">
+		<button class = "btn btn-lg btn-default col-xs-12" id = "[[key]]" ng-click = "itemSelected('bikeType', key)">[[key]]</button>
+	</div>
+	<button ng-if = "selected.bikeType" ng-click = "nextPressed()">Next</button>
+</div>

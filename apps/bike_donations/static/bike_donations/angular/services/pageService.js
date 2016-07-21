@@ -1,4 +1,4 @@
-angular.module('bikeSelect').service('headerService', function($location){
+angular.module('bikeSelect').service('pageService', function($location, $routeParams){
 	var urlInfo = [
 		{
 			'type': 'bike',
@@ -22,20 +22,45 @@ angular.module('bikeSelect').service('headerService', function($location){
 		return headerText; 
 	}
 
+	service.goToNextBikePartial = function(menuItem){
+		var url = '/addBike/' + menuItem
+		$location.path(url)
+	}
+
+	service.checkBikeTypeUrl = function(url){
+		var abStr = '/addBike'
+
+		var trimUrl = url.substring(0, abStr.length)
+		if (abStr == trimUrl){
+			return true 
+		}
+
+		return false
+	}
+
 	service.determineUrl = function(callback){
 		var urlObj;
 		var element;
 		var atHome = true;
-		console.log(urlInfo)
+		var currentUrl = $location.url()
+
 		for (var i = 0; i < urlInfo.length; i++){
 			urlObj = urlInfo[i];
 			element = urlObj['type'];
 
-			if (urlObj.path == $location.url()){
+			if (urlObj.path == currentUrl && urlObj.path != '/addBike'){
 				headerText = urlObj.message;
 				document.getElementById(element).disabled = true;
 
 				atHome = false;
+			}else if (urlObj.path == '/addBike')
+				if (currentUrl == urlObj.path || currentUrl == urlObj.path + '/'){
+					$location.path('/addBike/bikeType')
+				}else if (this.checkBikeTypeUrl(currentUrl)){
+					headerText = urlObj.message
+					document.getElementById(element).disabled = true;
+
+					atHome = false;
 			}else{
 				document.getElementById(element).disabled = false;
 			}

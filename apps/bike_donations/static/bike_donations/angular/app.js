@@ -2,7 +2,7 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 	.config(['$interpolateProvider', '$httpProvider','$routeProvider','$locationProvider',
 		function($interpolateProvider, $httpProvider, $routeProvider, $locationProvider){
 			$routeProvider
-				.when('/addBike', {
+				.when('/addBike/:menuItem', {
 		 			templateUrl: 'static/bike_donations/angular/partials/addBike.html'
 		 		})
 		 		.when('/addComponent',{

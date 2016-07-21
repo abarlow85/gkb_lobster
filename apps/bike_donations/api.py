@@ -5,6 +5,18 @@ import random
 
 class LightspeedApi(object):
 	auth = ('22dabb44da10a0d29347905309fd40dc5ad88bc3683927bb6be0d2142ba7c90b', 'apikey')
+	oAuth = {
+		'clientSecret':  '$2y$10$x/BNL8imH.5u.L.HWHE8l..5ENRXR4e5qW6lUT0/YCFdLVUi981yS',
+		'clientKey': 'gkbplayground'
+	}
+
+	def get_temporaryToken(self):
+		url = "https://cloud.merchantos.com/oauth/authorize.php?response_type=code&client_id=" + self.oAuth['clientKey'] + "&scope=employee:reports%20employee:inventory%20employee:register"
+
+		response = requests.get(url)
+		print response.content
+		return
+
 
 	def get_inventory(self):
 		url = 'https://api.merchantos.com/API/Account/132193/Item.json'

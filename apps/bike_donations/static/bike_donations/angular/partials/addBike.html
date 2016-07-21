@@ -1,22 +1,20 @@
 <div ng-controller = "bikeOptionsController">
 	<div class="row">
 		<div id = "optionsBox" class="col-xs-8">
-			<div ng-if = "bikeOption && !productOption.status">
-
+			<div>
 				<div id = "bikeType">
 					<div class="row">
 						<div class="col-xs-12">
-							<h4>Select a bike</h4>
+							<h4>[[subHeaderText]]</h4>
 						<div class="check" ng-if="selected.type">
 							<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
 						</div>
 					</div>
 				</div><!-- end row -->
-				<div class="selectBox row">
-					<select ng-model="selected.type" size = '5'>
-						<option ng-repeat = "(key, value) in bikeType" >[[key]]</option>
-					</select>
+				<div class="selectBox row" ng-repeat = "(key, value) in menuData">
+						<button class = "btn btn-lg btn-default col-xs-12" id = "[[key]]" ng-click = "itemSelected(key)">[[key]]</button>
 				</div><!--end selectBox row-->
+				<button ng-if = "selectedItem" ng-click = "nextPressed()">Next</button>
 
 						</div><!--closes bike -->
 				<div id="brand" ng-if="selected.type && brand" class="row">

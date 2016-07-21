@@ -1,4 +1,4 @@
-angular.module('bikeSelect').controller('omniOptionsController',function($scope, $location, $rootScope, headerService, bikeOptionsFactory, boolService){
+angular.module('bikeSelect').controller('omniOptionsController',function($scope, $location, $rootScope, pageService, bikeOptionsFactory, boolService){
 	if (!$scope.headerText){
 		$scope.headerText = "Add To Inventory"
 	}
@@ -7,7 +7,7 @@ angular.module('bikeSelect').controller('omniOptionsController',function($scope,
    		return $location.path();
    	},  
    	function(newValue, oldValue) {  
-      	headerService.determineUrl(function(newHeader){
+      	pageService.determineUrl(function(newHeader){
       		$scope.headerText = newHeader
       	});
    	},true);

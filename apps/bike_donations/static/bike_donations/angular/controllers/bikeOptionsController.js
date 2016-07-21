@@ -1,17 +1,44 @@
-angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, $window, bikeOptionsFactory, scrollService, boolService){
+angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $routeParams, $location, $window, bikeOptionsFactory, scrollService, boolService){
 	$scope.bikeType = {};
 	$scope.features = [];
 	$scope.assembled_bike = {};
+	$scope.menuData = {};
 
-	boolService.forceSelect('bike', 10)
+	$scope.currentSelect = $routeParams.menuItem;
+	var typeHead = {
+		'bikeType': 'Select a Bike',
+		'brand': 'Select a Brand',
+		'frame': 'Select a Frame',
+		'cosmetic': 'Choose Cosmetic Quality',
+		'features': 'Add Features'
+	}
+	var typeArray = Object.keys(typeHead);
+	$scope.subHeaderText = typeHead[$routeParams.menuItem]
+	console.log($scope.subHeaderText)
 
 
-	bikeOptionsFactory.selectionData(function(data){
-		
-		for (var key in data){
-			$scope.bikeType[key] = data[key]['status']
+	if ($scope.currentSelect == 'bikeType'){
+		bikeOptionsFactory.selectionData(function(data){
+		console.log(data)
+			for (var key in data){
+				$scope.menuData[key] = data[key].status
+			}
+		});
+	}else{
+		var prep = bikeOptionsFactory.receivePrepScope()
+		if (Object.keys(prep).length < 2){
+			$location.path('/addBike/bikeType');
+		}else{
+			$scope.menuData = prep;
 		}
-	});
+	}
+
+	$scope.itemSelected = function(item){
+		$scope.selected[$scope.currentSelect] = item;
+		bikeOptionsFactory.valueSelect($scope.currentSelect, item)
+		var nextPath = bikeOptionsFactory.assembleScope($scope.currentSelect);
+		$location.path('addBike/' + nextPath)
+	}
 
 	$scope.$watch(function() {
 		return boolService.returnSelect('bike');
@@ -26,8 +53,14 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	}, true);
 
 
-	function optionClicked(type, select, prep){
+	function optionClicked(type, select){
 		var selectArr = ["brand", "cosmetic", "frame", "features"];
+
+		if (type == 'bikeType'){
+			prep = selectArr[0]
+		}else if (type != 'features'){
+			prep = selectArr[selectArr.indexOf(select)]
+		}
 
 		if (select && select !="placed"){
 
@@ -65,20 +98,18 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 						break;
 					}else{
 						console.log('let\'s do next')
-						if (Object.keys(nObject)[0] == "Other"){
-							bikeOptionsFactory.data.brand.Other.status = true;
-						}
 						$scope.selected[selectArr[pIndex]] = "placed"
 					}
+
 
 					pIndex++
 				}
 
-				var change = function(){
-					scrollService.scrollTo(selectArr[pIndex]);
-				}
+				// <!--var change = function(){
+				// 	scrollService.scrollTo(selectArr[pIndex]);
+				// }
 
-				setTimeout(change, 20)
+				// setTimeout(change, 20)
 			}
 		};
 	}
@@ -91,21 +122,22 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 	$scope.selected = {};
 
-	$scope.$watch('selected.type',function(){
-		optionClicked("bikeType",$scope.selected.type, "brand")
-	});
+	// $scope.$watch('selected.type',function(){
+	// 	optionClicked("bikeType",$scope.selected.type, "brand")
+	// });
 
-	$scope.$watch('selected.brand',function(){
-		optionClicked("brand",$scope.selected.brand, "cosmetic")
-	});
+	// $scope.$watch('selected.brand',function(){
+	// 	optionClicked("brand",$scope.selected.brand, "cosmetic")
+	// });
 
-	$scope.$watch('selected.cosmetic',function(){
-		optionClicked("cosmetic",$scope.selected.cosmetic, "frame")
-	});
+	// $scope.$watch('selected.cosmetic',function(){
+	// 	optionClicked("cosmetic",$scope.selected.cosmetic, "frame")
+	// });
 
-	$scope.$watch('selected.frame',function(){
-		optionClicked("frame",$scope.selected['frame'], "features")
-	});
+	// $scope.$watch('selected.frame',function(){
+	// 	optionClicked("frame",$scope.selected['frame'], "features")
+	// });
+
 
 	$scope.checkbox = function(item){
 
