@@ -16,24 +16,40 @@
 
 <!--Angular Below-->
 
-<script type = "text/javascript" src = "{% static 'bike_donations/angular/services/boolService.js' %}"></script>
-<script type = "text/javascript" src = "{% static 'bike_donations/angular/services/scrollService.js' %}"></script>
+<!-- <script type = "text/javascript" src = "{% static 'bike_donations/angular/services/boolService.js' %}"></script> -->
+<!-- <script type = "text/javascript" src = "{% static 'bike_donations/angular/services/scrollService.js' %}"></script> -->
 
-<script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/bikeOptionsFactory.js' %}"></script>
+<!-- <script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/bikeOptionsFactory.js' %}"></script> -->
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/componentOptionsFactory.js' %}"></script>
 
-<script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/omniOptionsController.js' %}"></script>
-<script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/bikeOptionsController.js' %}"></script>
+<!-- <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/omniOptionsController.js' %}"></script> -->
+<!-- <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/bikeOptionsController.js' %}"></script> -->
+
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/BikeFactory.js' %}"></script>
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/BikesController.js' %}"></script>
+
+
+
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/componentOptionsController.js' %}"></script>
 
 <title>{{request.session.selectionTitle}}</title>
+
+<style type="text/css" media="screen">
+
+	.selectionDiv {
+		height: 40vh;
+		overflow-y: scroll;
+		white-space: nowrap;
+	}
+	
+</style>
 </head>
 
 
 <body>
 
 <div class="container">
-	<div id='controllerSelect' ng-controller={{request.session.selection}}>
+	<div id='controllerSelect' ng-controller="BikesController">
 	<div id="bikeSideNav" class="sideNav">
 		<p class="closebtn" onclick="closeNav()" id="exout">&times;</p>
 		<div id="hamburger" onclick="openNav()">
@@ -65,12 +81,12 @@
 			</div>
 			<div id="buttonBox" class="row">
 
-					<form>{% csrf_token %}
-
-
-							<div ng-view="">
+					<form class="selectionDiv">{% csrf_token %}
+						<div id="bikeType" class="row" ng-repeat="bike in bikeType">
+							<button id=[[bike]] class="col-xs-8 btn btn-success option" ng-click="addBikeType(bike)">[[bike]]</button>
 
 							</div>
+						</div>
 
 					</form>
 

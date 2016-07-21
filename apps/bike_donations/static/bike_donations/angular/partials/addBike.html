@@ -7,18 +7,18 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<h4>Select a bike</h4>
-					<div class="check" ng-if="selected.type">
-						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
+						<div class="check" ng-if="selected.type">
+							<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
+						</div>
 					</div>
-				</div>
-			</div><!-- end row -->
-			<div class="selectBox row">
-				<select ng-model="selected.type" size = '5'>
-					<option ng-repeat = "(key, value) in bikeType" >[[key]]</option>
-				</select>
-			</div><!--end selectBox row-->
+				</div><!-- end row -->
+				<div class="selectBox row">
+					<select ng-model="selected.type" size = '5'>
+						<option ng-repeat = "(key, value) in bikeType" >[[key]]</option>
+					</select>
+				</div><!--end selectBox row-->
 
-					</div><!--closes bike -->
+			</div><!--closes bike -->
 			<div id="brand" ng-if="selected.type && brand" class="row">
 				<div class="col-xs-12">
 					<h4>Select a Brand</h4>
