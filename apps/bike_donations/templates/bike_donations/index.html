@@ -4,21 +4,9 @@
 
 {% load staticfiles %}
 
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
 
-	<!-- Latest compiled and minified CSS -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
-
-<!-- Optional theme -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> -->
-
-<!-- Latest compiled and minified JavaScript -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
-<!-- <script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script> -->
-<!-- <script type = "text/javascript" src = "https:ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script> -->
 {% include 'bike_donations/dependencies.html' %}
-<!-- <link href='https://fonts.googleapis.com/css?family=Lato:400,900,300' rel='stylesheet' type='text/css'> -->
+
 <link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/app.js' %}"></script>
 
@@ -48,21 +36,26 @@
 <div class="container">
 	<div id='controllerSelect' ng-controller={{request.session.selection}}>
 	<div id="bikeSideNav" class="sideNav">
-		<p class="closebtn" onclick="closeNav()" id="exout">&times;</p>
 		<div id="hamburger" onclick="openNav()">
-			<img class="img-responsive img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/bike_home.png' %}" />
+			<img class="img-responsive img-circle" src="{% static 'bike_donations/resources/bike_home.png' %}" />
 		</div>
-		 
-		<a href="/menu/"> <img class="img-responsive img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/bike_home.png' %}" /></a>
+		<p class="closebtn" onclick="closeNav()" id="exout">&times;</p>
 
-		<p ng-click="editJump('bikeType')">Type</p>
-		<p ng-click="editJump('brand')" ng-style="selected.type != undefined ? {'color': 'red'} : {'color': 'blue'}" >[[selected.type]] Brand</p>
 
-		<p ng-click="editJump('cosmetic')">Cosmetics</p>
-		<p ng-click="editJump('frame')">Frame</p>
-		<p ng-click="editJump('features')">Features</p>
-		<p ng-click="editJump('quantity')">Quantity</p>
-		<p>Confirmation</p>
+		<a href="#" id="toMenu"> <img class="img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/bike_home.png' %}" /></a>
+		<div id="linkSet">
+
+
+
+			<p ng-click="editJump('bikeType')">Type</p>
+			<p ng-click="editJump('brand')" ng-style="selected.type != undefined ? {'color': 'red'} : {'color': 'blue'}" >[[selected.type]] Brand</p>
+
+			<p ng-click="editJump('cosmetic')">Cosmetics</p>
+			<p ng-click="editJump('frame')">Frame</p>
+			<p ng-click="editJump('features')">Features</p>
+			<p ng-click="editJump('quantity')">Quantity</p>
+			<p>Confirmation</p>
+		</div>
 
 	</div>
 
@@ -107,16 +100,20 @@
 </div> <!-- end of container -->
 <script>
 	function openNav() {
-		document.getElementById("bikeSideNav").style.width="250px";
+		document.getElementById("bikeSideNav").style.width="210px";
 		document.getElementById("outerMain").style.marginLeft="250px";
 		document.getElementById("hamburger").style.display="none";
 		document.getElementById("exout").style.display="block";
+		document.getElementById("toMenu").href="/menu/";
+			document.getElementById("toMenu").style.display="block";
 	}
 	function closeNav() {
 		document.getElementById("bikeSideNav").style.width="42px";
 		document.getElementById("outerMain").style.marginLeft="0";
 		document.getElementById("hamburger").style.display="block";
 		document.getElementById("exout").style.display="none";
+		document.getElementById("toMenu").href="#";
+		document.getElementById("toMenu").style.display="none";
 	}
 </script>
 </body>

@@ -9,8 +9,8 @@ body {
 	background-color: rgba(255, 255, 255, 0.8);
   padding-left: 5vw;
 	padding-right: 5vw;
-  padding-top: 5vh;
-  padding-bottom: 10vh;
+  padding-top: 5vw;
+  padding-bottom: 10vw;
 }
 h1 {
 	font:'Lato', sans-serif;
@@ -18,8 +18,8 @@ h1 {
 	background-color: #116F3A;
 	color: white;
 	margin-top: 0;
-	margin-bottom: 5vh;
-	padding: 5vh;
+	margin-bottom: 2vw;
+	padding: 2vw;
 }
 h5 {
 	font: 'Lato', sans-serif;
@@ -40,17 +40,18 @@ a:hover {
 	color: #116F3A;
 }
 .btn {
-	height: 10vh;
-	margin-top: 15vh;
-	font-size: 6vh;
-	font-family: 'Raleway', sans-serif;
+	margin-top: 5vw;
+	padding-top: 2vw;
+	padding-bottom: 2vw;
+	height: 15vw;
+	font-size: 6vw;
+	font-family: 'Lato', sans-serif;
 	background: #303030;
 	border: 3px solid #116F3A;
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50);
 	border-radius: 10px;
 	color: white;
 	letter-spacing: 1.28px;
-
 }
 .btn:focus, .btn:hover {
 	background: #494849;

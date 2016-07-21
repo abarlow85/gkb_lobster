@@ -4,18 +4,30 @@
 	font-family: 'Raleway', sans-serif;
 
 }
+#toMenu {
+	display: none;
+}
 #bikeSideNav {
 	width: 42px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 20px;
 }
-/*#sideBarLogo {
-	border-radius: 50%;
-}*/
+#linkSet {
+	margin-left: 5px;
+}
+
 
 #hamburger {
 	margin: 0px;
 	padding: 0px;
-	color: white;
+}
 
+#hamburger img {
+	padding: 0px;
+	margin: 0px;
+	min-height: 30px;
+	min-width: 30px;
 }
 #exout {
 	display: none;
