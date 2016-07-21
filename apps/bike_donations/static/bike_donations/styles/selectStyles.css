@@ -6,6 +6,7 @@
 }
 #toMenu {
 	display: none;
+	background-color: #116F3A;
 }
 .fa{
 	padding-right: 0px;
@@ -60,8 +61,11 @@
 
 
 #hamburger {
+	width: 50px;
+
 	margin: 0px;
-	padding: 0px;
+	padding: 5px;
+	background-color: #116F3A;
 }
 
 #hamburger img {
@@ -209,7 +213,7 @@ table {
 }
 
 th {
-	color: green;
+	color: #116F3A;
 }
 
 h4 {
