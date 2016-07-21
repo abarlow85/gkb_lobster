@@ -5,7 +5,7 @@
 {% load staticfiles %}
 
 {% include 'bike_donations/dependencies.html' %}
-<!-- <link href='https://fonts.googleapis.com/css?family=Lato:400,900,300' rel='stylesheet' type='text/css'> -->
+
 <link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/app.js' %}"></script>
 
@@ -25,7 +25,7 @@
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/omniOptionsController.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/bikeOptionsController.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/componentOptionsController.js' %}"></script>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 <title>{{request.session.selectionTitle}}</title>
 </head>
 
@@ -34,25 +34,49 @@
 
 <div class="container">
 	<div id='controllerSelect' ng-controller={{request.session.selection}}>
+
+
 	<div id="bikeSideNav" class="sideNav">
-		<p class="closebtn" onclick="closeNav()" id="exout">&times;</p>
 		<div id="hamburger" onclick="openNav()">
-			<img class="img-responsive img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/bike_home.png' %}" />
+			<img class="img-responsive img-circle" src="{% static 'bike_donations/resources/bike_home.png' %}" />
 		</div>
-		 
-		<a href="/menu/"> <img class="img-responsive img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/bike_home.png' %}" /></a>
+		<a href="#" id="toMenu"> <img class="img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/bike_home.png' %}" /></a>
+		<div id="wrapper">
+		<p class="closebtn" onclick="closeNav()" id="exout">&times;</p>
 
-		<p ng-click="editJump('bikeType')">Type</p>
-		<p ng-click="editJump('brand')" ng-style="selected.type != undefined ? {'color': 'red'} : {'color': 'blue'}" >[[selected.type]] Brand</p>
 
-		<p ng-click="editJump('cosmetic')">Cosmetics</p>
-		<p ng-click="editJump('frame')">Frame</p>
-		<p ng-click="editJump('features')">Features</p>
-		<p ng-click="editJump('quantity')">Quantity</p>
-		<p>Confirmation</p>
+
+		<div id="linkSet">
+
+			<h5 id="bike"><i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i> </h5>
+			<p ng-click="editJump('bikeType')" class="kangroo">Type</p>
+			<br />
+			<h5 id="bike"><i class="fa fa-trademark fa-2x" aria-hidden="true"></i> </h5>
+			<p ng-click="editJump('brand')" ng-style="selected.type != undefined ? {'color': 'red'} : {'color': 'blue'}" class="kangroo">[[selected.type]] Brand</p>
+			<br />
+
+			<h5 id="bike"><i class="fa fa-diamond fa-2x" aria-hidden="true"></i> </h5>
+			<p ng-click="editJump('cosmetic')" class="kangroo">Cosmetics</p>
+			<br />
+
+			<h5 id="bike"><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i> </h5>
+			<p ng-click="editJump('frame')" class="kangroo">Frame</p>
+			<br />
+
+			<h5 id="bike"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> </h5>
+			<p ng-click="editJump('features')" class="kangroo">Features</p>
+			<br />
+
+			<h5 id="bike"><i class="fa fa-hashtag fa-2x" aria-hidden="true"></i> </h5>
+			<p ng-click="editJump('quantity')" class="kangroo">Quantity</p>
+			<br />
+
+			<h5 id="bike"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i> </h5>
+			<p class="kangroo">Confirmation</p>
+		</div>
 
 	</div>
-
+	</div>
 
 	<div id = "outerMain">
 
@@ -75,7 +99,7 @@
 					</form>
 
 			</div><!--closes buttonBox-->
-			<nav class="navbar navbar-inverse navbar-fixed-bottom">
+			<!-- <nav class="navbar navbar-inverse navbar-fixed-bottom">
 			  <div class="container-fluid">
 			    <div class="navbar-header">
 			      <a class="navbar-brand" href="#">WebSiteName</a>
@@ -87,7 +111,7 @@
 			      <li><a href="#">Page 3</a></li>
 			    </ul>
 			  </div>
-			</nav>
+			</nav> -->
 
 		</div> <!--closes outerMain-->
 	</div><!--closes controllerSelect-->
@@ -98,12 +122,34 @@
 		document.getElementById("outerMain").style.marginLeft="250px";
 		document.getElementById("hamburger").style.display="none";
 		document.getElementById("exout").style.display="block";
+		document.getElementById("toMenu").href="/menu/";
+		document.getElementById("toMenu").style.display="block";
+
+		// var x = document.getElementsByClassName("fa");
+		// console.log("fa stuff", x);
+		// for(var i=0; i<x.length; i++){
+		// 	x[i].style.display="none";
+		// }
+		var array = document.getElementsByClassName("kangroo");
+		for (var y= 0;  y<array.length; y++) {
+			array[y].style.display = "inline-block";
+		}
 	}
 	function closeNav() {
-		document.getElementById("bikeSideNav").style.width="42px";
+		document.getElementById("bikeSideNav").style.width="50px";
 		document.getElementById("outerMain").style.marginLeft="0";
 		document.getElementById("hamburger").style.display="block";
 		document.getElementById("exout").style.display="none";
+		document.getElementById("toMenu").href="#";
+		document.getElementById("toMenu").style.display="none";
+		var array = document.getElementsByClassName("kangroo");
+		for (var y= 0;  y<array.length; y++) {
+			array[y].style.display = "none";
+		}
+		var x = document.getElementsByClassName("fa");
+		for(var i=0; i<x.length; i++){
+			x[i].style.display="inline-block";
+		}
 	}
 </script>
 </body>
