@@ -9,6 +9,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class Home(LoginRequiredMixin, View):
 
 	def get(self,request):
+		if request.user.is_superuser:
+			logout(request)
+			return HttpResponseRedirect('/login')
 		if 'selection' in request.session:
 			del request.session['selection']
 		if 'selectionTitle' in request.session:

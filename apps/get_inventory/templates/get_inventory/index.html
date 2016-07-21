@@ -9,11 +9,10 @@
 	
 
 	<link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'get_inventory/styles/style.css' %}">
 	<script src="{% static 'get_inventory/angular/app.js' %}"></script>
 	<script src="{% static 'get_inventory/angular/inventoryController.js' %}"></script>
 	<script src="{% static 'get_inventory/angular/inventoryFactory.js' %}"></script>
-
-
 </head>
 <body>
 	<div class="container">
@@ -23,18 +22,18 @@
 		</div>
 		<div class="row">
 			<div class="row">
-			<a href="/menu" class="btn btn-warning col-xs-12">Back to Menu</a>
+			<a href="/menu" class="btn col-xs-12 btn-lg" id="btn-back">Back to Menu</a>
 			</div>
 		</div>
 		<div ng-controller = 'inventoryController'>
 			<form>
 				{% csrf_token %}
 				<div class="form-group">
-					<label for="customSku" class="control-label">Scan or type barcode</label>
-					<input type="text" class="form-control" name="customSku" ng-model="item.sku" minlength="12" maxlength="12">
+					<label for="customSku" class="control-label">Scan or type barcode ***Ignore the last digit***</label>
+					<input type="text" class="form-control" name="customSku" ng-model="item.sku" minlength="11" maxlength="11">
 				</div>
 				<div class="form-group text-center">
-					<button ng-click="getItem()" class="btn btn-success">Search Inventory</button>
+					<button ng-click="getItem()" class="btn btn-lg" id="btn-search">Search Inventory</button>
 				</div>
 			</form>
 			<div class="row text-center">
@@ -64,7 +63,7 @@
 				</table>
 				<div class="row text-center">
 					<form>
-						<input type="submit" class="btn btn-danger" ng-if="result && !archived" ng-click="deleteItem(result.itemID)" value="Delete from Inventory">
+						<input type="submit" id="btn-delete" class="btn btn-lg" ng-if="result && !archived" ng-click="deleteItem(result.itemID)" value="Delete from Inventory">
 					</form>
 				</div>
 				<div class="row text-center">

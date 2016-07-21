@@ -13,11 +13,18 @@ from django.contrib.auth import logout
 class Home(LoginRequiredMixin, View):
 	
 	def get(self, request):
+		if request.user.is_superuser:
+			logout(request)
+			return HttpResponseRedirect('/login')
 		return render(request, 'get_inventory/index.html')
 
 class Search(LoginRequiredMixin, View):
 	
 	def get(self, request, sku):
+		if request.user.is_superuser:
+			logout(request)
+			return HttpResponseRedirect('/login')
+
 		form = CustomSkuForm({'customSku': sku})
 
 		if form.is_valid():
@@ -33,7 +40,10 @@ class Search(LoginRequiredMixin, View):
 
 @login_required()
 def delete_item(request):
-
+	if request.user.is_superuser:
+		logout(request)
+		return HttpResponseRedirect('/login')
+		
 	api = LightspeedApi()
 	confirm = api.delete_item(request.body)
 	if confirm['status'] == 200:

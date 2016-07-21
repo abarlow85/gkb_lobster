@@ -21,6 +21,10 @@ def home(request):
 	if request.user.is_superuser:
 		logout(request)
 		return HttpResponseRedirect('/login')
+
+	if 'selection' not in request.session:
+		return HttpResponseRedirect('/menu')
+		
 	return render(request, 'bike_donations/index.html')
 
 @login_required()
