@@ -5,6 +5,40 @@ body {
 	-o-background-size: cover;
 	background-size: cover;
 }
+#header {
+	/*padding: 0px;*/
+	height: 15vw;
+	font:'Lato', sans-serif;
+  font-size: 7vw;
+	background-color: #116F3A;
+	color: white;
+	margin-bottom: 2vw;
+	padding: 2vw;
+}
+#header img{
+	/*border-radius: 50%;*/
+	height:10vw;
+	margin-bottom:3.5%;
+	/*width: 10%;*/
+
+}
+h1{
+margin-top: 3vw;
+margin-left: auto;
+margin-right: auto;
+text-align: center;
+font-size: 0.7em;
+
+}
+/*#h1-text{
+	width: 90%;
+}*/
+
+img, #h1-text {
+	display: inline-block;
+}
+
+
 #menuOptions {
 	background-color: rgba(255, 255, 255, 0.8);
   padding-left: 5vw;
@@ -12,19 +46,12 @@ body {
   padding-top: 5vw;
   padding-bottom: 10vw;
 }
-h1 {
-	font:'Lato', sans-serif;
-  font-size: 3.9em;
-	background-color: #116F3A;
-	color: white;
-	margin-top: 0;
-	margin-bottom: 2vw;
-	padding: 2vw;
-}
+
 h5 {
 	font: 'Lato', sans-serif;
 	color: #116F3A;
 	text-align: right;
+	font-size: 1.8em;
 }
 hr {
 
@@ -33,7 +60,7 @@ hr {
 
 a {
 		color: #116F3A;
-		font-size: 4.0em;
+		font-size: 6vw;
 }
 a:hover {
 	text-decoration: none;

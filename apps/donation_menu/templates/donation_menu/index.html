@@ -10,10 +10,19 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'donation_menu/styles/styles.css' %}">
 </head>
 <body>
-	<div>
 
 
-		<h1 class="text-center">GOOD KARMA BIKES</h1>
+		<div id="header" class="row">
+			<img class="col-xs-2" src="{% static 'donation_menu/resources/logoThing.jpg' %}" />
+			<div id="h1-text" class="col-xs-10">
+					<h1>Inventory Management System</h1>
+			</div>
+		</div>
+
+
+
+
+
 		<div class="container">
 			<div id="menuOptions">
 
@@ -23,15 +32,15 @@
 					Logged in as: {{request.user.username}}
 				</h5>
 
-					<a href="{% url 'check-in-bike' %}">Bike</a>
+					<a href="{% url 'check-in-bike' %}"> Bicycles</a>
 
 					<hr />
 					<a href="{% url 'check-in-other' %}">
-						Component / Other
+						Components / other
 					</a>
 					<hr />
 					<a href="{% url 'find-donation' %}">
-						Inventory
+						Search inventory
 					</a>
 					<hr />
 				</div>
@@ -40,6 +49,6 @@
 				<a href="/logout" id="btn-logout" class="btn btn-lg col-xs-12">Logout</a>
 
 		</div>
-	</div>
+
 </body>
 </html>

@@ -7,15 +7,56 @@
 #toMenu {
 	display: none;
 }
-#bikeSideNav {
-	width: 42px;
-	padding-left: 0px;
+.fa{
 	padding-right: 0px;
-	padding-top: 20px;
+}
+#wrapper{
+	margin: 0px;
+	background-color: rgba(255, 255, 255, 0.4);
+	height: 100%;
+}
+#bikeSideNav {
+	width: 50px;
+	height: 100%;
+	padding: 0px;
+	z-index: 1;
+	background: url("../resources/Woodgrain_Pattern.png") no-repeat center fixed;
+	/*background-position: -20px -20px;*/
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.sideNav {
+
+
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+
+	overflow-x: hidden;
+	padding-top: 60px;
+	transition: 0.5s;
 }
 #linkSet {
-	margin-left: 5px;
+	margin-left: -6px;
 }
+
+#linkSet .kangroo{
+	display : none;
+	padding-left: 1px;
+
+
+}
+#bike{
+	margin-left: -40px;
+}
+#linkSet h5, #linkSet p {
+	display: inline-block;
+}
+
 
 
 #hamburger {
@@ -32,18 +73,7 @@
 #exout {
 	display: none;
 }
-.sideNav {
-	height: 100%;
-	width: 0;
-	position: fixed;
-	z-index: 1;
-	top: 0;
-	left: 0;
-	background-color: #116F3A;
-	overflow-x: hidden;
-	padding-top: 60px;
-	transition: 0.5s;
-}
+
 .sideNav p {
 	padding: 8px 8px 8px 32px;
 	text-decoration: none;
