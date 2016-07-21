@@ -1,4 +1,13 @@
 angular.module('bikeSelect').controller('componentOptionsController', function($scope, $location, $window, componentOptionsFactory, scrollService, boolService){
+
+
+	var location = document.getElementById('controllerSelect')
+	if (location.getAttribute('ng-controller') == 'bikeOptionsController') {
+		$location.path('/addBike');
+	} else {
+		$location.path('/addComponent');
+	}
+	
 	$scope.which = [];
 	$scope.bikeOptions
 
@@ -19,8 +28,9 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 			}
 		}
 	});
-	
+
 	$scope.selected = {};
+	$scope.selected.quantity = 1;
 
 	$scope.$watch('selected.which',function(){
 		componentOptionsFactory.clearComponentProduct()
@@ -49,23 +59,27 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 				info[typeArr[idx]] = Number($scope.selected.obj[$scope.selected.item])
 			}
 		}
-		
-		componentOptionsFactory.createComponentProduct(info);	
+
+		componentOptionsFactory.createComponentProduct(info);
 
 	});
 
 	$scope.postComponent = function(){
-		$scope.posting = true
-		$scope.error = false
-				
-		componentOptionsFactory.sendComponentToServer(function(response){
-			console.log(response);
-			if (response.status == true) {
-				$window.location = "/print/"
-			} else {
-				$scope.error = response.error
-			}
-		});
+		if ($scope.selected.quantity && $scope.selected.quantity <=20 && $scope.selected.quantity > 0){
+			$scope.posting = true
+			$scope.error = false
+
+			componentOptionsFactory.sendComponentToServer($scope.selected.quantity, function(response){
+				console.log(response);
+				if (response.status == true) {
+					$window.location = "/print/"
+				} else {
+					$scope.error = response.error
+				}
+			});
+		}else{
+			console.log("quantity exceeded");
+		}
 
 	}
 });

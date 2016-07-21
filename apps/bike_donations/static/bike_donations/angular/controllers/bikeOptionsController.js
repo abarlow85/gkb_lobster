@@ -1,13 +1,21 @@
 angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, $window, bikeOptionsFactory, scrollService, boolService){
+	var location = document.getElementById('controllerSelect')
+	if (location.getAttribute('ng-controller') == 'bikeOptionsController') {
+		$location.path('/addBike');
+	} else {
+		$location.path('/addComponent');
+	}
+
 	$scope.bikeType = {};
 	$scope.features = [];
 	$scope.assembled_bike = {};
+	console.log("scoping brand", $scope.brand)
 
 	boolService.forceSelect('bike', 10)
 
 
 	bikeOptionsFactory.selectionData(function(data){
-		
+
 		for (var key in data){
 			$scope.bikeType[key] = data[key]['status']
 		}
@@ -90,6 +98,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 
 	$scope.selected = {};
+	$scope.selected.quantity = 1;
 
 	$scope.$watch('selected.type',function(){
 		optionClicked("bikeType",$scope.selected.type, "brand")
@@ -119,15 +128,26 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	$scope.getBike = function(){
 
 		// event.preventDefault();
-		$scope.posted = true;
-		$scope.error = false;
-		bikeOptionsFactory.assembleBike(function(bike){
-			$scope.bike_info = bike;
-			bikeOptionsFactory.postBike(bike, function(data){
-				$scope.error = data;
-				console.log(data);
-			})
-		});
+		console.log("printing quantity",$scope.selected.quantity);
+
+		if ($scope.selected.quantity && $scope.selected.quantity <= 20 && $scope.selected.quantity > 0){
+			$scope.posted = true;
+			$scope.error = false;
+
+			bikeOptionsFactory.assembleBike(function(bike){
+				$scope.bike_info = bike;
+				$scope.bike_info["quantity"] = $scope.selected.quantity;
+				console.log("bike", bike);
+				bikeOptionsFactory.postBike(bike, function(data){
+					$scope.error = data;
+					console.log(data);
+				})
+			});
+		}
+		else{
+			console.log("quantity exceeds");
+		}
+
 
 	};
 

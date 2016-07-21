@@ -13,7 +13,7 @@ def verifyUser(request):
             if user.is_active:
                 print("user is valid", user)
                 login(request, user)
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/menu')
             else:
                 print("password is valid but disabled")
                 return render(request, 'login/index.html', {"error":"Account disabled"})

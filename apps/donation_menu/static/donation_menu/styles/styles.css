@@ -1,0 +1,26 @@
+.btn {
+	height: 20vh;
+	margin-top: 4vh;
+	font-size: 10vh;
+	font-family: 'Raleway', sans-serif;
+	background: #116F3A;
+	border: 3px solid #116F3A;
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50);
+	border-radius: 10px;
+	color: white;
+	letter-spacing: 1.28px;
+
+}
+.btn:focus, .btn:hover {
+	background: #58D68D;
+}
+
+#btn-logout {
+	background: #303030;
+}
+
+
+#btn-logout:focus, #btn-logout:hover {
+	background: #494849;
+	color: #58D68D;
+}

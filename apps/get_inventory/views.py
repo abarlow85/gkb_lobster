@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views.generic import View
 from .forms import CustomSkuForm
@@ -12,16 +11,13 @@ from django.contrib.auth import logout
 # Create your views here.
 
 class Home(LoginRequiredMixin, View):
-	login_url = '/login'
-	form = CustomSkuForm()
-
+	
 	def get(self, request):
-		return render(request, 'get_inventory/index.html', {'form' : self.form})
+		return render(request, 'get_inventory/index.html')
 
 class Search(LoginRequiredMixin, View):
-	login_url = '/login'
+	
 	def get(self, request, sku):
-		print sku
 		form = CustomSkuForm({'customSku': sku})
 
 		if form.is_valid():
@@ -35,9 +31,12 @@ class Search(LoginRequiredMixin, View):
 		else:
 			return render(request, 'get_inventory/index.html', {'form':form})
 
-@login_required(login_url = '/login')
+@login_required()
 def delete_item(request):
 
 	api = LightspeedApi()
 	confirm = api.delete_item(request.body)
-	return JsonResponse({'status':True})
+	if confirm['status'] == 200:
+		return JsonResponse({'status':True})
+	else:
+		return JsonResponse({'status':False, 'error': confirm['error']})

@@ -37,13 +37,13 @@ class LightspeedApi(object):
 			if response.status_code == 404:
 				finalResult = {'status': 'Item could not be found'}
 			else:
-				finalResult = {'status': errorsDictionary[response.status_code]}
+				finalResult = {'status': response.status_code, 'error': errorsDictionary[response.status_code]}
 		else:
-			finalResult = {'status': response.status_code, 'content':response.content}
-			
+			finalResult = {'status': response.status_code, 'content':response.content}	
+
 		return finalResult
 
-	def create_item(self, description, price, username):
+	def create_item(self, description, price, username,quantity):
 		sku_chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
 		sku = "GKBD"
 		for _ in range(8):
@@ -54,7 +54,7 @@ class LightspeedApi(object):
 		pythonDictionary["customSku"] = sku
 		pythonDictionary['ItemShops'] = {}
 		pythonDictionary['ItemShops']['ItemShop'] = {}
-		pythonDictionary['ItemShops']['ItemShop']['qoh'] = 1
+		pythonDictionary['ItemShops']['ItemShop']['qoh'] = quantity
 		pythonDictionary['ItemShops']['ItemShop']['shopID'] = 1
 		pythonDictionary['Prices'] = {}
 		pythonDictionary['Prices']['ItemPrice']={}
@@ -69,7 +69,6 @@ class LightspeedApi(object):
 		pythonDictionary['Tags'] = {}
 		pythonDictionary['Tags']['@attributes'] = {"count":1}
 		pythonDictionary['Tags']['tag'] = username
-
 
 		#done adding tags == the good stuff
 		json_data = json.dumps(pythonDictionary)

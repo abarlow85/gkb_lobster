@@ -4,13 +4,73 @@
 	font-family: 'Raleway', sans-serif;
 
 }
+#bikeSideNav {
+	width: 42px;
+}
+/*#sideBarLogo {
+	border-radius: 50%;
+}*/
+
+#hamburger {
+	margin: 0px;
+	padding: 0px;
+	color: white;
+
+}
+#exout {
+	display: none;
+}
+.sideNav {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #116F3A;
+	overflow-x: hidden;
+	padding-top: 60px;
+	transition: 0.5s;
+}
+.sideNav p {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	color: black;
+	display: block;
+	transition: 0.3s;
+}
+.whitecolor{
+	color:blue;
+}
+.blackcolor{
+	color:red;
+}
+.sideNav p:hover, .offcanvas p:focus {
+	color: #f1f1f1;
+}
+.closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px !important;
+	margin-left: 50px;
+}
+#main {
+	transition: margin-left .5s;
+	padding: 20px;
+}
+@media screen and (max-height: 450px){
+	.sideNav {padding-top: 15px;}
+	.sideNav p {font-size: 18px;}
+}
 
 #outerMain{
 	margin-top: 5.1em;
 }
 #header{
 	border-bottom:.2em solid rgb(0, 168, 80);
-	position: fixed;
+	/*position: fixed;*/
 	width: 100%;
 	top:0;
 	display:block;
@@ -24,6 +84,13 @@
 	vertical-align: top;
 	text-shadow: 0px 2px 2px rgba(0, 0, 0, .2);
 
+}
+.number-box{
+	height:2px;
+	margin-left:20px;
+	margin-bottom: 20px;
+	background-color: #F4E786;
+	color: #0000FF;
 }
 #header img {
 	display: inline-block;
@@ -70,20 +137,20 @@ table {
 	padding-left: 20px;
 	right: 0px;
 }
-.notepad {
+/*.notepad {
 	background-image: url("../resources/yellowpaper.jpeg");
 	background-repeat: no-repeat;
 	height: 500px;
 	padding-left: 2.2em;
 	position: fixed;
 	right: 10px;
-	overflow-y: scroll;
+	overflow-y: scroll;*/
 	/*word-wrap: break-word;*/
-}
-.notepad p {
-	padding: 0;
+/*}*/
+/*.notepad p {*/
+	/*padding: 0;*/
 
-}
+/*}*/
 .info{
 	color: maroon;
 }
@@ -140,7 +207,7 @@ li {
 		height: 56mm;
 		width: 56mm;
 	}
-	#header, #buttonBoxDiv, #optionsBox, .btn, #labelBackBtn {
+	.btn, #labelBackBtn {
 		display: none;
 	}
 	#label {

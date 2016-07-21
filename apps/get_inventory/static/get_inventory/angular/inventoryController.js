@@ -12,19 +12,22 @@ angular.module('gkbInv').controller('inventoryController', function($scope, $loc
 			$scope.searching = true;
 			
 			inventoryFactory.getItem($scope.item.sku, function(data){
-				try {
-
+				if (data.status == true) {
 					$scope.searching = false;
-					$scope.result = data;
-					$scope.price = data.Prices.ItemPrice[0].amount
-					if (data.archived == "true") {
+					result = JSON.parse(data.item)
+					$scope.result = result.Item
+					$scope.price = $scope.result.Prices.ItemPrice[0].amount
+					if ($scope.price == '0') {
+						$scope.price = 'Program'
+					}
+					if ($scope.result.archived == "true") {
 						$scope.archived = true;
 						
 					}
-				} catch (err) {
-					$scope.notFound = "This item could not be found"
+				} else {
 					$scope.searching = false;
-				} 
+					$scope.notFound = data.error
+				}
 			});
 
 		}
@@ -32,10 +35,14 @@ angular.module('gkbInv').controller('inventoryController', function($scope, $loc
 
 	$scope.deleteItem = function(id){
 		$scope.deleting = true
+		$scope.notFound = "";
 		inventoryFactory.deleteItem(id, function(response){
-			console.log(response)
 			$scope.deleting = false
-			$scope.archived = true
+			if (response.status == true) {
+				$scope.archived = true
+			} else {
+				$scope.notFound = response.error
+			}
 		});
 	}
 

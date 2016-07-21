@@ -1,47 +1,78 @@
-{% load staticfiles %}
-	<div ng-controller = 'inventoryController' class="row">
-		<form>
-			<div class="form-group">
-				<label for="customSku" class="control-label">Scan or type in the barcode</label>
-				<input type="text" class="form-control" name="customSku" ng-model="item.sku" minlength="12" maxlength="12">
-			</div>
-			<div class="form-group text-center">
-				<button ng-click="getItem()" class="btn btn-success btn-lg">Search Inventory</button>
-			</div>
-		</form>
-		<div class="row text-center">
-			<img src="{% static 'bike_donations/resources/GKBWheel.gif' %}" alt="riding a bike" ng-if="searching">
-			<h2 ng-if="notFound" ng-bind="notFound"></h2>
+<!DOCTYPE html>
+<html ng-app='gkbInv'>
+<head>
+	{% load staticfiles %}
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Find a Donation</title>
+	{% include 'bike_donations/dependencies.html' %}
+	
+
+	<link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
+	<script src="{% static 'get_inventory/angular/app.js' %}"></script>
+	<script src="{% static 'get_inventory/angular/inventoryController.js' %}"></script>
+	<script src="{% static 'get_inventory/angular/inventoryFactory.js' %}"></script>
+
+
+</head>
+<body>
+	<div class="container">
+		<div id = "header-inv-page" class="row">
+			<h2 class="col-xs-8">Find a Donation</h2>
+			<img class="img-responsive pull-right" src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
 		</div>
 		<div class="row">
-			<table class="table table-bordered table-striped table-responsive" ng-if="result">
-				<caption class="text-center">Inventory Details</caption>
-				<tbody>
-					<tr ng-if="archived">
-						<th class="text-danger">***NOTE***</th><td>This item has been archived/deleted</td>
-					</tr>
-					<tr>
-						<th>Description</th><td>[[result.description]]</td>
-					</tr>
-					<tr>
-						<th>Price</th><td>[[price]]</td>
-					</tr>
-					<tr>
-						<th>Custom SKU</th><td>[[result.customSku]]</td>
-					</tr>
-					<tr>
-						<th>Item ID (Auto Assigned)</th><td>[[result.itemID]]</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="row text-center">
-				<form>
-					<input type="submit" class="btn btn-danger" ng-if="result && !archived" ng-click="deleteItem(result.itemID)" value="Delete from Inventory">
-				</form>
+			<div class="row">
+			<a href="/menu" class="btn btn-warning col-xs-12">Back to Menu</a>
 			</div>
+		</div>
+		<div ng-controller = 'inventoryController'>
+			<form>
+				{% csrf_token %}
+				<div class="form-group">
+					<label for="customSku" class="control-label">Scan or type barcode</label>
+					<input type="text" class="form-control" name="customSku" ng-model="item.sku" minlength="12" maxlength="12">
+				</div>
+				<div class="form-group text-center">
+					<button ng-click="getItem()" class="btn btn-success">Search Inventory</button>
+				</div>
+			</form>
 			<div class="row text-center">
-				<img ng-if="deleting" src="{% static 'bike_donations/resources/GKBWheel.gif' %}">
+				<img src="{% static 'bike_donations/resources/GKBWheel.gif' %}" alt="riding a bike" ng-if="searching">
+				
+			</div>
+			<div class="row">
+				<table class="table table-bordered table-striped table-responsive" ng-if="result">
+					<caption class="text-center">Inventory Details</caption>
+					<tbody>
+						<tr ng-if="archived">
+							<th class="text-danger">***NOTE***</th><td>This item has been archived/deleted</td>
+						</tr>
+						<tr>
+							<th>Description</th><td>[[result.description]]</td>
+						</tr>
+						<tr>
+							<th>Price</th><td>[[price]]</td>
+						</tr>
+						<tr>
+							<th>Custom SKU</th><td>[[result.customSku]]</td>
+						</tr>
+						<tr>
+							<th>Item ID (Auto Assigned)</th><td>[[result.itemID]]</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="row text-center">
+					<form>
+						<input type="submit" class="btn btn-danger" ng-if="result && !archived" ng-click="deleteItem(result.itemID)" value="Delete from Inventory">
+					</form>
+				</div>
+				<div class="row text-center">
+					<h2 ng-if="notFound" ng-bind="notFound"></h2>
+					<img ng-if="deleting" src="{% static 'bike_donations/resources/GKBWheel.gif' %}">
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</body>
+</html>

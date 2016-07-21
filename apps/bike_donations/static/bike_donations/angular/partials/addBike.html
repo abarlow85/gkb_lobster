@@ -1,117 +1,119 @@
-<div ng-controller = "bikeOptionsController">
-	<div class="row">
-		<div id = "optionsBox" class="col-xs-8">
-			<div ng-if = "bikeOption && !productOption.status">
 
-				<div id = "bikeType">
-					<div class="row">
-						<div class="col-xs-12">
-							<h4>Select a bike</h4>
-						<div class="check" ng-if="selected.type">
-							<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
-						</div>
-					</div>
-				</div><!-- end row -->
-				<div class="selectBox row">
-					<select ng-model="selected.type" size = '5'>
-						<option ng-repeat = "(key, value) in bikeType" >[[key]]</option>
-					</select>
-				</div><!--end selectBox row-->
+<div class="row">
+	<div id = "optionsBox" class="col-xs-8">
+		<div ng-if = "bikeOption && !productOption.status">
 
-						</div><!--closes bike -->
-				<div id="brand" ng-if="selected.type && brand" class="row">
+			<div id = "bikeType">
+				<div class="row">
 					<div class="col-xs-12">
-						<h4>Select a Brand</h4>
-						<div class = "check" ng-if = 'selected.brand'>
-							<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
-						</div>
-					</div>
-					<div class = "selectBox">
-						<select ng-model="selected.brand" size = "5">
-							<option ng-repeat = "(key, value) in brand">[[key]]</option>
-						</select>
+						<h4>Select a bike</h4>
+					<div class="check" ng-if="selected.type">
+						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
 					</div>
 				</div>
+			</div><!-- end row -->
+			<div class="selectBox row">
+				<select ng-model="selected.type" size = '5'>
+					<option ng-repeat = "(key, value) in bikeType" >[[key]]</option>
+				</select>
+			</div><!--end selectBox row-->
 
-				<div id="cosmetic" ng-if = "selected.brand && cosmetic" class="row">
-					<div class="col-xs-12">
-						<h4>Select Cosmetic Quality</h4>
-						<div class = "check" ng-if = 'selected.cosmetic'>
-							<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
-						</div>
+					</div><!--closes bike -->
+			<div id="brand" ng-if="selected.type && brand" class="row">
+				<div class="col-xs-12">
+					<h4>Select a Brand</h4>
+					<div class = "check" ng-if = 'selected.brand'>
+						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
 					</div>
-					<div class = "selectBox">
-						<select ng-model="selected.cosmetic" size = "5">
-							<option ng-repeat = "(key, value) in cosmetic">[[key]]</option>
-						</select>
-					</div>
-				</div><!--closes cosmetic-->
+				</div>
+				<div class = "selectBox">
+					<select ng-model="selected.brand" size = "5">
+						<option ng-repeat = "(key, value) in brand">[[key]]</option>
+					</select>
+				</div>
+			</div>
 
-				<div id="frame" ng-if = "selected.cosmetic && frame" class="row">
-					<div class="col-xs-12">
-						<h4>Select a Frame</h4>
-						<div class = "check" ng-if = 'selected.frame'>
-							<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
-						</div>
+			<div id="cosmetic" ng-if = "selected.brand && cosmetic" class="row">
+				<div class="col-xs-12">
+					<h4>Select Cosmetic Quality</h4>
+					<div class = "check" ng-if = 'selected.cosmetic'>
+						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
 					</div>
-					<div class = "selectBox">
-						<select ng-model="selected['frame']" size = "4">
-							<option ng-repeat = "(key, value) in frame">[[key]]</option>
-						</select>
-					</div>
-				</div><!--CLOSES FRAME-->
+				</div>
+				<div class = "selectBox">
+					<select ng-model="selected.cosmetic" size = "5">
+						<option ng-repeat = "(key, value) in cosmetic">[[key]]</option>
+					</select>
+				</div>
+			</div><!--closes cosmetic-->
 
-				<div id="features" ng-if = "selected.frame && features" class="row">
-					<div class="col-xs-12">
-						<h4>Add Features</h4>
-						<div class = "check" ng-if = 'selected.features'>
-							<img class="checkmark" src = "static/bike_donations/angular/partials/addBike.html">
-						</div>
+			<div id="frame" ng-if = "selected.cosmetic && frame" class="row">
+				<div class="col-xs-12">
+					<h4>Select a Frame</h4>
+					<div class = "check" ng-if = 'selected.frame'>
+						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
 					</div>
-					<div class = "checkBoxBox">
-						<span ng-repeat="(key, value) in features">
-							<label>
-			    			<input type="checkbox" id="[[key]]" ng-click = "checkbox(key)"/>[[key]]<br>
-			    		</label><br><br>
-			  		</span>
-					</div>
-				</div><!--closes features-->
-			</div><!--closes ng-if bikeOption-->
-		</div><!-- end of #optionsBox -->
+				</div>
+				<div class = "selectBox">
+					<select ng-model="selected['frame']" size = "4">
+						<option ng-repeat = "(key, value) in frame">[[key]]</option>
+					</select>
+				</div>
+			</div><!--CLOSES FRAME-->
 
-		<div class="col-xs-4 notepad pull-right" id="notetaking">
-			<h4 class="info">Bike Information</h4>
-			<p><u>Model:</u><span ng-if="selected.type" ng-bind="selected.type" ng-click="editJump('bikeType')" class="blue"></span></p>
-			<p ng-hide="selected.type == 'Kids 12inch wheels' "><u>Brand:</u><span ng-if="selected.brand" ng-bind="selected.brand" ng-click="editJump('brand')" class="blue"></span></p>
-			<p><u>Cosmetics:</u><span ng-if="selected.cosmetic" ng-bind="selected.cosmetic" ng-click="editJump('cosmetic')" class="blue"></span></p>
-			<p ng-if="frame"><u>Frame:</u><span ng-if="selected.frame" ng-bind="selected.frame" ng-click="editJump('frame')" class="blue"></span></p>
-			<p ng-hide="selected.type == 'Kids 12inch wheels' " class="features"><u>Features:</u>
+			<div id="features" ng-if = "selected.frame && features" class="row">
+				<div class="col-xs-12">
+					<h4>Add Features</h4>
+					<div class = "check" ng-if = 'selected.features'>
+						<img class="checkmark" src = "static/bike_donations/angular/partials/addBike.html">
+					</div>
+				</div>
+				<div class = "checkBoxBox">
+					<span ng-repeat="(key, value) in features">
+						<label>
+		    			<input type="checkbox" id="[[key]]" ng-click = "checkbox(key)"/>[[key]]<br>
+		    		</label><br><br>
+		  		</span>
+				</div>
+			</div><!--closes features-->
+		</div><!--closes ng-if bikeOption-->
+	</div><!-- end of #optionsBox -->
+
+	<div class="col-xs-4 notepad pull-right" id="notetaking">
+
+			<!-- <h4 class="info">Bike Information</h4> -->
+			<!-- <p><u>Model:</u><span ng-if="selected.type" ng-bind="selected.type" ng-click="editJump('bikeType')" class="blue"></span></p> -->
+			<!-- <p ng-hide="selected.type == 'Kids 12inch wheels' "><u>Brand:</u><span ng-if="selected.brand" ng-bind="selected.brand" ng-click="editJump('brand')" class="blue"></span></p> -->
+			<!-- <p><u>Cosmetics:</u><span ng-if="selected.cosmetic" ng-bind="selected.cosmetic" ng-click="editJump('cosmetic')" class="blue"></span></p> -->
+			<!-- <p ng-if="frame"><u>Frame:</u><span ng-if="selected.frame" ng-bind="selected.frame" ng-click="editJump('frame')" class="blue"></span></p> -->
+			<!-- <p ng-hide="selected.type == 'Kids 12inch wheels' " class="features"><u>Features:</u> -->
 				<!-- <span ng-bind="assembled_bike.features"></span> -->
-				<ol ng-click="editJump('features')" ng-if="assembled_bike.features">
-					<li ng-repeat="feature in assembled_bike.features" ng-bind="feature" class="blue">
-					</li>
-				</ol>
-			</p>
+				<!-- <ol ng-click="editJump('features')" ng-if="assembled_bike.features"> -->
+					<!-- <li ng-repeat="feature in assembled_bike.features" ng-bind="feature" class="blue"> -->
+					<!-- </li> -->
+				<!-- </ol> -->
+			<!-- </p> -->
 			<form ng-if="selected.frame && features">
+
+				<!-- <p><u>Quantity:</u><input ng-model="selected.quantity" class= "number-box" type="number" name="quantity" min="1" max="20" ></p> -->
+
 				<div class="commit">
 					<button ng-click="getBike()" class="btn btn-success">All Done</button>
 					<button ng-click="goBack()" ng-if="!posted" class="btn btn-danger">Restart</button>
 				</div>
 			</form>
-			<div class="afterPosting" ng-if="posted && !error">
-				<p>Please wait!</p>
-				<p>Adding to inventory!</p>
-				<img class="rider" src="static/bike_donations/resources/riding.gif" />
-			</div>
-			<div class="errorsPosting text-danger" ng-if="error">
-				<p ng-bind="error">	</p>
-			</div>
+		<div class="afterPosting" ng-if="posted && !error">
+			<p>Please wait!</p>
+			<p>Adding to inventory!</p>
+			<img class="rider" src="static/bike_donations/resources/riding.gif" />
+		</div>
+		<div class="errorsPosting text-danger" ng-if="error">
+			<p ng-bind="error">	</p>
+		</div>
 
-		</div><!-- ends notepad-->
-	</div> <!-- ends main row-->
-	</div> <!-- end of bikeOptionsController -->
-</div><!-- closes container-->
-</div>
+	</div><!-- ends notepad-->
+</div> <!-- ends main row-->
+
 <script>
 	$(document).ready(function(){
 		var elementPosition = $('#notetaking').offset();
@@ -123,4 +125,5 @@
 			}
 		});
 	})
+
 </script>
