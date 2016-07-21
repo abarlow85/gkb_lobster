@@ -18,6 +18,16 @@ from django.contrib.auth import logout
 # Create your views here.
 @login_required()
 def home(request):
+	oAuth = {
+		'clientKey': 'gkbScrumTesting', 
+		'clientSecret': '$2y$10$m4XAnnZtm/N0IC/pz9wfz.WJ24EsPoQOygqYWOBsk/T3CpQvPiCYu'
+	}
+	# auth = ('abarlow85@gmail.com', 'gkbScrum')
+	url = 'https://cloud.merchantos.com/oauth/authorize.php?response_type=code&client_id=' + oAuth['clientKey'] + '&scope=employee:all'
+	response = requests.get(url, auth=auth)
+	print 'this is our response'
+	print dir(response)
+	print response.headers	
 	if request.user.is_superuser:
 		logout(request)
 		return HttpResponseRedirect('/login')
