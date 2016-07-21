@@ -6,22 +6,53 @@
 	<title>Donation Check-In</title>
 	{% load staticfiles %}
 	{% include 'bike_donations/dependencies.html' %}
-	
+
 	<link rel="stylesheet" type="text/css" href="{% static 'donation_menu/styles/styles.css' %}">
 </head>
 <body>
-	<div class="">
-		<div class="row">
-			<a href="{% url 'check-in-bike' %}" class="btn btn-lg col-xs-12 ">Bike</a>
-		</div>
-		<div class="row">
-			<a href="{% url 'check-in-other' %}" class="btn btn-lg col-xs-12">Component or Other</a>
-		</div>
-		<div class="row">
-			<a href="{% url 'find-donation' %}" class="btn btn-lg col-xs-12">Find a Donation</a>
-		</div>
-		<div class="row">
-			<a href="/logout" id="btn-logout" class="btn btn-lg col-xs-12">Logout</a>
+	<div>
+
+
+		<h1 class="text-center">GOOD KARMA BIKES</h1>
+		<div class="container">
+			<div id="menuOptions">
+
+
+
+				<h5>
+					Logged in as: {{request.user.username}}
+				</h5>
+
+					<a href="{% url 'check-in-bike' %}">Bike</a>
+
+					<hr />
+					<a href="{% url 'check-in-other' %}">
+						Component / Other
+					</a>
+					<hr />
+					<a href="{% url 'find-donation' %}">
+						Inventory
+					</a>
+					<hr />
+				</div>
+				
+
+
+
+
+<!--
+			<div class="row">
+				<a href="{% url 'check-in-bike' %}" class="btn btn-lg col-xs-12 ">Bike</a>
+			</div>
+			<div class="row">
+				<a href="{% url 'check-in-other' %}" class="btn btn-lg col-xs-12">Component or Other</a>
+			</div>
+			<div class="row">
+				<a href="{% url 'find-donation' %}" class="btn btn-lg col-xs-12">Find a Donation</a>
+			</div> -->
+			<div class="row">
+				<a href="/logout" id="btn-logout" class="btn btn-lg col-xs-12">Logout</a>
+			</div>
 		</div>
 	</div>
 </body>
