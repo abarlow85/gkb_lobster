@@ -21,7 +21,8 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 	});
 	
 	$scope.selected = {};
-
+	$scope.selected.quantity = 1;
+	
 	$scope.$watch('selected.which',function(){
 		componentOptionsFactory.clearComponentProduct()
 		console.log('change')
@@ -55,13 +56,21 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 	});
 
 	$scope.postComponent = function(){
-		$scope.posting = true
-				
-		componentOptionsFactory.sendComponentToServer(function(response){
-			if (response.success == true) {
-				$window.location = "/print/"
-			}
-		});
+		if ($scope.selected.quantity && $scope.selected.quantity <=20 && $scope.selected.quantity > 0){
+			$scope.posting = true
+			$scope.error = false
+					
+			componentOptionsFactory.sendComponentToServer($scope.selected.quantity, function(response){
+				console.log(response);
+				if (response.status == true) {
+					$window.location = "/print/"
+				} else {
+					$scope.error = response.error
+				}
+			});
+		}else{
+			console.log("quantity exceeded");
+		}
 
 	}
 });

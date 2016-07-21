@@ -1,27 +1,25 @@
-<div ng-controller = "componentOptionsController">
-	<div id = 'categoryPick'>
-		<div class="row">
-			<div class="col-xs-12">
-				<h4>Pick a Category</h4>
-				<div class="check" ng-if="selected.type">
-					<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
-				</div>
+<div id = 'categoryPick'>
+	<div class="row">
+		<div class="col-xs-12">
+			<h4>Pick a Category</h4>
+			<div class="check" ng-if="selected.type">
+				<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
 			</div>
 		</div>
-		<div class="selectBox row">
-			<select ng-model = 'selected.which' size = '4'>
-				<option ng-repeat = 'item in which'>[[item]]</option>
-			</select><br>
-		</div>
 	</div>
+	<div class="selectBox row">
+		<select ng-model = 'selected.which' size = '4'>
+			<option ng-repeat = 'item in which'>[[item]]</option>
+		</select><br>
+	</div>
+</div>
 
-	<div id = 'itemSelect' ng-if = 'selected.which'>
-		<div class="row">
-			<div class="col-xs-12">
-				<h4>Pick a [[trim]]</h4>
-				<div class="check" ng-if="selected.type">
-					<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
-				</div>
+<div id = 'itemSelect' ng-if = 'selected.which'>
+	<div class="row">
+		<div class="col-xs-12">
+			<h4>Pick a [[trim]]</h4>
+			<div class="check" ng-if="selected.type">
+				<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
 			</div>
 		</div>
 		<div class="selectBox row">
@@ -29,13 +27,32 @@
 				<option ng-repeat = '(key, value) in selected.obj'>[[key]]</option>
 			</select>
 		</div>
+
+		<div class="selectBox row" ng-if="selected.item">
+			<p><u>Quantity:</u><input ng-model="selected.quantity" class= "number-box" type="number" name="quantity" min="1" max="20" ></p>
+		</div>
+
 		<div class="row text-center">
-			<button class="btn btn-success" ng-click='postComponent()' ng-if = 'selected.item'>Add [[selected.item]]</button>
+			<button class="btn btn-success btn-lg" ng-click='postComponent()' ng-if = 'selected.item'>Add [[selected.item]]</button>
 		</div>
 		<div class="row text-center">
-			<img ng-if="posting" src="static/bike_donations/resources/GKBwheel.gif" />
+			<img ng-if="posting && !error" src="static/bike_donations/resources/GKBwheel.gif" />
+			<p class="text-danger" ng-if="error" ng-bind="error"></p>
 		</div>
 	</div>
+	<div class="selectBox row">
+		<select ng-if = 'selected.which' size = '6' ng-model='selected.item'>
+			<option ng-repeat = '(key, value) in selected.obj'>[[key]]</option>
+		</select>
+	</div>
+	<div class="row text-center">
+		<button class="btn btn-success btn-lg" ng-click='postComponent()' ng-if = 'selected.item'>Add [[selected.item]]</button>
+	</div>
+	<div class="row text-center">
+		<img ng-if="posting && !error" src="static/bike_donations/resources/GKBwheel.gif" />
+		<p class="text-danger" ng-if="error" ng-bind="error"></p>
+	</div>
+</div>
 	<!--
 	<div id = "bikeType">
 					<div class="row">
@@ -52,4 +69,3 @@
 					</select>
 				</div>
 -->
-</div>

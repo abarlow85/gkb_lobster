@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect
 from .models import Bike, Component
-from ..component_factors.models import HandlebarOption, SaddleOption, CategoryOption, ItemOption
+from ..component_factors.models import CategoryOption, ItemOption
 from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption
 import requests
 import json
@@ -16,12 +16,15 @@ from django.contrib.auth import logout
 
 
 # Create your views here.
-@login_required(login_url = '/login')
+@login_required()
 def home(request):
-	LightspeedApi().get_temporaryToken();
+	if request.user.is_superuser:
+		logout(request)
+		return HttpResponseRedirect('/login')
+
 	return render(request, 'bike_donations/index.html')
 
-@login_required(login_url = '/login')
+@login_required()
 def form_data(request):
 	context = {
 		'bikeType' : serialize_selections(BikeOption.objects.all()),
@@ -49,7 +52,7 @@ def serialize_selections(query_set):
 
 	return data
 
-@login_required(login_url = '/login')
+@login_required()
 def donateBike_post(request):
 	print("user", request.user.username)
 	username = request.user.username
@@ -82,31 +85,48 @@ def donateBike_post(request):
 	else:
 		parsed_json['frame'] = None
 
+	if "quantity" in parsed_json:
+		parsed_json["quantity"] = int(parsed_json["quantity"])
+		quantity = parsed_json["quantity"]
+	else:
+		quantity = 1
+
 	parsed_json["features"]=[obj.id for obj in featuresoption]
 	parsed_json["cosmetic"]=cosmeticoption.id
 	parsed_json["bikeType"] = bikeoption.id
+
 	form = BikeForm(parsed_json)
 
 	if form.is_valid():
-		print ("In the forms", form["bikeType"].value())
-		parsed_json["djangoPrice"] = getBikePrice(optionsArray, featuresoption)
+		price = getBikePrice(optionsArray, featuresoption)
+		if float(price) > 100.00:
+			parsed_json["djangoPrice"] = price
+		else:
+			parsed_json["djangoPrice"] = "Program"
+
+
 	else:
 		print ("Not valid", form.errors.as_json())
 	descriptionString = str(bikeoption.option + " " + request.session['brand'] + " " + cosmeticoption.option)
 	bikePrice = parsed_json['djangoPrice']
 	lightspeed = LightspeedApi()
 
-	#returns pythonDictionary
-	newBicycle = lightspeed.create_item(descriptionString, bikePrice, username)
+	#let's not return pythonDictionary, instead let's return
+	# finalResult = {'success': response.reason, 'bikeAdded': pythonDictionary}
+	newBicycle = lightspeed.create_item(descriptionString, bikePrice, username, quantity)
+
+	if newBicycle['status'] == 200:
 
 	# session for label template
-	request.session['customSku'] = newBicycle['customSku']
+		request.session['customSku'] = newBicycle['bikeAdded']['customSku']
 
-	request.session['type'] = bikeoption.option
-	request.session['price'] = bikePrice
-	return JsonResponse({'success' : True})
+		request.session['type'] = bikeoption.option
+		request.session['price'] = bikePrice
+		return JsonResponse({'success' : True})
+	else:
+		return JsonResponse({'success' : False, 'error' : newBicycle['status']})
 
-@login_required(login_url = '/login')
+@login_required()
 def component_post(request):
 	parsed_json = json.loads(request.body)
 
@@ -117,16 +137,26 @@ def component_post(request):
 
 	parsed_json['item'] = itemSelect.id
 	parsed_json['category'] = categorySelect.id
+	quantity = 1
+	if "quantity" in parsed_json:
+		parsed_json["quantity"] = int(parsed_json["quantity"])
+		quantity = parsed_json["quantity"]
+	
+
 	form = componentForm(parsed_json)
 
 	if form.is_valid():
 		lightspeed = LightspeedApi()
-		newComponent = lightspeed.create_item(descriptionString, int(parsed_json['price']))
-		request.session['customSku'] = newComponent['customSku']
-		request.session['price'] = parsed_json['price']
-		request.session['type'] = itemType
+		newComponent = lightspeed.create_item(descriptionString, int(parsed_json['price']), request.user.username, quantity)
 
-		return JsonResponse({'success' : True})
+		if newComponent['status'] == 200:
+			request.session['customSku'] = newComponent['bikeAdded']['customSku']
+			request.session['price'] = parsed_json['price']
+			request.session['type'] = None
+			request.session['brand'] = itemSelect.option
+			return JsonResponse({'status' : True})
+		else:
+			return JsonResponse({'status' : False, 'error' : newComponent['status']})
 
 	else:
 		print ("Not valid", form.errors.as_json())
@@ -138,38 +168,36 @@ def getBikePrice(optionsArray, featuresoption):
 	price_factor = 1
 	nego_factor = 1.05
 	for option in optionsArray:
-		print option, option.price_factor
 		price_factor *= option.price_factor
 	for feature in featuresoption:
-		print feature, feature.price_factor
 		price_factor *= feature.price_factor
-	print ("price factor", price_factor, basePrice * float(price_factor) * nego_factor)
 	return format(basePrice * float(price_factor) * nego_factor, '.2f')
 
-@login_required(login_url = '/login')
+@login_required()
 def print_label(request):
 	label = {
 		'customSku' : request.session['customSku'],
-		'brand' : request.session['brand'],
-		'price' : request.session['price'],
+		'brand' : request.session['brand']
+		
 	}
+
+	if request.session['price'] == "Program":
+		label['Program'] = True
+	else: 
+		label['price'] = request.session['price']
 
 	if request.session['type'] is not None:
 		label['type'] = request.session['type']
 
 	return render(request, 'bike_donations/barcode.html', label)
 
-@login_required(login_url = '/login')
+@login_required()
 def component_data(request):
 	components = serialize_componentFactor(ItemOption.objects.all())
-	print "printing components"
-	print components
 	return JsonResponse(components)
 
 def serialize_componentFactor(query_set):
 	comp = {}
-
-	print query_set
 	for obj in query_set:
 		category = str(obj.requisites)
 		if  category in comp:
@@ -180,19 +208,8 @@ def serialize_componentFactor(query_set):
 		
 	return comp
 
-@login_required(login_url = '/login')
+@login_required()
 def loggingout(request):
 	logout(request)
 	return HttpResponseRedirect('/login')
 
-
-
-
-
-
-
-
-# def getBike(request):
-# 	print (request.body)
-# 	print request
-# 	return render(request, 'bike_donations/confirmation.html')

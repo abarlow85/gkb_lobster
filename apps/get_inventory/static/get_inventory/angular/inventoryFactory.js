@@ -5,8 +5,9 @@ angular.module('gkbInv').factory('inventoryFactory', function($http){
 	factory.getItem = function(sku, callback){
 		if (sku){
 			$http.get('items/'+sku).success(function(response){
-				data = JSON.parse(response);
-				callback(data.Item);
+				console.log(response);
+				data = response;
+				callback(data);
 			});
 		}
 	}

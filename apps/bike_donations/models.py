@@ -13,6 +13,7 @@ class Bike(models.Model):
 	features = models.ManyToManyField(FeaturesOption, blank=True)
 	nego_factor = models.DecimalField(max_digits=3, decimal_places=2, default=1.05)
 	price = models.DecimalField(max_digits=6, decimal_places=2, default=200.00)
+	
 
 class Component(models.Model):
 	category = models.ForeignKey(CategoryOption, null=True, blank=True)

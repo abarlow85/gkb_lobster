@@ -1,4 +1,4 @@
-angular.module('bikeSelect', ['ngCookies','ngRoute'])
+angular.module('bikeSelect', ['ngRoute'])
 	.config(['$interpolateProvider', '$httpProvider','$routeProvider','$locationProvider',
 		function($interpolateProvider, $httpProvider, $routeProvider, $locationProvider){
 			$routeProvider
