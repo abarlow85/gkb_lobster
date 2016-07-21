@@ -117,19 +117,6 @@
 	/*top: 10px;*/
 }
 
-#label {
-		height: 100%;
-		width: 100%;
-		padding: 0px;
-		text-align: center;
-}
-
-
-#cost, .bike-info {
-	/*font-size: 100%;*/
-	margin: 0px;
-	padding: 0px;
-}
 table {
 	width: 100%;
 }
@@ -161,10 +148,6 @@ table {
 .commit {
 	padding-top: 0;
 }
-#labelBackBtn {
-	margin: 3em auto;
-	display: block;
-}
 
 th {
 	color: green;
@@ -194,37 +177,4 @@ li {
 }
 .blue {
 	color: blue;
-}
-@media print {
-	*{
-		/*size: 2.0in 2.0in;*/
-		margin: 0px;
-		padding: 0px;
-
-	}
-
-	body {
-		height: 56mm;
-		width: 56mm;
-	}
-	.btn, #labelBackBtn {
-		display: none;
-	}
-	#label {
-		height: 56mm;
-		width: 56mm;
-		/*margin: -20px;*/
-		/*padding: 0px;*/
-		text-align: center;
-	}
-	#barcode {
-		/*margin-left: -20px;*/
-		/*padding: 0px;*/
-	}
-	#cost, .bike-info {
-		/*font-size: 100%;*/
-		/*margin: 0px;
-		padding: 0px;*/
-	}
-
 }

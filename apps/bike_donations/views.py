@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponseBadRequest
 from .models import Bike, Component
 from ..component_factors.models import CategoryOption, ItemOption
 from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption
@@ -57,114 +57,118 @@ def serialize_selections(query_set):
 
 @login_required()
 def donateBike_post(request):
-	print("user", request.user.username)
-	username = request.user.username
-	parsed_json = json.loads(request.body)
-	optionsArray = []
+	if request.method == 'POST':
+		username = request.user.username
+		parsed_json = json.loads(request.body)
+		optionsArray = []
 
-	bikeoption = BikeOption.objects.get(option=parsed_json["bikeType"])
-	optionsArray.append(bikeoption)
+		bikeoption = BikeOption.objects.get(option=parsed_json["bikeType"])
+		optionsArray.append(bikeoption)
 
-	if 'brand' in parsed_json:
-		brandoption = BrandOption.objects.get(option=parsed_json["brand"])
-		optionsArray.append(brandoption)
-		parsed_json["brand"]=brandoption.id
-		request.session['brand'] = brandoption.option
-	else:
-		parsed_json['brand'] = None
-		request.session['brand'] = ""
-
-	cosmeticoption = CosmeticOption.objects.get(option=parsed_json["cosmetic"])
-	optionsArray.append(cosmeticoption)
-
-
-	featuresoption = [FeaturesOption.objects.get(option=feature) for feature in parsed_json["features"]]
-
-	if 'frame' in parsed_json:
-		frameoption = FrameOption.objects.get(option=parsed_json["frame"])
-		optionsArray.append(frameoption)
-		parsed_json["frame"]=frameoption.id
-
-	else:
-		parsed_json['frame'] = None
-
-	if "quantity" in parsed_json:
-		parsed_json["quantity"] = int(parsed_json["quantity"])
-		quantity = parsed_json["quantity"]
-	else:
-		quantity = 1
-
-	parsed_json["features"]=[obj.id for obj in featuresoption]
-	parsed_json["cosmetic"]=cosmeticoption.id
-	parsed_json["bikeType"] = bikeoption.id
-
-	form = BikeForm(parsed_json)
-
-	if form.is_valid():
-		price = getBikePrice(optionsArray, featuresoption)
-		if float(price) > 100.00:
-			parsed_json["djangoPrice"] = price
+		if 'brand' in parsed_json:
+			brandoption = BrandOption.objects.get(option=parsed_json["brand"])
+			optionsArray.append(brandoption)
+			parsed_json["brand"]=brandoption.id
+			request.session['brand'] = brandoption.option
 		else:
-			parsed_json["djangoPrice"] = "Program"
+			parsed_json['brand'] = None
+			request.session['brand'] = ""
+
+		cosmeticoption = CosmeticOption.objects.get(option=parsed_json["cosmetic"])
+		optionsArray.append(cosmeticoption)
 
 
-	else:
-		print ("Not valid", form.errors.as_json())
-	descriptionString = str(bikeoption.option + " " + request.session['brand'] + " " + cosmeticoption.option)
-	bikePrice = parsed_json['djangoPrice']
-	lightspeed = LightspeedApi()
+		featuresoption = [FeaturesOption.objects.get(option=feature) for feature in parsed_json["features"]]
 
-	#let's not return pythonDictionary, instead let's return
-	# finalResult = {'success': response.reason, 'bikeAdded': pythonDictionary}
-	newBicycle = lightspeed.create_item(descriptionString, bikePrice, username, quantity)
+		if 'frame' in parsed_json:
+			frameoption = FrameOption.objects.get(option=parsed_json["frame"])
+			optionsArray.append(frameoption)
+			parsed_json["frame"]=frameoption.id
 
-	if newBicycle['status'] == 200:
+		else:
+			parsed_json['frame'] = None
 
-	# session for label template
-		request.session['customSku'] = newBicycle['bikeAdded']['customSku']
+		if "quantity" in parsed_json:
+			parsed_json["quantity"] = int(parsed_json["quantity"])
+			quantity = parsed_json["quantity"]
+		else:
+			quantity = 1
 
-		request.session['type'] = bikeoption.option
-		request.session['price'] = bikePrice
-		return JsonResponse({'success' : True})
-	else:
-		return JsonResponse({'success' : False, 'error' : newBicycle['status']})
+		parsed_json["features"]=[obj.id for obj in featuresoption]
+		parsed_json["cosmetic"]=cosmeticoption.id
+		parsed_json["bikeType"] = bikeoption.id
+
+		form = BikeForm(parsed_json)
+
+		if form.is_valid():
+			price = getBikePrice(optionsArray, featuresoption)
+			if float(price) > 100.00:
+				parsed_json["djangoPrice"] = price
+			else:
+				parsed_json["djangoPrice"] = "Program"
+
+
+		else:
+			print ("Not valid", form.errors.as_json())
+		descriptionString = str(bikeoption.option + " " + request.session['brand'] + " " + cosmeticoption.option)
+		bikePrice = parsed_json['djangoPrice']
+		lightspeed = LightspeedApi()
+
+		#let's not return pythonDictionary, instead let's return
+		# finalResult = {'success': response.reason, 'bikeAdded': pythonDictionary}
+		newBicycle = lightspeed.create_item(descriptionString, bikePrice, username, quantity)
+
+		if newBicycle['status'] == 200:
+
+		# session for label template
+			request.session['customSku'] = newBicycle['bikeAdded']['customSku']
+
+			request.session['type'] = bikeoption.option
+			request.session['price'] = bikePrice
+			return JsonResponse({'success' : True})
+		else:
+			return JsonResponse({'success' : False, 'error' : newBicycle['status']})
+	else: # not a post request
+		return HttpResponseBadRequest('<h1>Bad Request</h1>')
 
 @login_required()
 def component_post(request):
-	parsed_json = json.loads(request.body)
+	if request.method == 'POST':
+		parsed_json = json.loads(request.body)
 
-	categorySelect = CategoryOption.objects.get(option=parsed_json['category'])
-	itemSelect = ItemOption.objects.get(option=parsed_json['item'])
-	descriptionString = parsed_json['item'] + " " + parsed_json['category']
-	itemType = parsed_json['category']
+		categorySelect = CategoryOption.objects.get(option=parsed_json['category'])
+		itemSelect = ItemOption.objects.get(option=parsed_json['item'])
+		descriptionString = parsed_json['item'] + " " + parsed_json['category']
+		itemType = parsed_json['category']
 
-	parsed_json['item'] = itemSelect.id
-	parsed_json['category'] = categorySelect.id
-	quantity = 1
-	if "quantity" in parsed_json:
-		parsed_json["quantity"] = int(parsed_json["quantity"])
-		quantity = parsed_json["quantity"]
-	
+		parsed_json['item'] = itemSelect.id
+		parsed_json['category'] = categorySelect.id
+		quantity = 1
+		if "quantity" in parsed_json:
+			parsed_json["quantity"] = int(parsed_json["quantity"])
+			quantity = parsed_json["quantity"]
+		
 
-	form = componentForm(parsed_json)
+		form = componentForm(parsed_json)
 
-	if form.is_valid():
-		lightspeed = LightspeedApi()
-		newComponent = lightspeed.create_item(descriptionString, int(parsed_json['price']), request.user.username, quantity)
+		if form.is_valid():
+			lightspeed = LightspeedApi()
+			newComponent = lightspeed.create_item(descriptionString, int(parsed_json['price']), request.user.username, quantity)
 
-		if newComponent['status'] == 200:
-			request.session['customSku'] = newComponent['bikeAdded']['customSku']
-			request.session['price'] = parsed_json['price']
-			request.session['type'] = None
-			request.session['brand'] = itemSelect.option
-			return JsonResponse({'status' : True})
+			if newComponent['status'] == 200:
+				request.session['customSku'] = newComponent['bikeAdded']['customSku']
+				request.session['price'] = parsed_json['price']
+				request.session['type'] = None
+				request.session['brand'] = itemSelect.option
+				return JsonResponse({'status' : True})
+			else:
+				return JsonResponse({'status' : False, 'error' : newComponent['status']})
+
 		else:
-			return JsonResponse({'status' : False, 'error' : newComponent['status']})
-
-	else:
-		print ("Not valid", form.errors.as_json())
-		return JsonResponse(form.errors.as_json(), safe=False)
-
+			print ("Not valid", form.errors.as_json())
+			return JsonResponse(form.errors.as_json(), safe=False)
+	else: # not a post request
+		return HttpResponseBadRequest('<h1>Bad Request</h1>')
 
 def getBikePrice(optionsArray, featuresoption):
 	basePrice = 200.00
@@ -178,10 +182,12 @@ def getBikePrice(optionsArray, featuresoption):
 
 @login_required()
 def print_label(request):
+	if 'customSku' not in request.session:
+		return HttpResponseRedirect('/menu')
+
 	label = {
 		'customSku' : request.session['customSku'],
 		'brand' : request.session['brand']
-		
 	}
 
 	if request.session['price'] == "Program":
