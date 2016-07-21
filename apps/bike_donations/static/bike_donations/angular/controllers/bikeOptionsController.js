@@ -1,13 +1,21 @@
 angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, $window, bikeOptionsFactory, scrollService, boolService){
+	var location = document.getElementById('controllerSelect')
+	if (location.getAttribute('ng-controller') == 'bikeOptionsController') {
+		$location.path('/addBike');
+	} else {
+		$location.path('/addComponent');
+	}
+
 	$scope.bikeType = {};
 	$scope.features = [];
 	$scope.assembled_bike = {};
+	console.log("scoping brand", $scope.brand)
 
 	boolService.forceSelect('bike', 10)
 
 
 	bikeOptionsFactory.selectionData(function(data){
-		
+
 		for (var key in data){
 			$scope.bikeType[key] = data[key]['status']
 		}

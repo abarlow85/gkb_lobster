@@ -43,33 +43,77 @@
 
 
 <body>
+
 <div class="container">
+	<div id='controllerSelect' ng-controller={{request.session.selection}}>
+	<div id="bikeSideNav" class="sideNav">
+		<p class="closebtn" onclick="closeNav()" id="exout">&times;</p>
+		<h2 id="hamburger" onclick="openNav()" >&#9776;</h2>
+		<a href="/menu/"> <img class="img-responsive img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/logoThing.jpg' %}" /></a>
+
+		<p ng-click="editJump('bikeType')">Type</p>
+		<p ng-click="editJump('brand')" ng-style="selected.type != undefined ? {'color': 'red'} : {'color': 'blue'}" >[[selected.type]] Brand</p>
+
+		<p ng-click="editJump('cosmetic')">Cosmetics</p>
+		<p ng-click="editJump('frame')">Frame</p>
+		<p ng-click="editJump('features')">Features</p>
+		<p ng-click="editJump('quantity')">Quantity</p>
+		<p>Confirmation</p>
+
+	</div>
+
+
 	<div id = "outerMain">
-		<div ng-controller = "omniOptionsController" id="buttonBoxDiv" class="row">
+
+
+
+
 			<div id = "header" class="row">
 				<h2 class="col-xs-8">{{request.session.selectionTitle}}</h2>
-				<img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
+				<!-- <img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" /> -->
 			</div>
 			<div id="buttonBox" class="row">
-				<div id="buttonBoxDiv">
-					<div id="buttonBox" class="row">
-						<a href="/menu" title="" class="btn btn-warning btn-lg col-xs-12">Back to Menu</a>
-					</div>
-					<div>
-						<a class="btn" href="/logout">Logout</a>
-					</div>
+
 					<form>{% csrf_token %}
-						<div id='controllerSelect' ng-controller='{{request.session.selection}}'>
+
+
 							<div ng-view="">
 
 							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div> <!-- ends main row-->
-</div> <!-- end of container -->
 
+					</form>
+
+			</div><!--closes buttonBox-->
+			<nav class="navbar navbar-inverse navbar-fixed-bottom">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="#">WebSiteName</a>
+			    </div>
+			    <ul class="nav navbar-nav">
+			      <li class="active"><a href="#">Home</a></li>
+			      <li><a href="#">Page 1</a></li>
+			      <li><a href="#">Page 2</a></li>
+			      <li><a href="#">Page 3</a></li>
+			    </ul>
+			  </div>
+			</nav>
+
+		</div> <!--closes outerMain-->
+	</div><!--closes controllerSelect-->
+</div> <!-- end of container -->
+<script>
+	function openNav() {
+		document.getElementById("bikeSideNav").style.width="250px";
+		document.getElementById("outerMain").style.marginLeft="250px";
+		document.getElementById("hamburger").style.display="none";
+		document.getElementById("exout").style.display="block";
+	}
+	function closeNav() {
+		document.getElementById("bikeSideNav").style.width="42px";
+		document.getElementById("outerMain").style.marginLeft="0";
+		document.getElementById("hamburger").style.display="block";
+		document.getElementById("exout").style.display="none";
+	}
+</script>
 </body>
 </html>
