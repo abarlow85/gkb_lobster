@@ -18,6 +18,7 @@
 <!-- <script type = "text/javascript" src = "https:ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script> -->
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script> -->
 {% include 'bike_donations/dependencies.html' %}
+<!-- <link href='https://fonts.googleapis.com/css?family=Lato:400,900,300' rel='stylesheet' type='text/css'> -->
 <link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/app.js' %}"></script>
 
@@ -48,8 +49,11 @@
 	<div id='controllerSelect' ng-controller={{request.session.selection}}>
 	<div id="bikeSideNav" class="sideNav">
 		<p class="closebtn" onclick="closeNav()" id="exout">&times;</p>
-		<h2 id="hamburger" onclick="openNav()" >&#9776;</h2>
-		<a href="/menu/"> <img class="img-responsive img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/logoThing.jpg' %}" /></a>
+		<div id="hamburger" onclick="openNav()">
+			<img class="img-responsive img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/bike_home.png' %}" />
+		</div>
+		 
+		<a href="/menu/"> <img class="img-responsive img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/bike_home.png' %}" /></a>
 
 		<p ng-click="editJump('bikeType')">Type</p>
 		<p ng-click="editJump('brand')" ng-style="selected.type != undefined ? {'color': 'red'} : {'color': 'blue'}" >[[selected.type]] Brand</p>
