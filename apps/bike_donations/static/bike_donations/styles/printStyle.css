@@ -1,0 +1,61 @@
+*{
+	padding:0.75em;
+	margin:0;
+	font-family: 'Raleway', sans-serif;
+
+}
+
+.btn {
+	height: 10vw;
+	width: 60vw;
+	font-size: 4vw;
+}
+
+
+#label {
+		height: 100%;
+		width: 100%;
+		padding: 0px;
+		text-align: center;
+}
+
+#cost, .bike-info {
+	/*font-size: 100%;*/
+	margin: 0px;
+	padding: 0px;
+}
+
+#labelBackBtn {
+	margin: 3em auto;
+	display: block;
+}
+
+h4 {
+	color: #00A850;
+	display: inline-block;
+}
+
+@media print {
+	*{
+		/*size: 2.0in 2.0in;*/
+		margin: 0px;
+		padding: 0px;
+
+	}
+
+	body {
+		height: 56mm;
+		width: 56mm;
+	}
+	.btn, #labelBackBtn {
+		display: none;
+	}
+	#label {
+		height: 56mm;
+		width: 56mm;
+		/*margin: -20px;*/
+		/*padding: 0px;*/
+		text-align: center;
+	}
+
+}
