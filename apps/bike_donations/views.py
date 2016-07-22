@@ -112,7 +112,7 @@ def donateBike_post(request):
 			parsed_json["quantity"] = int(parsed_json["quantity"])
 			quantity = parsed_json["quantity"]
 		else:
-			quantity = 1
+			parsed_json["quantity"] = 1
 
 		parsed_json["features"]=[obj.id for obj in featuresoption]
 		parsed_json["cosmetic"]=cosmeticoption.id
@@ -132,6 +132,7 @@ def donateBike_post(request):
 			print ("Not valid", form.errors.as_json())
 		descriptionString = str(bikeoption.option + " " + request.session['brand'] + " " + cosmeticoption.option)
 		bikePrice = parsed_json['djangoPrice']
+		quantity = parsed_json["quantity"]
 		lightspeed = LightspeedApi()
 
 		#let's not return pythonDictionary, instead let's return

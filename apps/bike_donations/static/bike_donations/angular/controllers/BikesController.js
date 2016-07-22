@@ -7,57 +7,82 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 		$location.path('/addComponent');
 	}
 
-	$scope.typeSelect;
-	$scope.brandSelect;
-	$scope.cosmeticSelect;
-	$scope.frameSelect;
-	$scope.featuresSelect = []
-	$scope.formIndex = 0;
 	$scope.nextName = 'bikeType'
-	
 
 	BikeFactory.selectionData(function(data){
 		$scope.bikeType = data
 	});
 
 	$scope.addBikeType = function(option){
-		
+		$scope.bikeObject = {};
+		$scope.typeSelect = ''
+		$scope.brandSelect = ''
+		$scope.cosmeticSelect = ''
+		$scope.frameSelect = ''
+		$scope.featuresSelect = []
+
 		BikeFactory.addBikeType(option, function(selection, nextOptions) {
 			$scope.typeSelect = selection;
-			$scope.allOptions = nextOptions;
-			$scope.remainingOptions = nextOptions;
-			$scope.history = ['bikeType']
+			$scope.allOptions = JSON.parse(JSON.stringify(nextOptions));
+			$scope.remainingOptions = Object.keys(nextOptions)
+			$scope.history = []
 			$scope.selected = true
-			console.log($scope.allOptions)
+			$scope.bikeObject[$scope.nextName] = selection
+			// console.log($scope.allOptions)
 			
 		});
 	}
 
 	$scope.nextBtn = function(){
-		$scope.selected = false
+		console.log("NEXT")
 
-		for (var remaining in $scope.remainingOptions) {
-			$scope.nextOptions = $scope.allOptions[remaining];
-			$scope.nextName = remaining;
-			delete $scope.remainingOptions[remaining]
+		$scope.selected = false
+		$scope.history.push($scope.nextName);
+
+		for (var idx in $scope.remainingOptions) {
+			var value = $scope.remainingOptions[idx]
+			$scope.nextOptions = $scope.allOptions[value];
+			$scope.nextName = value;
+			$scope.remainingOptions.splice(0,1);
 			break;
 		}
 
-		if (Object.keys($scope.remainingOptions) == 0) {
+		if ($scope.remainingOptions.length == 0) {
 			$scope.complete = true
 			return;
 		}
+		for (key in $scope.bikeObject) {
+			console.log(key)
+			if (key == $scope.nextName) {
+				$scope.selected = true
+				break;
+			}
+		}
+
+		if ($scope.nextName == 'features') {
+			$scope.selected = true;
+		}
+		
+		
 		
 	}
 
+	$scope.backBtn = function() {
+		$scope.complete = false
+		$scope.selected = true
+		$scope.remainingOptions.unshift($scope.nextName);
+		$scope.nextName = $scope.history.pop();
+		$scope.nextOptions = $scope.allOptions[$scope.nextName];
+		console.log("BACK")
+		console.log($scope.history);
+		console.log($scope.remainingOptions)
+	}
+
 	$scope.brandSelection = function(option) {
-		
 		BikeFactory.brandSelection(option, function(selection) {
 			$scope.brandSelect = selection;
-			$scope.history.push('brand');
 			$scope.selected = true
-
-
+			$scope.bikeObject[$scope.nextName] = selection
 		});
 
 		
@@ -66,9 +91,8 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 	$scope.cosmeticSelection = function(option) {
 		BikeFactory.cosmeticSelection(option, function(selection) {
 			$scope.cosmeticSelect = selection;
-			$scope.history.push('cosmetic');
 			$scope.selected = true
-
+			$scope.bikeObject[$scope.nextName] = selection
 
 		});
 
@@ -78,8 +102,8 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 	$scope.frameSelection = function(option) {
 		BikeFactory.frameSelection(option, function(selection) {
 			$scope.frameSelect = selection;
-			$scope.history.push('frame');
 			$scope.selected = true
+			$scope.bikeObject[$scope.nextName] = selection
 
 
 		});
@@ -88,15 +112,43 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 	}
 
 	$scope.featureSelection = function(option) {
-		var selected = document.getElementById(option);
-		if (selected.getAttribute('select') == null) {
-			selected.setAttribute('select','true')
-			selected.style.background = 'blue';
-		} else {
-			selected.removeAttribute('select')
-			selected.style.background = 'green';
+		var optionAlreadySelected = false;
+		for (var idx in $scope.featuresSelect) {
+			if ($scope.featuresSelect[idx] == option) {
+				$scope.featuresSelect.splice($scope.featuresSelect.indexOf(option), 1);
+				optionAlreadySelected = true;
+
+			}
+		}
+		if (!optionAlreadySelected) {
+			$scope.featuresSelect.push(option);
 		}
 
+		console.log($scope.featuresSelect);
+
+
+	}
+
+	$scope.isInSelections = function(option) {
+		return $scope.featuresSelect.indexOf(option) != -1
+	}
+
+	$scope.doneBtn = function() {
+		$scope.bikeObject['features'] = $scope.featuresSelect;
+		console.log($scope.bikeObject.quantity);
+		
+		BikeFactory.completeBike($scope.bikeObject, function(bike) {
+			$scope.history.push('features');
+			$scope.confirmBike = bike;
+			$scope.nextName = 'confirm';
+			console.log($scope.confirmBike);
+		});
+	}
+
+	$scope.postBike = function() {
+		BikeFactory.postBike(function(response){
+			$scope.error = response;
+		});
 	}
 
 

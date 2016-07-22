@@ -7,6 +7,7 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 
 	var selectedType, selectedBrand, selectedCosmetic, selectedFrame;
 	var selectedFeatures = [];
+	var bikeObject = {}
 
 
 	factory.selectionData = function(callback){
@@ -84,8 +85,10 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 
 
 	factory.addBikeType = function(bike, callback){
-		selectedType = bike;
 		this.reset();
+		selectedType = bike;
+		bikeObject.bikeType = bike;
+		
 		
 		nextOptions = this.getNextOptions()
 		callback(selectedType, nextOptions)
@@ -94,29 +97,49 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 
 	factory.brandSelection = function(brand, callback){
 		selectedBrand = brand;
+		bikeObject.brand = brand;
 		callback(selectedBrand)
 	}
 
 	factory.cosmeticSelection = function(cosmetic, callback){
 		selectedCosmetic = cosmetic;
+		bikeObject.cosmetic = cosmetic;
 		callback(selectedCosmetic)
 	}
 
 	factory.frameSelection = function(frame, callback){
 		selectedFrame = frame;
-		callback(selectedFrame)
+		bikeObject.frame = frame;
+		callback(selectedFrame);
 	}
 
-	factory.cosmeticSelection = function(features, callback){
-		selectedFeatures = features;
-		callback(selectedFeatures)
+	factory.completeBike = function(bike, callback){
+		selectedFeatures = bike.features;
+		bikeObject.features = bike.features;
+		bikeObject.quantity = bike.quantity;
+		callback(bikeObject);
+	}
+
+	factory.postBike = function(callback){
+		$http.post('/donateBikePost/', bikeObject).success(function(response){
+			if (response.success == true) {
+					$window.location = "/print/"
+			}
+			else {
+				console.log("Ohhh a failure")
+				callback(response.error)
+			}
+		});
 	}
 
 	factory.reset = function(){
+		selectedType = '';
 		selectedBrand = '';
 		selectedCosmetic = '';
 		selectedFrame = '';
 		selectedFeatures = []
+		bikeObject = {}
+
 	}
 
 	factory.getNextOptions = function(){
@@ -125,6 +148,7 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 			'cosmetic' : [],
 			'frame' : [],
 			'features' : [],
+			'quantity' : 1,
 		}
 
 		for (var brd in brand) {

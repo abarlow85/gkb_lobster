@@ -142,7 +142,10 @@ table {
 	color: maroon;
 }
 .features{
-	width: 275px;
+	display: inline-block;
+}
+.features span {
+	padding: 0px;
 }
 
 .commit {
@@ -177,4 +180,8 @@ li {
 }
 .blue {
 	color: blue;
+}
+
+#selectionDiv button {
+	color: white;
 }
