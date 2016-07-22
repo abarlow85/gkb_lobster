@@ -83,8 +83,98 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 	};
 
 
-	factory.addBikeType = function(bike){
+	factory.addBikeType = function(bike, callback){
+		selectedType = bike;
+		this.reset();
 		
+		nextOptions = this.getNextOptions()
+		callback(selectedType, nextOptions)
+		
+	}
+
+	factory.brandSelection = function(brand, callback){
+		selectedBrand = brand;
+		callback(selectedBrand)
+	}
+
+	factory.cosmeticSelection = function(cosmetic, callback){
+		selectedCosmetic = cosmetic;
+		callback(selectedCosmetic)
+	}
+
+	factory.frameSelection = function(frame, callback){
+		selectedFrame = frame;
+		callback(selectedFrame)
+	}
+
+	factory.cosmeticSelection = function(features, callback){
+		selectedFeatures = features;
+		callback(selectedFeatures)
+	}
+
+	factory.reset = function(){
+		selectedBrand = '';
+		selectedCosmetic = '';
+		selectedFrame = '';
+		selectedFeatures = []
+	}
+
+	factory.getNextOptions = function(){
+		nextOptions = {
+			'brand' : [],
+			'cosmetic' : [],
+			'frame' : [],
+			'features' : [],
+		}
+
+		for (var brd in brand) {
+			var requisites = brand[brd].requisites;
+			for (var req in requisites) {
+				
+				if (requisites[req] == selectedType) {
+					nextOptions.brand.push(brd);
+				}
+			}
+		}
+
+		for (var cos in cosmetic) {
+			var requisites = cosmetic[cos].requisites;
+			for (var req in requisites) {
+				
+				if (requisites[req] == selectedType) {
+					nextOptions.cosmetic.push(cos);
+				}
+			}
+		}
+
+		for (var frm in frame) {
+			var requisites = frame[frm].requisites;
+			for (var req in requisites) {
+				
+				if (requisites[req] == selectedType) {
+					nextOptions.frame.push(frm);
+				}
+			}
+		}
+
+		for (var feat in features) {
+			var requisites = features[feat].requisites;
+			for (var req in requisites) {
+				
+				if (requisites[req] == selectedType) {
+					nextOptions.features.push(feat);
+				}
+			}
+		}
+
+		for (var key in nextOptions) {
+			if (nextOptions[key].length == 0) {
+				console.log(key, 'has 0');
+				delete nextOptions[key];
+			}
+		}
+
+		return nextOptions;
 	}
 
 

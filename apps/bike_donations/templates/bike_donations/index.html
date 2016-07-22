@@ -80,13 +80,33 @@
 				<!-- <img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" /> -->
 			</div>
 			<div id="buttonBox" class="row">
-
+				<h4>[[nextName]]</h4>
+					<button class="btn btn-default btn-lg" ng-click="nextBtn()" ng-if="selected==true">Next</button>
+					<button class="btn btn-default btn-lg" ng-click="nextBtn()" ng-if="complete">Done</button>
 					<form class="selectionDiv">{% csrf_token %}
-						<div id="bikeType" class="row" ng-repeat="bike in bikeType">
-							<button id=[[bike]] class="col-xs-8 btn btn-success option" ng-click="addBikeType(bike)">[[bike]]</button>
+						
+						<div id="bikeType" class="row" ng-if="nextName == 'bikeType'" ng-repeat="bike in bikeType">
+							<button id=[[bike]] class="col-xs-8 btn btn-success bikeTypeBtn" ng-click="addBikeType(bike)">[[bike]]</button>
 
-							</div>
 						</div>
+
+						<div id="brand" class="row" ng-if="nextName == 'brand'" ng-repeat="option in nextOptions">
+						<button id=[[option]] class="col-xs-8 btn btn-success brand" ng-click="brandSelection(option)">[[option]]</button>
+						</div>
+
+						<div id="cosmetic" class="row" ng-if="nextName == 'cosmetic'" ng-repeat="option in nextOptions">
+						<button id=[[option]] class="col-xs-8 btn btn-success cosmetic" ng-click="cosmeticSelection(option)">[[option]]</button>
+						</div>
+
+						<div id="frame" class="row" ng-if="nextName == 'frame'" ng-repeat="option in nextOptions">
+						<button id=[[option]] class="col-xs-8 btn btn-success frame" ng-click="frameSelection(option)">[[option]]</button>
+						</div>
+
+						<div id="features" class="row" ng-if="nextName == 'features'" ng-repeat="option in nextOptions">
+						<button id=[[option]] class="col-xs-8 btn btn-success features" ng-click="featureSelection(option)">[[option]]</button>
+						</div>
+
+
 
 					</form>
 
