@@ -51,119 +51,26 @@
 
 <div class="container">
 	<div id='controllerSelect' ng-controller="BikesController">
-	<div id="bikeSideNav" class="sideNav">
-		<div id="hamburger" onclick="openNav()" ng-click="sideBarStatus(true)">
-			<img class="img-responsive img-circle" src="{% static 'bike_donations/resources/bike_home.png' %}" />
-		</div>
-		<div id="toMenu">
-			<div id='warped'>
-				<span class='w0'>G</span><span class='w1'>o</span><span class='w2'> </span><span class='w3'>b</span><span class='w4'>a</span><span class='w5'>c</span><span class='w6'>k</span>
-			</div>
-			<a href="#" id="toMenuATag"> <img class="img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/bike_home.png' %}" /></a>
-		</div>
+	{% include 'bike_donations/sideBar.html' %}
 
-
-
-
-		<div id="wrapper">
-		<p class="closebtn" onclick="closeNav()" ng-click="sideBarStatus(false)" id="exout">&times;</p>
-
-
-		<p id="identify">
-			Logged in as : {{request.user.username}}
-		</p>
-		<div id="linkSet">
-
-			<div class="linkGroup" ng-click="editJump('bikeType')" id="sideBarType">
-
-				<h5 id="bike"><i id="plusSign" class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo" ng-show="sideNavStatus"><span ng-if="!typeSelect">Type</span>[[typeSelect]]</p>
-			</div>
-
-			<div class="linkGroup" ng-if="allOptions.brand" ng-click="editJump('brand')" ng-style="nextName == 'brand' || brandSelect ? {'color': '#116F3A'} : {'color': '#303030'}">
-
-				<h5 id="bike"><i class="fa fa-trademark fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo" ng-show="sideNavStatus"><span ng-if="!brandSelect">Brand</span>[[brandSelect]]</p>
-			</div>
-
-			<div class="linkGroup" ng-if="allOptions.cosmetic" ng-click="editJump('cosmetic')" ng-style="nextName == 'cosmetic' || cosmeticSelect ? {'color': '#116F3A'} : {'color': '#303030'}">
-
-				<h5 id="bike"><i class="fa fa-diamond fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo" ng-show="sideNavStatus"><span ng-if="!cosmeticSelect">Cosmetics</span>[[cosmeticSelect]]</p>
-			</div>
-
-			<div class="linkGroup" ng-if="allOptions.frame" ng-click="editJump('frame')" ng-style="nextName == 'frame' || frameSelect ? {'color': '#116F3A'} : {'color': '#303030'}">
-				<h5 id="bike"><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo" ng-show="sideNavStatus"><span ng-if="!frameSelect">Frame</span> [[frameSelect]]</p>
-			</div>
-
-			<div class="linkGroup" ng-if="allOptions.features" ng-click="editJump('features')" ng-style="nextName == 'features' || featuresVisited ? {'color': '#116F3A'} : {'color': '#303030'}">
-				<h5 id="bike"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo" ng-show="sideNavStatus">Features <span ng-if="featuresSelect.length > 0">[[featuresSelect.length]] </span></p>
-			</div>
-			<div class="linkGroup" ng-click="editJump('quantity')" ng-show="allOptions" ng-style="nextName == 'quantity' || confirmBike ? {'color': '#116F3A'} : {'color': '#303030'}">
-
-				<h5 id="bike"><i class="fa fa-hashtag fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo" ng-show="sideNavStatus">Quantity : [[bikeObject.quantity]]</p>
-			</div>
-			<div class="linkGroup" ng-show="allOptions" ng-style="nextName == 'confirm' ? {'color': '#116F3A'} : {'color': '#303030'}">
-
-				<h5 id="bike"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo" ng-show="sideNavStatus">Confirmation</p>
-			</div>
-		</div>
-
-	</div>
-	</div>
-
-	<div id = "outerMain">
-		<div id = "header" class="row">
-			<h2 class="col-xs-8">{{request.session.selectionTitle}}</h2>
+		<div id = "outerMain">
+			<div id = "header" class="row">
+				<h2 class="col-xs-8">{{request.session.selectionTitle}}</h2>
 			<!-- <img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" /> -->
-		</div>
-		<div id="buttonBox" class="row">
-			<button class="btn btn-default btn-lg" ng-click="backBtn()" ng-if="nextName != 'bikeType' && nextName !='confirm' ">Back</button>
-			<button class="btn btn-default btn-lg pull-right" ng-click="nextBtn()" ng-if="selected==true">Next</button>
-			<button class="btn btn-default btn-lg pull-right" ng-click="doneBtn()" ng-if="complete && nextName != 'confirm'">Done</button>
-		</div>
+			</div>
+			<div id="buttonBox" class="row">
+				<button class="btn btn-default btn-lg" ng-click="backBtn()" ng-if="nextName != 'bikeType' && nextName !='confirm' ">Back</button>
+				<button class="btn btn-default btn-lg pull-right" ng-click="nextBtn()" ng-if="selected==true">Next</button>
+				<button class="btn btn-default btn-lg pull-right" ng-click="doneBtn()" ng-if="complete && nextName != 'confirm'">Done</button>
+			</div>
 			<h4>[[nextName]]</h4>
 
-			<form id="selectionDiv" ng-if="nextName != 'confirm'">{% csrf_token %}
-				<div id="bikeType" class="row" ng-if="nextName == 'bikeType'" ng-repeat="bike in bikeType">
-					<button id=[[bike]] class="col-xs-8 btn bikeTypeBtn" ng-click="addBikeType(bike)" ng-style="typeSelect == bike ? {'background' : '#116F3A'} : {'background':'#303030'}">[[bike]]</button>
-				</div>
+			<form id="selectionDiv">
+				{% csrf_token %}
+				<div ng-view="">
 
-				<div id="brand" class="row" ng-if="nextName == 'brand'" ng-repeat="option in nextOptions">
-				<button id=[[option]] class="col-xs-8 btn btn-success brand" ng-click="brandSelection(option)" ng-style="brandSelect == option ? {'background' : '#116F3A'} : {'background':'#303030'}">[[option]]</button>
 				</div>
-
-				<div id="cosmetic" class="row" ng-if="nextName == 'cosmetic'" ng-repeat="option in nextOptions">
-				<button id=[[option]] class="col-xs-8 btn btn-success cosmetic" ng-click="cosmeticSelection(option)" ng-style="cosmeticSelect == option ? {'background' : '#116F3A'} : {'background':'#303030'}">[[option]]</button>
-				</div>
-
-				<div id="frame" class="row" ng-if="nextName == 'frame'" ng-repeat="option in nextOptions">
-				<button id=[[option]] class="col-xs-8 btn btn-success frame" ng-click="frameSelection(option)" ng-style="frameSelect == option ? {'background' : '#116F3A'} : {'background':'#303030'}">[[option]]</button>
-				</div>
-
-				<div id="features" class="row" ng-if="nextName == 'features'" ng-repeat="option in nextOptions">
-				<button id=[[option]] class="col-xs-8 btn btn-success features" ng-click="featureSelection(option)"  ng-style = "isInSelections(option) ? {'background' : '#116F3A'} : {'background':'#303030'}"><span class="glyphicon glyphicon-ok-circle pull-left" ng-if="isInSelections(option)"></span>[[option]]</button>
-				</div>
-
-				<div id="quantity" class="col-xs-8 form-group text-center" ng-if="nextName == 'quantity'">
-					<label for='quantity' class="control-label input-lg"><u>Quantity:</u></label>
-					<select class="form-control input-lg" ng-model="bikeObject.quantity" ng-options="num for num in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]" ng-init="bikeObject.quantity = 1">
-					</select>
-					
-				</div>
-				
 			</form>
-
-			<div ng-if="nextName == 'confirm'">
-				<button class="btn btn-default" ng-click="postBike()">Confirm</button>
-				<div ng-repeat="option in confirmBike" ng-if="option != undefined || !option">
-					<p ng-bind="option"></p>
-				</div>
-			</div>
 		</div> <!--closes outerMain-->
 	</div><!--closes controllerSelect-->
 </div> <!-- end of container -->

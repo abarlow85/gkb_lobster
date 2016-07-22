@@ -1,0 +1,66 @@
+{% load staticfiles %}
+
+<div id="bikeSideNav" class="sideNav">
+		<div id="hamburger" onclick="openNav()" ng-click="sideBarStatus(true)">
+			<img class="img-responsive img-circle" src="{% static 'bike_donations/resources/bike_home.png' %}" />
+		</div>
+		<div id="toMenu">
+			<div id='warped'>
+				<span class='w0'>G</span><span class='w1'>o</span><span class='w2'> </span><span class='w3'>b</span><span class='w4'>a</span><span class='w5'>c</span><span class='w6'>k</span>
+			</div>
+			<a href="#" id="toMenuATag"> <img class="img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/bike_home.png' %}" /></a>
+		</div>
+
+
+
+
+		<div id="wrapper">
+		<p class="closebtn" onclick="closeNav()" ng-click="sideBarStatus(false)" id="exout">&times;</p>
+
+
+		<p id="identify">
+			Logged in as : {{request.user.username}}
+		</p>
+		<div id="linkSet">
+
+			<div class="linkGroup" ng-click="editJump('bikeType')" id="sideBarType">
+
+				<h5 id="bike"><i id="plusSign" class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo" ng-show="sideNavStatus"><span ng-if="!typeSelect">Type</span>[[typeSelect]]</p>
+			</div>
+
+			<div class="linkGroup" ng-if="allOptions.brand" ng-click="editJump('brand')" ng-style="nextName == 'brand' || brandSelect ? {'color': '#116F3A'} : {'color': '#303030'}">
+
+				<h5 id="bike"><i class="fa fa-trademark fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo" ng-show="sideNavStatus"><span ng-if="!brandSelect">Brand</span>[[brandSelect]]</p>
+			</div>
+
+			<div class="linkGroup" ng-if="allOptions.cosmetic" ng-click="editJump('cosmetic')" ng-style="nextName == 'cosmetic' || cosmeticSelect ? {'color': '#116F3A'} : {'color': '#303030'}">
+
+				<h5 id="bike"><i class="fa fa-diamond fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo" ng-show="sideNavStatus"><span ng-if="!cosmeticSelect">Cosmetics</span>[[cosmeticSelect]]</p>
+			</div>
+
+			<div class="linkGroup" ng-if="allOptions.frame" ng-click="editJump('frame')" ng-style="nextName == 'frame' || frameSelect ? {'color': '#116F3A'} : {'color': '#303030'}">
+				<h5 id="bike"><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo" ng-show="sideNavStatus"><span ng-if="!frameSelect">Frame</span> [[frameSelect]]</p>
+			</div>
+
+			<div class="linkGroup" ng-if="allOptions.features" ng-click="editJump('features')" ng-style="nextName == 'features' || featuresVisited ? {'color': '#116F3A'} : {'color': '#303030'}">
+				<h5 id="bike"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo" ng-show="sideNavStatus">Features <span ng-if="featuresSelect.length > 0">[[featuresSelect.length]] </span></p>
+			</div>
+			<div class="linkGroup" ng-click="editJump('quantity')" ng-show="allOptions" ng-style="nextName == 'quantity' || confirmBike ? {'color': '#116F3A'} : {'color': '#303030'}">
+
+				<h5 id="bike"><i class="fa fa-hashtag fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo" ng-show="sideNavStatus">Quantity : [[bikeObject.quantity]]</p>
+			</div>
+			<div class="linkGroup" ng-show="allOptions" ng-style="nextName == 'confirm' ? {'color': '#116F3A'} : {'color': '#303030'}">
+
+				<h5 id="bike"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo" ng-show="sideNavStatus">Confirmation</p>
+			</div>
+		</div>
+
+	</div>
+	</div>
