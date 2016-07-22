@@ -52,7 +52,7 @@
 <div class="container">
 	<div id='controllerSelect' ng-controller="BikesController">
 	<div id="bikeSideNav" class="sideNav">
-		<div id="hamburger" onclick="openNav()">
+		<div id="hamburger" onclick="openNav()" ng-click="sideBarStatus(true)">
 			<img class="img-responsive img-circle" src="{% static 'bike_donations/resources/bike_home.png' %}" />
 		</div>
 		<div id="toMenu">
@@ -66,7 +66,7 @@
 
 
 		<div id="wrapper">
-		<p class="closebtn" onclick="closeNav()" id="exout">&times;</p>
+		<p class="closebtn" onclick="closeNav()" ng-click="sideBarStatus(false)" id="exout">&times;</p>
 
 
 		<p id="identify">
@@ -77,39 +77,39 @@
 			<div class="linkGroup" ng-click="editJump('bikeType')" id="sideBarType">
 
 				<h5 id="bike"><i id="plusSign" class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo">Type [[selected.type]]</p>
+				<p class="kangroo" ng-show="sideNavStatus"><span ng-if="!typeSelect">Type</span>[[typeSelect]]</p>
 			</div>
 
-			<div class="linkGroup" ng-if="selected.type != 'Kids 12inch wheels'" ng-click="editJump('brand')" ng-style="selected.type != undefined ? {'color': '#116F3A'} : {'color': '#303030'}">
+			<div class="linkGroup" ng-if="allOptions.brand" ng-click="editJump('brand')" ng-style="nextName == 'brand' || brandSelect ? {'color': '#116F3A'} : {'color': '#303030'}">
 
 				<h5 id="bike"><i class="fa fa-trademark fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo">Brand  [[selected.brand]]</p>
+				<p class="kangroo" ng-show="sideNavStatus"><span ng-if="!brandSelect">Brand</span>[[brandSelect]]</p>
 			</div>
 
-			<div class="linkGroup" ng-click="editJump('cosmetic')" ng-style="selected.brand.length > 1 ? {'color': '#116F3A'} : {'color': '#303030'}">
+			<div class="linkGroup" ng-if="allOptions.cosmetic" ng-click="editJump('cosmetic')" ng-style="nextName == 'cosmetic' || cosmeticSelect ? {'color': '#116F3A'} : {'color': '#303030'}">
 
 				<h5 id="bike"><i class="fa fa-diamond fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo">Cosmetics [[selected.cosmetic]]</p>
+				<p class="kangroo" ng-show="sideNavStatus"><span ng-if="!cosmeticSelect">Cosmetics</span>[[cosmeticSelect]]</p>
 			</div>
 
-			<div class="linkGroup" ng-if="selected.frame != 'placed'" ng-click="editJump('frame')" ng-style="selected.cosmetic.length > 1 ? {'color': '#116F3A'} : {'color': '#303030'}">
+			<div class="linkGroup" ng-if="allOptions.frame" ng-click="editJump('frame')" ng-style="nextName == 'frame' || frameSelect ? {'color': '#116F3A'} : {'color': '#303030'}">
 				<h5 id="bike"><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo">Frame [[selected.frame]]</p>
+				<p class="kangroo" ng-show="sideNavStatus"><span ng-if="!frameSelect">Frame</span> [[frameSelect]]</p>
 			</div>
 
-			<div class="linkGroup" ng-if="assembled_bike.features[0] != 'None'" ng-click="editJump('features')" ng-style="selected.frame.length > 1 ? {'color': '#116F3A'} : {'color': '#303030'}">
+			<div class="linkGroup" ng-if="allOptions.features" ng-click="editJump('features')" ng-style="nextName == 'features' || featuresVisited ? {'color': '#116F3A'} : {'color': '#303030'}">
 				<h5 id="bike"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo">Features  [[assembled_bike.features.length]]</p>
+				<p class="kangroo" ng-show="sideNavStatus">Features <span ng-if="featuresSelect.length > 0">[[featuresSelect.length]] </span></p>
 			</div>
-			<div class="linkGroup" ng-click="editJump('quantity')">
+			<div class="linkGroup" ng-click="editJump('quantity')" ng-show="allOptions" ng-style="nextName == 'quantity' || confirmBike ? {'color': '#116F3A'} : {'color': '#303030'}">
 
 				<h5 id="bike"><i class="fa fa-hashtag fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo">Quantity</p>
+				<p class="kangroo" ng-show="sideNavStatus">Quantity : [[bikeObject.quantity]]</p>
 			</div>
-			<div class="linkGroup">
+			<div class="linkGroup" ng-show="allOptions" ng-style="nextName == 'confirm' ? {'color': '#116F3A'} : {'color': '#303030'}">
 
 				<h5 id="bike"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo">Confirmation</p>
+				<p class="kangroo" ng-show="sideNavStatus">Confirmation</p>
 			</div>
 		</div>
 
@@ -117,13 +117,12 @@
 	</div>
 
 	<div id = "outerMain">
-
 		<div id = "header" class="row">
 			<h2 class="col-xs-8">{{request.session.selectionTitle}}</h2>
 			<!-- <img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" /> -->
 		</div>
 		<div id="buttonBox" class="row">
-			<button class="btn btn-default btn-lg" ng-click="backBtn()" ng-if="nextName != 'bikeType'">Back</button>
+			<button class="btn btn-default btn-lg" ng-click="backBtn()" ng-if="nextName != 'bikeType' && nextName !='confirm' ">Back</button>
 			<button class="btn btn-default btn-lg pull-right" ng-click="nextBtn()" ng-if="selected==true">Next</button>
 			<button class="btn btn-default btn-lg pull-right" ng-click="doneBtn()" ng-if="complete && nextName != 'confirm'">Done</button>
 		</div>
@@ -161,7 +160,7 @@
 
 			<div ng-if="nextName == 'confirm'">
 				<button class="btn btn-default" ng-click="postBike()">Confirm</button>
-				<div ng-repeat="option in confirmBike" ng-if="option != undefined">
+				<div ng-repeat="option in confirmBike" ng-if="option != undefined || !option">
 					<p ng-bind="option"></p>
 				</div>
 			</div>
@@ -169,6 +168,7 @@
 	</div><!--closes controllerSelect-->
 </div> <!-- end of container -->
 <script>
+
 	function openNav() {
 		document.getElementById("bikeSideNav").style.width="300px";
 		document.getElementById("outerMain").style.marginLeft="300px";
@@ -183,10 +183,10 @@
 		// for(var i=0; i<x.length; i++){
 		// 	x[i].style.display="none";
 		// }
-		var array = document.getElementsByClassName("kangroo");
-		for (var y= 0;  y<array.length; y++) {
-			array[y].style.display = "inline-block";
-		}
+		// var array = document.getElementsByClassName("kangroo");
+		// for (var y= 0;  y<array.length; y++) {
+		// 	array[y].style.display = "inline-block";
+		// }
 	}
 	function closeNav() {
 		document.getElementById("bikeSideNav").style.width="50px";
@@ -196,10 +196,10 @@
 		document.getElementById("toMenuATag").href="#";
 		document.getElementById("toMenu").style.display="none";
 		document.getElementById("identify").style.display="none";
-		var array = document.getElementsByClassName("kangroo");
-		for (var y= 0;  y<array.length; y++) {
-			array[y].style.display = "none";
-		}
+		// var array = document.getElementsByClassName("kangroo");
+		// for (var y= 0;  y<array.length; y++) {
+		// 	array[y].style.display = "none";
+		// }
 		// var x = document.getElementsByClassName("fa");
 		// for(var i=0; i<x.length; i++){
 		// 	x[i].style.display="inline-block";

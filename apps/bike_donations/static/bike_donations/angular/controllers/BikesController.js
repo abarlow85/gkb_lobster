@@ -13,6 +13,11 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 		$scope.bikeType = data
 	});
 
+	$scope.sideBarStatus = function(status) {
+		$scope.sideNavStatus = status;
+		console.log(status);
+	}
+
 	$scope.addBikeType = function(option){
 		$scope.bikeObject = {};
 		$scope.typeSelect = ''
@@ -22,12 +27,14 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 		$scope.featuresSelect = []
 
 		BikeFactory.addBikeType(option, function(selection, nextOptions) {
-			$scope.typeSelect = selection;
-			$scope.allOptions = JSON.parse(JSON.stringify(nextOptions));
-			$scope.remainingOptions = Object.keys(nextOptions)
-			$scope.history = []
-			$scope.selected = true
-			$scope.bikeObject[$scope.nextName] = selection
+			
+				$scope.typeSelect = selection;
+				$scope.allOptions = JSON.parse(JSON.stringify(nextOptions));
+				$scope.remainingOptions = Object.keys(nextOptions)
+				$scope.history = []
+				$scope.selected = true
+				$scope.bikeObject[$scope.nextName] = selection
+			
 			// console.log($scope.allOptions)
 			
 		});
@@ -38,7 +45,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 
 		$scope.selected = false
 		$scope.history.push($scope.nextName);
-
+		console.log($scope.remainingOptions);
 		for (var idx in $scope.remainingOptions) {
 			var value = $scope.remainingOptions[idx]
 			$scope.nextOptions = $scope.allOptions[value];
@@ -49,10 +56,9 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 
 		if ($scope.remainingOptions.length == 0) {
 			$scope.complete = true
-			return;
 		}
 		for (key in $scope.bikeObject) {
-			console.log(key)
+			// console.log(key)
 			if (key == $scope.nextName) {
 				$scope.selected = true
 				break;
@@ -62,7 +68,14 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 		if ($scope.nextName == 'features') {
 			$scope.selected = true;
 		}
+
+		if ($scope.nextName == 'quantity') {
+
+			$scope.featuresVisited = true;
+			$scope.selected = false;
+		}
 		
+		console.log($scope.nextName)
 		
 		
 	}
@@ -112,6 +125,10 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 	}
 
 	$scope.featureSelection = function(option) {
+
+		if (!$scope.featuresVisited) {
+			$scope.featuresVisited = true
+		}
 		var optionAlreadySelected = false;
 		for (var idx in $scope.featuresSelect) {
 			if ($scope.featuresSelect[idx] == option) {
@@ -134,6 +151,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 	}
 
 	$scope.doneBtn = function() {
+
 		$scope.bikeObject['features'] = $scope.featuresSelect;
 		console.log($scope.bikeObject.quantity);
 		
@@ -141,7 +159,6 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			$scope.history.push('features');
 			$scope.confirmBike = bike;
 			$scope.nextName = 'confirm';
-			console.log($scope.confirmBike);
 		});
 	}
 
