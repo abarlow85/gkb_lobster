@@ -9,6 +9,9 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	$scope.bikeType = {};
 	$scope.features = [];
 	$scope.assembled_bike = {};
+
+	$scope.next = false;
+
 	console.log("scoping brand", $scope.brand)
 
 	boolService.forceSelect('bike', 10)

@@ -1,131 +1,34 @@
+	<div id="bikeType" class="row" ng-if="nextName == 'bikeType'" ng-repeat="bike in bikeType">
+		<button id=[[bike]] class="col-xs-8 btn bikeTypeBtn" ng-click="addBikeType(bike)" ng-style="typeSelect == bike ? {'background' : '#116F3A'} : {'background':'#303030'}">[[bike]]</button>
+	</div>
 
-<div class="row">
-	<div id = "optionsBox" class="col-xs-8">
-		<div ng-if = "bikeOption && !productOption.status">
+	<div id="brand" class="row" ng-if="nextName == 'brand'" ng-repeat="option in nextOptions">
+	<button id=[[option]] class="col-xs-8 btn btn-success brand" ng-click="brandSelection(option)" ng-style="brandSelect == option ? {'background' : '#116F3A'} : {'background':'#303030'}">[[option]]</button>
+	</div>
 
-			<div id = "bikeType">
-				<div class="row">
+	<div id="cosmetic" class="row" ng-if="nextName == 'cosmetic'" ng-repeat="option in nextOptions">
+	<button id=[[option]] class="col-xs-8 btn btn-success cosmetic" ng-click="cosmeticSelection(option)" ng-style="cosmeticSelect == option ? {'background' : '#116F3A'} : {'background':'#303030'}">[[option]]</button>
+	</div>
 
-					<div class="col-xs-12">
+	<div id="frame" class="row" ng-if="nextName == 'frame'" ng-repeat="option in nextOptions">
+	<button id=[[option]] class="col-xs-8 btn btn-success frame" ng-click="frameSelection(option)" ng-style="frameSelect == option ? {'background' : '#116F3A'} : {'background':'#303030'}">[[option]]</button>
+	</div>
 
-						<h4> <i class="fa fa-plus-square-o fa-3x" aria-hidden="true"></i> Select a bike</h4>
-					<div class="check" ng-if="selected.type">
-						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
-					</div>
-				</div>
-			</div><!-- end row -->
-			<div class="selectBox row">
-				<select ng-model="selected.type" size = '5'>
-					<option ng-repeat = "(key, value) in bikeType" >[[key]]</option>
-				</select>
-			</div><!--end selectBox row-->
+	<div id="features" class="row" ng-if="nextName == 'features'" ng-repeat="option in nextOptions">
+	<button id=[[option]] class="col-xs-8 btn btn-success features" ng-click="featureSelection(option)"  ng-style = "isInSelections(option) ? {'background' : '#116F3A'} : {'background':'#303030'}"><span class="glyphicon glyphicon-ok-circle pull-left" ng-if="isInSelections(option)"></span>[[option]]</button>
+	</div>
 
-					</div><!--closes bike -->
-			<div id="brand" ng-if="selected.type && brand" class="row">
-				<div class="col-xs-12">
-					<h4><i class="fa fa-trademark fa-3x" aria-hidden="true"></i> Select a Brand</h4>
-					<div class = "check" ng-if = 'selected.brand'>
-						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
-					</div>
-				</div>
-				<div class = "selectBox">
-					<select ng-model="selected.brand" size = "5">
-						<option ng-repeat = "(key, value) in brand">[[key]]</option>
-					</select>
-				</div>
-			</div>
+	<div id="quantity" class="col-xs-8 form-group text-center" ng-if="nextName == 'quantity'">
+		<label for='quantity' class="control-label input-lg"><u>Quantity:</u></label>
+		<select class="form-control input-lg" ng-model="bikeObject.quantity" ng-options="num for num in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]" ng-init="bikeObject.quantity = 1">
+		</select>
+		
+	</div>
 
-			<div id="cosmetic" ng-if = "selected.brand && cosmetic" class="row">
-				<div class="col-xs-12">
-					<h4><i class="fa fa-diamond fa-3x" aria-hidden="true"></i> Select Cosmetic Quality</h4>
-					<div class = "check" ng-if = 'selected.cosmetic'>
-						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
-					</div>
-				</div>
-				<div class = "selectBox">
-					<select ng-model="selected.cosmetic" size = "5">
-						<option ng-repeat = "(key, value) in cosmetic">[[key]]</option>
-					</select>
-				</div>
-			</div><!--closes cosmetic-->
-
-			<div id="frame" ng-if = "selected.cosmetic && frame" class="row">
-				<div class="col-xs-12">
-					<h4><i class="fa fa-bicycle fa-3x" aria-hidden="true"></i> Select a Frame</h4>
-					<div class = "check" ng-if = 'selected.frame'>
-						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
-					</div>
-				</div>
-				<div class = "selectBox">
-					<select ng-model="selected['frame']" size = "4">
-						<option ng-repeat = "(key, value) in frame">[[key]]</option>
-					</select>
-				</div>
-			</div><!--CLOSES FRAME-->
-
-			<div id="features" ng-if = "selected.frame && features" class="row">
-				<div class="col-xs-12">
-					<h4><i class="fa fa-cogs fa-3x" aria-hidden="true"></i> Add Features</h4>
-					<div class = "check" ng-if = 'selected.features'>
-						<img class="checkmark" src = "static/bike_donations/angular/partials/addBike.html">
-					</div>
-				</div>
-				<div class = "checkBoxBox">
-					<span ng-repeat="(key, value) in features">
-						<label>
-		    			<input type="checkbox" id="[[key]]" ng-click = "checkbox(key)"/>[[key]]<br>
-		    		</label><br><br>
-		  		</span>
-				</div>
-			</div><!--closes features-->
-		</div><!--closes ng-if bikeOption-->
-	</div><!-- end of #optionsBox -->
-
-	<div class="col-xs-4 notepad pull-right" id="notetaking">
-
-			<!-- <h4 class="info">Bike Information</h4> -->
-			<!-- <p><u>Model:</u><span ng-if="selected.type" ng-bind="selected.type" ng-click="editJump('bikeType')" class="blue"></span></p> -->
-			<!-- <p ng-hide="selected.type == 'Kids 12inch wheels' "><u>Brand:</u><span ng-if="selected.brand" ng-bind="selected.brand" ng-click="editJump('brand')" class="blue"></span></p> -->
-			<!-- <p><u>Cosmetics:</u><span ng-if="selected.cosmetic" ng-bind="selected.cosmetic" ng-click="editJump('cosmetic')" class="blue"></span></p> -->
-			<!-- <p ng-if="frame"><u>Frame:</u><span ng-if="selected.frame" ng-bind="selected.frame" ng-click="editJump('frame')" class="blue"></span></p> -->
-			<!-- <p ng-hide="selected.type == 'Kids 12inch wheels' " class="features"><u>Features:</u> -->
-				<!-- <span ng-bind="assembled_bike.features"></span> -->
-				<!-- <ol ng-click="editJump('features')" ng-if="assembled_bike.features"> -->
-					<!-- <li ng-repeat="feature in assembled_bike.features" ng-bind="feature" class="blue"> -->
-					<!-- </li> -->
-				<!-- </ol> -->
-			<!-- </p> -->
-			<form ng-if="selected.frame && features">
-
-				<!-- <p><u>Quantity:</u><input ng-model="selected.quantity" class= "number-box" type="number" name="quantity" min="1" max="20" ></p> -->
-
-				<div class="commit">
-					<button ng-click="getBike()" class="btn btn-success">All Done</button>
-					<button ng-click="goBack()" ng-if="!posted" class="btn btn-danger">Restart</button>
-				</div>
-			</form>
-		<div class="afterPosting" ng-if="posted && !error">
-			<p>Please wait!</p>
-			<p>Adding to inventory!</p>
-			<img class="rider" src="static/bike_donations/resources/riding.gif" />
+	<div ng-if="nextName == 'confirm'">
+		<button class="btn btn-default" ng-click="postBike()">Confirm</button>
+		<div ng-repeat="option in confirmBike">
+			<p ng-bind="option"></p>
 		</div>
-		<div class="errorsPosting text-danger" ng-if="error">
-			<p ng-bind="error">	</p>
-		</div>
+	</div>
 
-	</div><!-- ends notepad-->
-</div> <!-- ends main row-->
-
-<script>
-	$(document).ready(function(){
-		var elementPosition = $('#notetaking').offset();
-		$(window).scroll(function(){
-			if($(window).scrollTop() > elementPosition.top){
-				$('#notetaking').css('position', 'fixed').css({'bottom': '20px', 'right': '20px'});
-			} else {
-				$('#notetaking').css('position', 'static');
-			}
-		});
-	})
-
-</script>

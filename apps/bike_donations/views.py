@@ -39,12 +39,30 @@ def form_data(request):
 	return JsonResponse(context)
 
 
+# def serialize_selections(query_set):
+# 	data = {}
+
+# 	for obj in query_set:
+# 		if type(obj) == BikeOption:
+# 			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor}
+# 		else:
+# 			requisites = []
+# 			for req in obj.requisites.values():
+# 				requisites.append(req['option'])
+
+
+# 			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor, 'requisites':requisites}
+
+# 	return data
+
 def serialize_selections(query_set):
+	bikeType = []
 	data = {}
+
 
 	for obj in query_set:
 		if type(obj) == BikeOption:
-			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor}
+			bikeType.append(obj.option)
 		else:
 			requisites = []
 			for req in obj.requisites.values():
@@ -52,8 +70,10 @@ def serialize_selections(query_set):
 
 
 			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor, 'requisites':requisites}
+	if len(bikeType) == 0:
+		return data
 
-	return data
+	return bikeType
 
 @login_required()
 def donateBike_post(request):
@@ -92,7 +112,7 @@ def donateBike_post(request):
 			parsed_json["quantity"] = int(parsed_json["quantity"])
 			quantity = parsed_json["quantity"]
 		else:
-			quantity = 1
+			parsed_json["quantity"] = 1
 
 		parsed_json["features"]=[obj.id for obj in featuresoption]
 		parsed_json["cosmetic"]=cosmeticoption.id
@@ -112,6 +132,7 @@ def donateBike_post(request):
 			print ("Not valid", form.errors.as_json())
 		descriptionString = str(bikeoption.option + " " + request.session['brand'] + " " + cosmeticoption.option)
 		bikePrice = parsed_json['djangoPrice']
+		quantity = parsed_json["quantity"]
 		lightspeed = LightspeedApi()
 
 		#let's not return pythonDictionary, instead let's return
