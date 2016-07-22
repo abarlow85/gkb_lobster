@@ -5,8 +5,10 @@
 
 			<div id = "bikeType">
 				<div class="row">
+
 					<div class="col-xs-12">
-						<h4>Select a bike</h4>
+
+						<h4> <i class="fa fa-plus-square-o fa-3x" aria-hidden="true"></i> Select a bike</h4>
 					<div class="check" ng-if="selected.type">
 						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
 					</div>
@@ -21,7 +23,7 @@
 					</div><!--closes bike -->
 			<div id="brand" ng-if="selected.type && brand" class="row">
 				<div class="col-xs-12">
-					<h4>Select a Brand</h4>
+					<h4><i class="fa fa-trademark fa-3x" aria-hidden="true"></i> Select a Brand</h4>
 					<div class = "check" ng-if = 'selected.brand'>
 						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
 					</div>
@@ -35,7 +37,7 @@
 
 			<div id="cosmetic" ng-if = "selected.brand && cosmetic" class="row">
 				<div class="col-xs-12">
-					<h4>Select Cosmetic Quality</h4>
+					<h4><i class="fa fa-diamond fa-3x" aria-hidden="true"></i> Select Cosmetic Quality</h4>
 					<div class = "check" ng-if = 'selected.cosmetic'>
 						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
 					</div>
@@ -49,7 +51,7 @@
 
 			<div id="frame" ng-if = "selected.cosmetic && frame" class="row">
 				<div class="col-xs-12">
-					<h4>Select a Frame</h4>
+					<h4><i class="fa fa-bicycle fa-3x" aria-hidden="true"></i> Select a Frame</h4>
 					<div class = "check" ng-if = 'selected.frame'>
 						<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
 					</div>
@@ -63,7 +65,7 @@
 
 			<div id="features" ng-if = "selected.frame && features" class="row">
 				<div class="col-xs-12">
-					<h4>Add Features</h4>
+					<h4><i class="fa fa-cogs fa-3x" aria-hidden="true"></i> Add Features</h4>
 					<div class = "check" ng-if = 'selected.features'>
 						<img class="checkmark" src = "static/bike_donations/angular/partials/addBike.html">
 					</div>

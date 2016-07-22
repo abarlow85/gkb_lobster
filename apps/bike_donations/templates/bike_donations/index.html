@@ -45,34 +45,48 @@
 		<p class="closebtn" onclick="closeNav()" id="exout">&times;</p>
 
 
-
+		<p id="identify">
+			Logged in as : {{request.user.username}}
+		</p>
 		<div id="linkSet">
 
-			<h5 id="bike"><i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i> </h5>
-			<p ng-click="editJump('bikeType')" class="kangroo">Type</p>
-			<br />
-			<h5 id="bike"><i class="fa fa-trademark fa-2x" aria-hidden="true"></i> </h5>
-			<p ng-click="editJump('brand')" ng-style="selected.type != undefined ? {'color': 'red'} : {'color': 'blue'}" class="kangroo">[[selected.type]] Brand</p>
-			<br />
+			<div class="linkGroup" ng-click="editJump('bikeType')" id="sideBarType">
 
-			<h5 id="bike"><i class="fa fa-diamond fa-2x" aria-hidden="true"></i> </h5>
-			<p ng-click="editJump('cosmetic')" class="kangroo">Cosmetics</p>
-			<br />
+				<h5 id="bike"><i id="plusSign" class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo">Type [[selected.type]]</p>
+			</div>
 
-			<h5 id="bike"><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i> </h5>
-			<p ng-click="editJump('frame')" class="kangroo">Frame</p>
-			<br />
+			<div class="linkGroup" ng-click="editJump('brand')" ng-style="selected.type != undefined ? {'color': '#116F3A'} : {'color': '#303030'}">
 
-			<h5 id="bike"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> </h5>
-			<p ng-click="editJump('features')" class="kangroo">Features</p>
-			<br />
+				<h5 id="bike"><i class="fa fa-trademark fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo">Brand [[selected.brand]]</p>
+			</div>
 
-			<h5 id="bike"><i class="fa fa-hashtag fa-2x" aria-hidden="true"></i> </h5>
-			<p ng-click="editJump('quantity')" class="kangroo">Quantity</p>
-			<br />
+			<div class="linkGroup" ng-click="editJump('cosmetic')" ng-style="selected.brand.length > 1 ? {'color': '#116F3A'} : {'color': '#303030'}">
 
-			<h5 id="bike"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i> </h5>
-			<p class="kangroo">Confirmation</p>
+				<h5 id="bike"><i class="fa fa-diamond fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo">Cosmetics [[selected.cosmetic]]</p>
+			</div>
+
+			<div class="linkGroup" ng-click="editJump('frame')" ng-style="selected.cosmetic.length > 1 ? {'color': '#116F3A'} : {'color': '#303030'}">
+				<h5 id="bike"><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo">Frame [[selected.frame]]</p>
+			</div>
+
+			<div class="linkGroup"  ng-click="editJump('features')" ng-style="selected.frame.length > 1 ? {'color': '#116F3A'} : {'color': '#303030'}">
+				<h5 id="bike"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo">Features [[selected.features]]</p>
+			</div>
+			<div class="linkGroup" ng-click="editJump('quantity')">
+
+				<h5 id="bike"><i class="fa fa-hashtag fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo">Quantity</p>
+			</div>
+			<div class="linkGroup">
+
+				<h5 id="bike"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i> </h5>
+				<p class="kangroo">Confirmation</p>
+			</div>
 		</div>
 
 	</div>
@@ -118,12 +132,13 @@
 </div> <!-- end of container -->
 <script>
 	function openNav() {
-		document.getElementById("bikeSideNav").style.width="250px";
-		document.getElementById("outerMain").style.marginLeft="250px";
+		document.getElementById("bikeSideNav").style.width="275px";
+		document.getElementById("outerMain").style.marginLeft="275px";
 		document.getElementById("hamburger").style.display="none";
 		document.getElementById("exout").style.display="block";
 		document.getElementById("toMenu").href="/menu/";
 		document.getElementById("toMenu").style.display="block";
+		document.getElementById("identify").style.display="block";
 
 		// var x = document.getElementsByClassName("fa");
 		// console.log("fa stuff", x);
@@ -142,14 +157,15 @@
 		document.getElementById("exout").style.display="none";
 		document.getElementById("toMenu").href="#";
 		document.getElementById("toMenu").style.display="none";
+		document.getElementById("identify").style.display="none";
 		var array = document.getElementsByClassName("kangroo");
 		for (var y= 0;  y<array.length; y++) {
 			array[y].style.display = "none";
 		}
-		var x = document.getElementsByClassName("fa");
-		for(var i=0; i<x.length; i++){
-			x[i].style.display="inline-block";
-		}
+		// var x = document.getElementsByClassName("fa");
+		// for(var i=0; i<x.length; i++){
+		// 	x[i].style.display="inline-block";
+		// }
 	}
 </script>
 </body>

@@ -4,6 +4,17 @@
 	font-family: 'Raleway', sans-serif;
 
 }
+#sideBarType {
+	color: #116F3A;
+}
+#plusSign {
+	margin-left: 7px;
+}
+#identify {
+	text-align: right;
+	font-size: 0.9em;
+	display: none;
+}
 #toMenu {
 	display: none;
 	background-color: #116F3A;
@@ -14,7 +25,7 @@
 #wrapper{
 	margin: 0px;
 	background-color: rgba(255, 255, 255, 0.4);
-	height: 100%;
+	height: 200%;
 }
 #bikeSideNav {
 	width: 50px;
@@ -30,35 +41,43 @@
 }
 
 .sideNav {
-
-
 	position: fixed;
 	z-index: 1;
 	top: 0;
 	left: 0;
-
 	overflow-x: hidden;
 	padding-top: 60px;
 	transition: 0.5s;
 }
+#linkSet h5 {
+	display: inline-block;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
 #linkSet {
 	margin-left: -6px;
+
 }
 
 #linkSet .kangroo{
 	display : none;
 	padding-left: 1px;
-
-
 }
+
 #bike{
 	margin-left: -40px;
 }
-#linkSet h5, #linkSet p {
-	display: inline-block;
+
+.linkGroup:hover {
+	color: #27AE61;
+
 }
-
-
+.linkGroup {
+	padding-left: 0px;
+	padding-top: 0px;
+}
 
 #hamburger {
 	width: 50px;
@@ -67,7 +86,6 @@
 	padding: 5px;
 	background-color: #116F3A;
 }
-
 #hamburger img {
 	padding: 0px;
 	margin: 0px;
@@ -81,19 +99,12 @@
 .sideNav p {
 	padding: 8px 8px 8px 32px;
 	text-decoration: none;
-	font-size: 25px;
-	color: black;
+	font-size: 1.4em;
 	display: block;
 	transition: 0.3s;
 }
-.whitecolor{
-	color:blue;
-}
-.blackcolor{
-	color:red;
-}
-.sideNav p:hover, .offcanvas p:focus {
-	color: #f1f1f1;
+.offcanvas p:focus {
+	color: #303030;
 }
 .closebtn {
 	position: absolute;
