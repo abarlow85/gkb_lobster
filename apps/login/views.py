@@ -26,6 +26,5 @@ def verifyUser(request):
         return HttpResponseRedirect('/login')
 
 def csrf_failure(request, reason="Stop it"):
-    print "csrf time"
     logout(request)
     return render(request, 'login/index.html', {"error":"We had to log out the previous user. Please try again."})
