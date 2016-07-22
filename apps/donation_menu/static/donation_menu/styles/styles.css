@@ -1,9 +1,50 @@
+body {
+	background: url("../resources/Woodgrain_Pattern.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+#menuOptions {
+	background-color: rgba(255, 255, 255, 0.8);
+  padding-left: 5vw;
+	padding-right: 5vw;
+  padding-top: 5vh;
+  padding-bottom: 10vh;
+}
+h1 {
+	font:'Lato', sans-serif;
+  font-size: 3.9em;
+	background-color: #116F3A;
+	color: white;
+	margin-top: 0;
+	margin-bottom: 5vh;
+	padding: 5vh;
+}
+h5 {
+	font: 'Lato', sans-serif;
+	color: #116F3A;
+	text-align: right;
+}
+hr {
+
+	border: 1px solid #303030;
+}
+
+a {
+		color: #116F3A;
+		font-size: 4.0em;
+}
+a:hover {
+	text-decoration: none;
+	color: #116F3A;
+}
 .btn {
-	height: 20vh;
-	margin-top: 4vh;
-	font-size: 10vh;
+	height: 10vh;
+	margin-top: 15vh;
+	font-size: 6vh;
 	font-family: 'Raleway', sans-serif;
-	background: #116F3A;
+	background: #303030;
 	border: 3px solid #116F3A;
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50);
 	border-radius: 10px;
@@ -12,15 +53,6 @@
 
 }
 .btn:focus, .btn:hover {
-	background: #58D68D;
-}
-
-#btn-logout {
-	background: #303030;
-}
-
-
-#btn-logout:focus, #btn-logout:hover {
 	background: #494849;
 	color: #58D68D;
 }

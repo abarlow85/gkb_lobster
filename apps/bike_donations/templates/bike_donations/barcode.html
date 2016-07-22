@@ -3,27 +3,21 @@
 <head>
 	{% load staticfiles %}
 
+	{% include 'bike_donations/dependencies.html' %}
+
 	<script src="{% static 'bike_donations/angular/JsBarcode.all.min.js' %}"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-
-		<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	<link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/printStyle.css' %}">
 
 	<title>Print Label</title>
 </head>
 <body>
+
 	<div id="label">
 		<img id="barcode"
+			jsbarcode-format="upc"
 			jsbarcode-value="{{customSku}}"
 			jsbarcode-height="40"
-			jsbarcode-width="1"
+			jsbarcode-width="2"
 		></img>
 
 		<h2 id="cost">
@@ -39,13 +33,38 @@
 	    <button class="btn btn-success btn-lg" onclick="window.print()">Print Label</button>
 	</div>
 	
+	<div id="labelBackBtn" class="text-center">
+		<div class="row">
+			<button id="helpBtn" class="btn btn-info btn-lg">Help! The label is not printing</button>
+		</div>
+		<div id="helpText" class="row text-center" style="display: none;">
+			<div class="col-xs-4">
+				<h4>Is the label very small?</h4>
+				<p>Press the print button again and wait a few seconds until the print layout screen shows the label in the correct format.</p>
+			</div>
+			<div class="col-xs-4">
+				<h4>Is the printer not responding?</h4>
+				<p>Restart the printer. If restarting the printer doesn't work, restart your device.</p>
+			</div>
+			<div class="col-xs-4">
+				<h4>Is the label missing information or not appearing?</h4>
+				<p>Please contact the dev team.</p>
+			</div>
+		</div>
 
-	<a id="labelBackBtn" href="/" class="btn btn-warning btn-lg">Done</a>
+			<a href="/" class="btn btn-warning btn-lg">Done</a>
+
+	</div>
 
 
 
 </body>
 <script type="text/javascript">
 	JsBarcode('#barcode').init()
+</script>
+<script type="text/javascript">
+	$('#helpBtn').click(function(){
+		$('#helpText').css('display', 'block');
+	});
 </script>
 </html>

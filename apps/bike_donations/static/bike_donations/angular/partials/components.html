@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="selectBox row" ng-if="selected.item">
-			<p><u>Quantity:</u><input ng-model="selected.quantity" class= "number-box" type="number" name="quantity" min="1" max="20" ></p>
+			<h4>Quantity:  <input ng-model="selected.quantity" type="number" name="quantity" min="1" max="20" ></h4>
 		</div>
 
 		<div class="row text-center">
@@ -40,19 +40,19 @@
 			<p class="text-danger" ng-if="error" ng-bind="error"></p>
 		</div>
 	</div>
-	<div class="selectBox row">
+	<!-- <div class="selectBox row">
 		<select ng-if = 'selected.which' size = '6' ng-model='selected.item'>
 			<option ng-repeat = '(key, value) in selected.obj'>[[key]]</option>
 		</select>
-	</div>
-	<div class="row text-center">
+	</div> -->
+	<!-- <div class="row text-center">
 		<button class="btn btn-success btn-lg" ng-click='postComponent()' ng-if = 'selected.item'>Add [[selected.item]]</button>
-	</div>
-	<div class="row text-center">
+	</div> -->
+	<!-- <div class="row text-center">
 		<img ng-if="posting && !error" src="static/bike_donations/resources/GKBwheel.gif" />
 		<p class="text-danger" ng-if="error" ng-bind="error"></p>
 	</div>
-</div>
+</div> -->
 	<!--
 	<div id = "bikeType">
 					<div class="row">
@@ -62,7 +62,7 @@
 							<img class="checkmark" src = "static/bike_donations/resources/lilcheck.png">
 						</div>
 					</div>
-				</div>end row 
+				</div>end row
 				<div class="selectBox row">
 					<select ng-model="selected.type" size = '5'>
 						<option ng-repeat = "(key, value) in bikeType" >[[key]]</option>

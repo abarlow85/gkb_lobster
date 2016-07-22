@@ -1,15 +1,16 @@
 *{
   padding: 0;
-	margin:0;
-	font-family: 'Raleway', sans-serif;
+  margin:0;
+  font-family: 'Raleway', sans-serif;
 }
 
-h1, h3 {
-	letter-spacing: 3px;
-}
+
 #goodkarma {
-	margin-top: 5vh;
-	margin-bottom: 5vh;
+  font:'Lato', sans-serif;
+  font-size: 3.9em;
+  color: #116F3A;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
 }
 
 #passwords {
@@ -23,6 +24,16 @@ h1, h3 {
   border: 0px;
 
 }
+#loginCenter {
+  background-color: rgba(255, 255, 255, 0.8);
+  margin-left: 8vw;
+  margin-right: 8vw;
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+
+
+}
+
 #submitPassword {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
@@ -37,41 +48,46 @@ h1, h3 {
 
 }
 .centered {
-	text-align: center;
-	color: white;
+  text-align: center;
+  color: #116F3A;
 }
 .loginPageHTML {
-	background: url("../resources/road_img.jpg") no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+  background: url("../resources/Woodgrain_Pattern.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .login {
-	background-color: transparent;
+  background-color: transparent;
 }
 .buttonControl button{
-	/* Rectangle 158: */
-	background: transparent;
-	border: 3px solid #116F3A;
+  /* Rectangle 158: */
+  background: transparent;
+  border: 3px solid #116F3A;
   height: 15vh;
-	/* Administrator: */
-	font-family: Verdana;
-	font-size: 6vh;
-	color: #FFFFFF;
-	letter-spacing: 1.28px;
-	margin-bottom: 5vh;
+  /* Administrator: */
+  font-family: 'Verdana';
+  font-size: 6vh;
+  color: #303030;
+  letter-spacing: 1.28px;
+  margin-bottom: 5vh;
   margin-left: auto;
   margin-right: auto;
-	width: 60%;
-	padding: 0;
-	display: block;
+  width: 60%;
+  padding: 0;
+  display: block;
 }
 .buttonControl button:hover{
-	color: #116F3A;
+  color: #116F3A;
 }
 
 .submit {
-	color: #474749;
+  color: #474749;
+}
+form {
+  margin-top: 5vh;
+  height: 10vh;
+  margin-bottom: 5vh;
 }
