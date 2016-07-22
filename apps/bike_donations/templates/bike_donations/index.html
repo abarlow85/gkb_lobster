@@ -16,8 +16,8 @@
 
 <!--Angular Below-->
 
-<!-- <script type = "text/javascript" src = "{% static 'bike_donations/angular/services/boolService.js' %}"></script> -->
-<!-- <script type = "text/javascript" src = "{% static 'bike_donations/angular/services/scrollService.js' %}"></script> -->
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/services/boolService.js' %}"></script>
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/services/scrollService.js' %}"></script>
 
 <!-- <script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/bikeOptionsFactory.js' %}"></script> -->
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/componentOptionsFactory.js' %}"></script>
@@ -50,7 +50,7 @@
 
 
 <div class="container">
-	<div id='controllerSelect' ng-controller="BikesController">
+	<div id='controllerSelect' ng-controller="{{request.session.selection}}">
 	{% include 'bike_donations/sideBar.html' %}
 
 		<div id = "outerMain">
