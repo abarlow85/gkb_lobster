@@ -32,6 +32,7 @@
 
 <body>
 
+
 <div class="container">
 	<div id='controllerSelect' ng-controller={{request.session.selection}}>
 
@@ -40,7 +41,16 @@
 		<div id="hamburger" onclick="openNav()">
 			<img class="img-responsive img-circle" src="{% static 'bike_donations/resources/bike_home.png' %}" />
 		</div>
-		<a href="#" id="toMenu"> <img class="img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/bike_home.png' %}" /></a>
+		<div id="toMenu">
+			<div id='warped'>
+				<span class='w0'>G</span><span class='w1'>o</span><span class='w2'> </span><span class='w3'>b</span><span class='w4'>a</span><span class='w5'>c</span><span class='w6'>k</span>
+			</div>
+			<a href="#" id="toMenuATag"> <img class="img-circle" id="sideBarLogo" src="{% static 'bike_donations/resources/bike_home.png' %}" /></a>
+		</div>
+
+
+
+
 		<div id="wrapper">
 		<p class="closebtn" onclick="closeNav()" id="exout">&times;</p>
 
@@ -56,10 +66,10 @@
 				<p class="kangroo">Type [[selected.type]]</p>
 			</div>
 
-			<div class="linkGroup" ng-click="editJump('brand')" ng-style="selected.type != undefined ? {'color': '#116F3A'} : {'color': '#303030'}">
+			<div class="linkGroup" ng-if="selected.type != 'Kids 12inch wheels'" ng-click="editJump('brand')" ng-style="selected.type != undefined ? {'color': '#116F3A'} : {'color': '#303030'}">
 
 				<h5 id="bike"><i class="fa fa-trademark fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo">Brand [[selected.brand]]</p>
+				<p class="kangroo">Brand  [[selected.brand]]</p>
 			</div>
 
 			<div class="linkGroup" ng-click="editJump('cosmetic')" ng-style="selected.brand.length > 1 ? {'color': '#116F3A'} : {'color': '#303030'}">
@@ -68,14 +78,14 @@
 				<p class="kangroo">Cosmetics [[selected.cosmetic]]</p>
 			</div>
 
-			<div class="linkGroup" ng-click="editJump('frame')" ng-style="selected.cosmetic.length > 1 ? {'color': '#116F3A'} : {'color': '#303030'}">
+			<div class="linkGroup" ng-if="selected.frame != 'placed'" ng-click="editJump('frame')" ng-style="selected.cosmetic.length > 1 ? {'color': '#116F3A'} : {'color': '#303030'}">
 				<h5 id="bike"><i class="fa fa-bicycle fa-2x" aria-hidden="true"></i> </h5>
 				<p class="kangroo">Frame [[selected.frame]]</p>
 			</div>
 
-			<div class="linkGroup"  ng-click="editJump('features')" ng-style="selected.frame.length > 1 ? {'color': '#116F3A'} : {'color': '#303030'}">
+			<div class="linkGroup" ng-if="assembled_bike.features[0] != 'None'" ng-click="editJump('features')" ng-style="selected.frame.length > 1 ? {'color': '#116F3A'} : {'color': '#303030'}">
 				<h5 id="bike"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> </h5>
-				<p class="kangroo">Features [[selected.features]]</p>
+				<p class="kangroo">Features  [[assembled_bike.features.length]]</p>
 			</div>
 			<div class="linkGroup" ng-click="editJump('quantity')">
 
@@ -132,11 +142,11 @@
 </div> <!-- end of container -->
 <script>
 	function openNav() {
-		document.getElementById("bikeSideNav").style.width="275px";
-		document.getElementById("outerMain").style.marginLeft="275px";
+		document.getElementById("bikeSideNav").style.width="300px";
+		document.getElementById("outerMain").style.marginLeft="300px";
 		document.getElementById("hamburger").style.display="none";
 		document.getElementById("exout").style.display="block";
-		document.getElementById("toMenu").href="/menu/";
+		document.getElementById("toMenuATag").href="/menu/";
 		document.getElementById("toMenu").style.display="block";
 		document.getElementById("identify").style.display="block";
 
@@ -155,7 +165,7 @@
 		document.getElementById("outerMain").style.marginLeft="0";
 		document.getElementById("hamburger").style.display="block";
 		document.getElementById("exout").style.display="none";
-		document.getElementById("toMenu").href="#";
+		document.getElementById("toMenuATag").href="#";
 		document.getElementById("toMenu").style.display="none";
 		document.getElementById("identify").style.display="none";
 		var array = document.getElementsByClassName("kangroo");

@@ -1,9 +1,114 @@
 *{
 	padding:0.75em;
 	margin:0;
-	font-family: 'Raleway', sans-serif;
+	font-family: 'Raleway', sans-serif;}
 
+#toMenuATag {
+		position: relative;
+		/*display: block;*/
+		left: 15px;
+		bottom: 10px;
+	}
+
+
+#warped {
+	 position: relative;
+	 display: block;
+	 width:80px;
+	 height:100px;
+	 right: 210px;
+	 bottom: 60px;
+ }
+
+#warped>span[class^=w]:nth-of-type(n+0){
+	display:block; position:absolute;
+	 -moz-transform-origin:50% 100%; -webkit-transform-origin:50% 100%; -o-transform-origin:50%
+	 100%; -ms-transform-origin:50% 100%; transform-origin:50% 100%;
+ }
+
+#warped span{
+	font-family:'ABeeZee';
+	font-size:22px;
+	font-weight:regular;
+	font-style:normal;
+	line-height:0.65;
+	white-space:pre;
+	overflow:visible;
+	padding:0px;
 }
+
+#warped .w0 {
+	-moz-transform: rotate(4.67rad);
+	-webkit-transform: rotate(4.67rad);
+	-o-transform: rotate(4.67rad);
+	-ms-transform: rotate(4.67rad);
+	transform: rotate(4.67rad);
+	width: 26px; height: 24px;
+	left: 222.03px; top: 197.94px;
+}
+
+#warped .w1 {
+	-moz-transform: rotate(5.17rad);
+	-webkit-transform: rotate(5.17rad);
+	-o-transform:rotate(5.17rad);
+	-ms-transform: rotate(5.17rad);
+	transform: rotate(5.17rad);
+	width: 23px; height: 24px;
+	left: 229.81px;
+	top: 169.43px;
+}
+
+#warped .w2 {
+	-moz-transform: rotate(5.55rad);
+	-webkit-transform: rotate(5.55rad);
+	-o-transform:rotate(5.55rad);
+	-ms-transform: rotate(5.55rad);
+	transform: rotate(5.55rad);
+	width: 11px; height: 24px;
+	left: 249.11px; top: 152.06px;
+}
+
+#warped .w3 {
+	-moz-transform: rotate(5.92rad);
+	-webkit-transform: rotate(5.92rad);
+	-o-transform:rotate(5.92rad);
+	-ms-transform: rotate(5.92rad);
+	transform: rotate(5.92rad);
+	width: 23px; height: 24px;
+	left: 261.82px; top: 140.74px;
+}
+
+#warped .w4 {
+	-moz-transform: rotate(6.39rad);
+	-webkit-transform: rotate(6.39rad);
+	-o-transform: rotate(6.39rad);
+	-ms-transform: rotate(6.39rad);
+	transform: rotate(6.39rad);
+	width: 23px; height: 24px;
+	left: 289.36px; top: 137.4px;
+}
+
+#warped .w5 {
+	-moz-transform: rotate(6.83rad);
+	-webkit-transform: rotate(6.83rad);
+	-o-transform:rotate(6.83rad);
+	-ms-transform: rotate(6.83rad);
+	transform: rotate(6.83rad);
+	width: 18px; height: 24px;
+	left: 315.77px; top: 145.66px;
+}
+
+#warped .w6 {
+	-moz-transform: rotate(7.23rad);
+	-webkit-transform: rotate(7.23rad);
+	-o-transform:rotate(7.23rad);
+	-ms-transform: rotate(7.23rad);
+	transform: rotate(7.23rad);
+	width: 19px; height: 24px;
+	left: 332.39px;
+	top: 161.54px;
+}
+
 #sideBarType {
 	color: #116F3A;
 }
@@ -15,10 +120,20 @@
 	font-size: 0.9em;
 	display: none;
 }
+#goBackSpace {
+	margin-left: 12px;
+	margin-top: -5px;
+
+
+}
+
 #toMenu {
+
 	display: none;
 	background-color: #116F3A;
+	color: white;
 }
+
 .fa{
 	padding-right: 0px;
 }
@@ -77,6 +192,7 @@
 .linkGroup {
 	padding-left: 0px;
 	padding-top: 0px;
+	padding-right: 0px;
 }
 
 #hamburger {
@@ -99,7 +215,7 @@
 .sideNav p {
 	padding: 8px 8px 8px 32px;
 	text-decoration: none;
-	font-size: 1.4em;
+	font-size: 1.3em;
 	display: block;
 	transition: 0.3s;
 }
