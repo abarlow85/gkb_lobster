@@ -6,8 +6,9 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 		'price':200,
 		'features':[]
 	};
-
-	var prepScope = {};
+	var bikeNovel = true;
+	var allVisitedAvailable = []
+	var prepCache = {};
 
 	factory.letterBy = function(passObject){
 		var letteredArr = Object.keys(passObject);
@@ -36,6 +37,26 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 		return finalObj
 	};
+
+	factory.isBikeNovel = function(){
+		return bikeNovel;
+	};
+
+	factory.pastAndIfFuture = function(currentSelect, callback){
+		if (this.isInArray(allVisitedAvailable, currentSelect)){
+			var returnObj = {};
+			var index = allVisitedAvailable.indexOf(currentSelect);
+			if (index >= 1){
+				returnObj['past'] = allVisitedAvailable[index - 1];
+			}
+
+			if (index < allVisitedAvailable.length - 1){
+				returnObj['next'] = allVisitedAvailable[index + 1]
+			}
+			callback(returnObj)
+		}
+	}
+
 
 	factory.pricedBy = function(passObject){
 		var pricedArr = Object.keys(passObject)
@@ -72,6 +93,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 	factory.selectionData = function(callback){
 		$http.get('/form').success(function(response){
 			bikeData = {};
+			bikeNovel = false;
 
             for(var object in response){
             	if (object != 'cosmetic') {
@@ -80,52 +102,101 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
                 	bikeData[object] = factory.pricedBy(response[object])
                 }
             }
+
+            prepCache.bikeType = {};
+            for (var obj in bikeData.bikeType){
+            	prepCache.bikeType[obj] = bikeData.bikeType[obj]['status']
+            }
 			callback(bikeData.bikeType)
 		});
 	}
 
 	factory.clearHouse = function(alsoBikeType){
+		for (var i = 0; i < 10; i++){
+			console.log('WE ARE IN CLEAR HOUSE')
+		};
 		assembled_bike.features = [];
 		assembled_bike.price = 200;
 
 		if (!alsoBikeType){
-			assembled_bike.price *= assembled_bike.bikeType.price_factor;
+			assembled_bike.price *= bikeData.bikeType.price_factor;
+			allVisitedAvailable = ['bikeType'];
+		}else{
+			allVisitedAvailable = [];
 		}
 
 		for (var obj in bikeData){
-			if (!alsoBikeType || obj != 'bikeType'){
+			if (alsoBikeType || obj != 'bikeType'){
 				if (obj != 'features'){
-					delete assembled_bike[obj];
+					if (obj in assembled_bike){
+						delete assembled_bike[obj];
+					}
 				}
 
 				for (var item in bikeData[obj]){
 					bikeData[obj][item]['status'] = false;
 				}
+
+				if (obj in prepCache){
+					delete prepCache[obj]
+				}
 			}
 		}
-	}
+	};
+
+	factory.ifBikeTypeGetBikeType = function(){
+		if ('bikeType' in bikeData){
+			return bikeData.bikeType
+		}
+	};
 
 	factory.checkData = function(){
 		return bikeData;
+	};
+
+	factory.somethingVisitedAlsoAvailable = function(newSection){
+		if (this.isInArray(allVisitedAvailable, newSection) == false){
+			allVisitedAvailable.push(newSection)
+		}
 	}
 
-	factory.receivePrepScope = function(){
-		var returnScope = prepScope
-		prepScope = {};
-		return returnScope;
+	factory.receivePrepScope = function(currentSelect, count){
+		if (currentSelect in prepCache){
+			return prepCache[currentSelect];
+		}else{
+			this.assembleScope(currentSelect,true,function(){
+				if (currentSelect in prepCache){
+					return prepCache[currentSelect];
+				}else{
+					return;
+				}
+			})
+		}
+	};
+
+	factory.isInArray = function(arr, thing){
+		for (var i = 0; i < arr.length; i++){
+			if (thing == arr[i]){
+				return true;
+			}
+		}
+		return false;
 	}
 
-	factory.assembleScope = function(select){
-		console.log(select)
+	factory.assembleScope = function(select, current, callback){
 		var itemArr = ["bikeType","brand","frame","cosmetic","features"]
-		console.log(itemArr)
-		selectIndex = itemArr.indexOf(select) + 1
+		if (!current){
+			selectIndex = itemArr.indexOf(select) + 1
+		}else{
+			selectIndex = itemArr.indexOf(select)
+		}
 
 		while (selectIndex < itemArr.length){
 			var currentObject = bikeData[itemArr[selectIndex]];
+			prepCache[itemArr[selectIndex]] = {};
 			for(var opt in currentObject){
 
-				if (opt != 'status'){
+				if (opt != 'status' && itemArr[selectIndex] != 'bikeType'){
 					var requiredArr = currentObject[opt]['requisites']
 					var mustHave;
 
@@ -138,30 +209,29 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 					};
 
 					if (wIndex != requiredArr.length){
-						prepScope[opt] = false;
+						prepCache[itemArr[selectIndex]][opt] = currentObject[opt]['status'];
 					};
+				}else{
+					prepCache[itemArr[selectIndex]][opt] = currentObject[opt]['status'];
 				}
 			}
 
-			if (Object.keys(prepScope).length != 0){
-				return(itemArr[selectIndex]);
+			if (Object.keys(prepCache[itemArr[selectIndex]]).length != 0){
+				console.log('wow let\'s look at prepCache', prepCache)
+				if (!callback){
+					return(itemArr[selectIndex]);
+				}else{
+					callback();
+				}
+
+			}else{
+				delete prepCache[itemArr[selectIndex]]
 			}
+
 			selectIndex += 1;
 		}
-
 		return;
-	}
-		factory.postBike = function(bikeObject, callback){
-			$http.post('/donateBikePost/',bikeObject).success(function(response){
-				if (response.success == true) {
-					$window.location = "/print/"
-				}
-				else {
-					console.log("Ohhh a failure")
-					callback(response.error)
-				}
-			});
-		}
+	};
 
 	factory.getBike = function(){
 		$http.post('/confirmation/', {status: true}).success(function(){
@@ -179,9 +249,13 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 
 	factory.valueSelect = function(select, option){
+		for (var i = 0; i < 200; i++){
+			console.log('SELECT CHECK CHECK', select)
+		}
 		if (select != "features"){
 			assembled_bike[select] = option
 			bikeData[select][option]["status"] = true;
+			prepCache[select][option] = true;
 		}else{
 			assembled_bike['features'].push(option)
 		}
@@ -190,14 +264,29 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 			if (select != "features"){
 				if (selection != option){
 					bikeData[select][selection]["status"] = false;
+					if (selection in prepCache[select]){
+						prepCache[select][selection] = false;
+					}
 				}
 			}else if (selection == option){
 				if (bikeData[select][selection]["status"]== false){
 					bikeData[select][selection]["status"] = true;
+					if (selection in prepCache[select]){
+						prepCache[select][selection] = true;
+					}
 				}else{
 					bikeData[select][selection]["status"] = false;
+					if (selection in prepCache[select]){
+						prepCache[select][selection] = false;
+					}
 				}
 			}
+		}
+
+		console.log('is THIS WHERE IT ALL GOES WRONG', prepCache)
+		if (select == 'bikeType'){
+			console.log('!!!!!!!!!!!!BIKE TYPE CLEAR HOUSE')
+			this.clearHouse()
 		}
 	};
 

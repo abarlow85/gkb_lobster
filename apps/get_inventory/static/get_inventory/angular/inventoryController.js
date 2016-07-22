@@ -8,7 +8,7 @@ angular.module('gkbInv').controller('inventoryController', function($scope, $loc
 		$scope.result = undefined;
 		$scope.price = undefined;
 		$scope.notFound = "";
-		if ($scope.item.sku.length == 12) {
+		if ($scope.item.sku.length == 11) {
 			$scope.searching = true;
 			
 			inventoryFactory.getItem($scope.item.sku, function(data){

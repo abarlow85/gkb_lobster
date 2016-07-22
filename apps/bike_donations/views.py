@@ -22,7 +22,11 @@ def home(request):
 		logout(request)
 		return HttpResponseRedirect('/login')
 
+	if 'selection' not in request.session:
+		return HttpResponseRedirect('/menu')
+		
 	return render(request, 'bike_donations/index.html')
+	
 
 @login_required()
 def form_data(request):

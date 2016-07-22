@@ -15,64 +15,78 @@ angular.module('bikeSelect').service('pageService', function($location, $routePa
 		}
 	];
 
+	var typeHead = {
+		'bikeType': 'Select a Bike',
+		'brand': 'Select a Brand',
+		'frame': 'Select a Frame',
+		'cosmetic': 'Choose Cosmetic Quality',
+		'features': 'Add Features'
+	}
+
 	var service = {};
 	var headerText;
+	var currentUrl;
+
+	service.detectUrl = function(){
+		return currentUrl;
+	}
+
+	service.getBikeTypeHead = function(){
+		return typeHead[$routeParams.menuItem]
+	}
+
+	service.menuInput = function(val){
+		if (val == 'bikeSelectionSelected'){
+			$location.path('/addBike/bikeType')
+		}else if(val == 'componentSelectionSelected'){
+			$location.path('/addComponent/')
+		}
+	}
 
 	service.getHeaderText = function(){
 		return headerText; 
 	}
 
-	service.goToNextBikePartial = function(menuItem){
-		var url = '/addBike/' + menuItem
-		$location.path(url)
+	service.goToNextBikePartial = function(nextMenuItem){
+		var url = '/addBike/' + nextMenuItem
+		$location.path(url);
 	}
 
 	service.checkBikeTypeUrl = function(url){
-		var abStr = '/addBike'
+		var abStr = '/addBike';
 
 		var trimUrl = url.substring(0, abStr.length)
 		if (abStr == trimUrl){
-			return true 
+			return true; 
 		}
 
-		return false
+		return false;
 	}
 
-	service.determineUrl = function(callback){
+	service.determineUrl = function(){
 		var urlObj;
 		var element;
 		var atHome = true;
-		var currentUrl = $location.url()
+		currentUrl = $location.url();
 
 		for (var i = 0; i < urlInfo.length; i++){
 			urlObj = urlInfo[i];
 			element = urlObj['type'];
 
-			if (urlObj.path == currentUrl && urlObj.path != '/addBike'){
-				headerText = urlObj.message;
-				document.getElementById(element).disabled = true;
-
-				atHome = false;
-			}else if (urlObj.path == '/addBike')
+			if (urlObj.path == '/addBike'){
 				if (currentUrl == urlObj.path || currentUrl == urlObj.path + '/'){
-					$location.path('/addBike/bikeType')
+					$location.path('/addBike/bikeType');
 				}else if (this.checkBikeTypeUrl(currentUrl)){
-					headerText = urlObj.message
-					document.getElementById(element).disabled = true;
-
-					atHome = false;
-			}else{
-				document.getElementById(element).disabled = false;
+					if (!($routeParams.menuItem in typeHead)){
+						$location.path('/addBike/bikeType');
+					}
+				}
 			}
 		}
 
-		if (atHome){
-			headerText = "Add To Inventory"
-		}
+		
+	};
 
-		callback(headerText)
-	}
-
-	return service
+	return service;
 
 });

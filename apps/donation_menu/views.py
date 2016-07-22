@@ -9,6 +9,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class Home(LoginRequiredMixin, View):
 
 	def get(self,request):
+		if request.user.is_superuser:
+			logout(request)
+			return HttpResponseRedirect('/login')
 		if 'selection' in request.session:
 			del request.session['selection']
 		if 'selectionTitle' in request.session:
@@ -18,14 +21,14 @@ class Home(LoginRequiredMixin, View):
 class Bike(LoginRequiredMixin, View):
 
 	def get(self,request):
-		request.session['selection'] = 'bikeOptionsController'
+		request.session['selection'] = 'bikeSelectionSelected'
 		request.session['selectionTitle'] = 'Add a bike'
 		return HttpResponseRedirect('/')
 
 class Other(LoginRequiredMixin, View):
 
 	def get(self,request):
-		request.session['selection'] = 'componentOptionsController'
+		request.session['selection'] = 'componentSelectionSelected'
 		request.session['selectionTitle'] = 'Add component or other'
 		return HttpResponseRedirect('/')
 
