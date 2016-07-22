@@ -1,53 +1,226 @@
 *{
 	padding:0.75em;
 	margin:0;
-	font-family: 'Raleway', sans-serif;
+	font-family: 'Raleway', sans-serif;}
 
-}
-#bikeSideNav {
-	width: 42px;
-}
-/*#sideBarLogo {
-	border-radius: 50%;
-}*/
+#toMenuATag {
+		position: relative;
+		/*display: block;*/
+		left: 15px;
+		bottom: 10px;
+	}
 
-#hamburger {
-	margin: 0px;
-	padding: 0px;
-	color: white;
 
+#warped {
+	 position: relative;
+	 display: block;
+	 width:80px;
+	 height:100px;
+	 right: 210px;
+	 bottom: 60px;
+ }
+
+#warped>span[class^=w]:nth-of-type(n+0){
+	display:block; position:absolute;
+	 -moz-transform-origin:50% 100%; -webkit-transform-origin:50% 100%; -o-transform-origin:50%
+	 100%; -ms-transform-origin:50% 100%; transform-origin:50% 100%;
+ }
+
+#warped span{
+	font-family:'ABeeZee';
+	font-size:22px;
+	font-weight:regular;
+	font-style:normal;
+	line-height:0.65;
+	white-space:pre;
+	overflow:visible;
+	padding:0px;
 }
-#exout {
+
+#warped .w0 {
+	-moz-transform: rotate(4.67rad);
+	-webkit-transform: rotate(4.67rad);
+	-o-transform: rotate(4.67rad);
+	-ms-transform: rotate(4.67rad);
+	transform: rotate(4.67rad);
+	width: 26px; height: 24px;
+	left: 222.03px; top: 197.94px;
+}
+
+#warped .w1 {
+	-moz-transform: rotate(5.17rad);
+	-webkit-transform: rotate(5.17rad);
+	-o-transform:rotate(5.17rad);
+	-ms-transform: rotate(5.17rad);
+	transform: rotate(5.17rad);
+	width: 23px; height: 24px;
+	left: 229.81px;
+	top: 169.43px;
+}
+
+#warped .w2 {
+	-moz-transform: rotate(5.55rad);
+	-webkit-transform: rotate(5.55rad);
+	-o-transform:rotate(5.55rad);
+	-ms-transform: rotate(5.55rad);
+	transform: rotate(5.55rad);
+	width: 11px; height: 24px;
+	left: 249.11px; top: 152.06px;
+}
+
+#warped .w3 {
+	-moz-transform: rotate(5.92rad);
+	-webkit-transform: rotate(5.92rad);
+	-o-transform:rotate(5.92rad);
+	-ms-transform: rotate(5.92rad);
+	transform: rotate(5.92rad);
+	width: 23px; height: 24px;
+	left: 261.82px; top: 140.74px;
+}
+
+#warped .w4 {
+	-moz-transform: rotate(6.39rad);
+	-webkit-transform: rotate(6.39rad);
+	-o-transform: rotate(6.39rad);
+	-ms-transform: rotate(6.39rad);
+	transform: rotate(6.39rad);
+	width: 23px; height: 24px;
+	left: 289.36px; top: 137.4px;
+}
+
+#warped .w5 {
+	-moz-transform: rotate(6.83rad);
+	-webkit-transform: rotate(6.83rad);
+	-o-transform:rotate(6.83rad);
+	-ms-transform: rotate(6.83rad);
+	transform: rotate(6.83rad);
+	width: 18px; height: 24px;
+	left: 315.77px; top: 145.66px;
+}
+
+#warped .w6 {
+	-moz-transform: rotate(7.23rad);
+	-webkit-transform: rotate(7.23rad);
+	-o-transform:rotate(7.23rad);
+	-ms-transform: rotate(7.23rad);
+	transform: rotate(7.23rad);
+	width: 19px; height: 24px;
+	left: 332.39px;
+	top: 161.54px;
+}
+
+#sideBarType {
+	color: #116F3A;
+}
+#plusSign {
+	margin-left: 7px;
+}
+#identify {
+	text-align: right;
+	font-size: 0.9em;
 	display: none;
 }
-.sideNav {
+#goBackSpace {
+	margin-left: 12px;
+	margin-top: -5px;
+
+
+}
+
+#toMenu {
+
+	display: none;
+	background-color: #116F3A;
+	color: white;
+}
+
+.fa{
+	padding-right: 0px;
+}
+#wrapper{
+	margin: 0px;
+	background-color: rgba(255, 255, 255, 0.4);
+	height: 200%;
+}
+#bikeSideNav {
+	width: 50px;
 	height: 100%;
-	width: 0;
+	padding: 0px;
+	z-index: 1;
+	background: url("../resources/Woodgrain_Pattern.png") no-repeat center fixed;
+	/*background-position: -20px -20px;*/
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.sideNav {
 	position: fixed;
 	z-index: 1;
 	top: 0;
 	left: 0;
-	background-color: #116F3A;
 	overflow-x: hidden;
 	padding-top: 60px;
 	transition: 0.5s;
 }
+#linkSet h5 {
+	display: inline-block;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+#linkSet {
+	margin-left: -6px;
+
+}
+
+#linkSet .kangroo{
+	display : none;
+	padding-left: 1px;
+}
+
+#bike{
+	margin-left: -40px;
+}
+
+.linkGroup:hover {
+	color: #27AE61;
+
+}
+.linkGroup {
+	padding-left: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+}
+
+#hamburger {
+	width: 50px;
+
+	margin: 0px;
+	padding: 5px;
+	background-color: #116F3A;
+}
+#hamburger img {
+	padding: 0px;
+	margin: 0px;
+	min-height: 30px;
+	min-width: 30px;
+}
+#exout {
+	display: none;
+}
+
 .sideNav p {
 	padding: 8px 8px 8px 32px;
 	text-decoration: none;
-	font-size: 25px;
-	color: black;
+	font-size: 1.3em;
 	display: block;
 	transition: 0.3s;
 }
-.whitecolor{
-	color:blue;
-}
-.blackcolor{
-	color:red;
-}
-.sideNav p:hover, .offcanvas p:focus {
-	color: #f1f1f1;
+.offcanvas p:focus {
+	color: #303030;
 }
 .closebtn {
 	position: absolute;
@@ -153,7 +326,7 @@ table {
 }
 
 th {
-	color: green;
+	color: #116F3A;
 }
 
 h4 {
