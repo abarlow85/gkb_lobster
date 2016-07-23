@@ -1,7 +1,7 @@
 <<<<<<< HEAD
-<div ng-controller = 'bikeOptionsController'>
+<div ng-controller = "bikeOptionsController">
 	<div class="row">
-			<div id = 'buttons'>
+			<div id = 'buttons' ng-if="!product">
 				<button ng-disabled = "noFuture"  class = 'btn btn-lg btn-default' ng-click = "goToNext()">Next</button>
 				<button ng-if = "havePast" class = 'btn btn-lg btn-default' ng-click = "goToPast()">Back</button>
 			</div>
@@ -17,12 +17,21 @@
 					</div>
 				</div><!-- end row -->
 				<div class="selectBox row" ng-repeat = "(key, value) in menuData">
-						<button ng-class = "{'btn btn-lg btn-default col-xs-12': value == false, 'btn btn-lg btn-success col-xs-12': value == true}" id = "[[key]]" ng-click = "itemSelected(key)">[[key]]</button>
+						<button ng-class = "{'btn btn-lg btn-default col-xs-12': value == false, 'btn btn-lg btn-success col-xs-12': value == true}" id = "[[key]]" ng-disabled = 'value && currentSelect != "features"' ng-click = "itemSelected(key)">[[key]]</button>
 				</div><!--end selectBox row-->
-
 			</div>
 		</div>
+		<div id = 'productBox' ng-if = "product">
+			<table class="table table-bordered">
+				<tr ng-repeat = '(key, value) in bikeSelected'>
+					<th>[[key]]</th>
+					<td><a ng-click = "jumpTo(key)">[[value]]</a></td>
+				</tr>
+			</table>
+		</div>
 	</div>
+</div>
+</div>
 						<!--closes bike -->
 <!--
 	<div id="brand" ng-if="selected.type && brand" class="row">

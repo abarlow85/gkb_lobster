@@ -112,14 +112,12 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 	}
 
 	factory.clearHouse = function(alsoBikeType){
-		for (var i = 0; i < 10; i++){
-			console.log('WE ARE IN CLEAR HOUSE')
-		};
 		assembled_bike.features = [];
 		assembled_bike.price = 200;
 
 		if (!alsoBikeType){
-			assembled_bike.price *= bikeData.bikeType.price_factor;
+			console.log(assembled_bike.bikeType)
+			assembled_bike.price *= Number(bikeData.bikeType[assembled_bike.bikeType].price_factor);
 			allVisitedAvailable = ['bikeType'];
 		}else{
 			allVisitedAvailable = [];
@@ -247,34 +245,52 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 		});
 	}
 
+	factory.getAssembledBike = function(){
+		return assembled_bike;
+	}
+
 
 	factory.valueSelect = function(select, option){
 		for (var i = 0; i < 200; i++){
 			console.log('SELECT CHECK CHECK', select)
 		}
+		var dupl = false;
 		if (select != "features"){
+			if (select in assembled_bike){
+				console.log('we are sane at least!')
+				if (assembled_bike[select] == option){
+					dupl = true;
+				}
+			}
 			assembled_bike[select] = option
 			bikeData[select][option]["status"] = true;
 			prepCache[select][option] = true;
 		}else{
+			console.log('WE HAVE FEATURE')
 			assembled_bike['features'].push(option)
 		}
 
 		for (var selection in bikeData[select]){
 			if (select != "features"){
 				if (selection != option){
+					if (bikeData[select][selection]["status"] == true && option != selection){
+						assembled_bike.price /= bikeData[select][selection]['price_factor'];
+					}
 					bikeData[select][selection]["status"] = false;
 					if (selection in prepCache[select]){
 						prepCache[select][selection] = false;
 					}
 				}
 			}else if (selection == option){
-				if (bikeData[select][selection]["status"]== false){
+				if (bikeData[select][selection]["status"] == false){
 					bikeData[select][selection]["status"] = true;
 					if (selection in prepCache[select]){
 						prepCache[select][selection] = true;
 					}
 				}else{
+					console.log('WE ARE AND OPTION', option)
+					assembled_bike.price /= bikeData[select][selection]['price_factor']
+					dupl = true;
 					bikeData[select][selection]["status"] = false;
 					if (selection in prepCache[select]){
 						prepCache[select][selection] = false;
@@ -282,8 +298,11 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 				}
 			}
 		}
-
-		console.log('is THIS WHERE IT ALL GOES WRONG', prepCache)
+		if (dupl == false){
+			assembled_bike.price *= bikeData[select][option]['price_factor'];
+		}else{
+			console.log('WE ARE NOT DUPL')
+		}
 		if (select == 'bikeType'){
 			console.log('!!!!!!!!!!!!BIKE TYPE CLEAR HOUSE')
 			this.clearHouse()

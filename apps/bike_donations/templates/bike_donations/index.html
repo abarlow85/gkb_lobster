@@ -52,8 +52,19 @@
 
 
 	<div id = "outerMain">
-{{request.session.selection}}
 
+		<div id = 'navbarController Data Demo'>
+			<h3>navbarController Data Demo</h3>
+			<table>
+				<tr>
+					<td><b>Selection Option</b>
+					<td><b>Availability</b></td>
+					<td><b>Is being currently visited<b></td>
+					<td><b>Selected Option<b></td>
+				<tr>
+			</table>
+
+		</div>
 		<div ng-controller = 'omniOptionsController'>
 			<div id = "header" class="row">
 				<h2 class="col-xs-8">{{request.session.selectionTitle}}</h2>
@@ -61,18 +72,21 @@
 				<!-- <img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" /> -->
 			</div>
 		</div>
-			<div id="buttonBox" class="row">
 
-					<form>{% csrf_token %}
+		<div id="buttonBox" class="row">
+
+				<form>{% csrf_token %}
 
 
-							<div ng-view=""></div>
+						<div ng-view=""></div>
 
-					</form>
+				</form>
 
-			</div><!--closes buttonBox-->
+		</div><!--closes buttonBox-->
+
 		<!-- </div>
-	
+			
+
 			<nav class="navbar navbar-inverse navbar-fixed-bottom">
 			  <div class="container-fluid">
 			    <div class="navbar-header">
@@ -87,8 +101,8 @@
 			  </div>
 			</nav>
 
-		</div>  <!--closes outerMain-->
-	</div><!--closes controllerSelect-->
+		</div>  closes outerMain-->
+	</div>-->
 </div> <!-- end of container -->
 <script>
 	function openNav() {

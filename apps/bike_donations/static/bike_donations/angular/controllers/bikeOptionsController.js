@@ -4,6 +4,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	$scope.assembled_bike = {};
 	$scope.menuData = {};
 	$scope.noFuture = true;
+	$scope.product = false;
 	var nextPath;
 	var backPath
 
@@ -11,14 +12,23 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	$scope.subHeaderText = pageService.getBikeTypeHead();
 	bikeOptionsFactory.somethingVisitedAlsoAvailable($scope.currentSelect)
 
-	if ($scope.currentSelect == 'bikeType' && bikeOptionsFactory.isBikeNovel()){
+	$scope.$watch(function(){
+		return bikeOptionsFactory.getAssembledBike()
+	},function(newValue, oldValue) {  
+   		console.log(newValue)
+   	}, true);
+
+	if ($scope.currentSelect == 'productConfirm'){
+		$scope.product = true;
+		$scope.bikeSelected = bikeOptionsFactory.getAssembledBike()
+		delete $scope.bikeSelected['price']
+	}else if ($scope.currentSelect == 'bikeType' && bikeOptionsFactory.isBikeNovel()){
 		bikeOptionsFactory.selectionData(function(data){
 			for (var key in data){
 				$scope.menuData[key] = data[key].status
 			}
 		});
 	}else{
-		console.log('WE ARE IN BIKE OPTIONS FACTORY')
 		$scope.havePast = true;
 
 		var timelineInfo = bikeOptionsFactory.pastAndIfFuture($scope.currentSelect, function(info){
@@ -37,10 +47,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 			}
 		});
 
-		console.log('HEED CURRENT SELECT', $scope.currentSelect)
-
 		var prep = bikeOptionsFactory.receivePrepScope($scope.currentSelect)
-		console.log(prep)
 		if (!prep || Object.keys(prep).length < 1){
 			$location.path('/addBike/bikeType');
 		}else{
@@ -50,21 +57,38 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 	$scope.itemSelected = function(item){
 		$scope.selected[$scope.currentSelect] = item;
-		$scope.menuData[item] = true;
-		for (var obj in $scope.menuData){
-			if (obj != item){
-				console.log(obj)
-				$scope.menuData[obj] = false;
+		if ($scope.currentSelect != 'features'){
+			$scope.menuData[item] = true;
+			for (var obj in $scope.menuData){
+				if (obj != item){
+					console.log(obj)
+					$scope.menuData[obj] = false;
+				}
+			}
+		}else{
+			for (var obj in $scope.menuData){
+				if (obj == item){
+					if ($scope.menuData[obj] = true){
+						$scope.menuData[obj] = false;
+					}else{
+						$scope.menuData[obj] = false;
+					}
+				}
 			}
 		}
-		console.log($scope.menuData)
 		bikeOptionsFactory.valueSelect($scope.currentSelect, item);
+
+		$scope.noFuture = false;
+
 		if ($scope.currentSelect != 'features'){
 			nextPath = bikeOptionsFactory.assembleScope($scope.currentSelect);
 		}else{
-			console.log('we are not a future')
+			nextPath = "productConfirm";
 		}
-		$scope.noFuture = false;
+	}
+
+	$scope.jumpTo = function(key){
+		$location.path('addBike/' + key)
 	}
 
 	$scope.goToNext = function(){
@@ -72,7 +96,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 			console.log('next path', nextPath)
 			$location.path('addBike/' + nextPath)
 		}else{
-			console.log('WHAT NO NEXT')
+			$location.path('addBike/productConfirm')
 		}
 	}
 

@@ -1,5 +1,5 @@
 angular.module('bikeSelect').controller('omniOptionsController',function($scope, $location, $rootScope, pageService, bikeOptionsFactory, boolService){
-	$scope.omniLink
+	$scope.omniLink;
 	$rootScope.$watch(function() { 
    		return $location.path();
    	},function(newValue, oldValue) {  

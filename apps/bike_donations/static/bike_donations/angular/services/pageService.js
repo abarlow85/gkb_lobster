@@ -9,8 +9,8 @@ angular.module('bikeSelect').service('pageService', function($location, $routePa
 			'path': '/addComponent',
 			'message': "Add A Component"
 		},{
-			'type': 'other',
-			'path': '/find',
+		 	'type': 'other',
+		 	'path': '/find',
 			'message': "Find Item in Inventory"
 		}
 	];
@@ -20,7 +20,8 @@ angular.module('bikeSelect').service('pageService', function($location, $routePa
 		'brand': 'Select a Brand',
 		'frame': 'Select a Frame',
 		'cosmetic': 'Choose Cosmetic Quality',
-		'features': 'Add Features'
+		'features': 'Add Features',
+		'productConfirm':'Confirm Bike'
 	}
 
 	var service = {};
