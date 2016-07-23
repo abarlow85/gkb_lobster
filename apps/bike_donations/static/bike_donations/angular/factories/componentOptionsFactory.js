@@ -1,29 +1,28 @@
 angular.module('bikeSelect').factory('componentOptionsFactory', function($http){
 
 	factory = {};
-	factory.componentProduct = {};
+	var data = {};
+	componentProduct = {};
 	factory.createComponentProduct = function(info){
-		this.componentProduct = info;
+		componentProduct = info;
 	}
 
 	factory.clearComponentProduct = function(){
-		this.componentPost = {};
+		componentPost = {};
 	}
 
 	factory.getAllComponents = function(callback){
 		$http.get('/componentForm').success(function(response){
-			console.log("printing response",response);
 			factory.data = response
 			callback(response)
 		});
 	};
 
 	factory.sendComponentToServer = function(quantity,callback){
-		var info = factory.componentProduct;
+		var info = componentProduct;
 		info["quantity"] = quantity;
 		if (Object.keys(info).length != 0) {
 			$http.post('/componentPost/', info).success(function(response){
-				
 				callback(response);
 			});
 		}else{

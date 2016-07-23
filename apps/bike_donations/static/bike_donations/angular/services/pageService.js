@@ -32,6 +32,9 @@ angular.module('bikeSelect').service('pageService', function($location, $routePa
 		return currentUrl;
 	}
 
+	service.getTypeArr = function(){
+		return Object.keys(typeHead)
+	}
 	service.getBikeTypeHead = function(){
 		return typeHead[$routeParams.menuItem]
 	}
