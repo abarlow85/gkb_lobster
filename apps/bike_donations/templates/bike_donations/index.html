@@ -41,7 +41,7 @@
 		overflow-y: scroll;
 		white-space: nowrap;
 	}
-	
+
 </style>
 </head>
 
@@ -58,11 +58,7 @@
 				<h2 class="col-xs-8">{{request.session.selectionTitle}}</h2>
 			<!-- <img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" /> -->
 			</div>
-			<div id="buttonBox" class="row">
-				<button class="btn btn-default btn-lg" ng-click="backBtn()" ng-if="nextName != 'bikeType' && nextName !='confirm' ">Back</button>
-				<button class="btn btn-default btn-lg pull-right" ng-click="nextBtn()" ng-if="selected==true">Next</button>
-				<button class="btn btn-default btn-lg pull-right" ng-click="doneBtn()" ng-if="complete && nextName != 'confirm'">Done</button>
-			</div>
+			
 			<h4>[[nextName]]</h4>
 
 			<form id="selectionDiv">

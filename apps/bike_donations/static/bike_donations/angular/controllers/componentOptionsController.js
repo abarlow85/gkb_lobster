@@ -7,62 +7,108 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 	} else {
 		$location.path('/addComponent');
 	}
-	
+
 	$scope.which = [];
 	$scope.bikeOptions
+	$scope.currentPartial = 'category';
+	$scope.previousPartial = 'category';
 
 	boolService.forceSelect('component');
 
 	componentOptionsFactory.getAllComponents(function(response){
 		console.log('init response')
 		console.log(response)
+		 $scope.x = response
 		for (var obj in response){
 			$scope.which.push(obj)
+
 			$scope[obj] = {};
+
 			for (var index = 0; index < response[obj].length; index++){
 				var catItemObj = response[obj][index];
 				var itemName = catItemObj['item'];
 				var itemPrice = catItemObj['price'];
-				console.log ("printing catItemObj", catItemObj);
 				$scope[obj][itemName] = itemPrice;
 			}
 		}
 	});
-
+	$scope.componentDonation = {};
 	$scope.selected = {};
 	$scope.selected.quantity = 1;
+	$scope.nextButtonAppears = false;
+	$scope.nextPartial = "";
 
-	$scope.$watch('selected.which',function(){
-		componentOptionsFactory.clearComponentProduct()
-		console.log('change')
-		var change = function(){
-			scrollService.scrollTo('itemSelect')
-		}
+	// $scope.$watch('selected.which',function(){
+	// 	componentOptionsFactory.clearComponentProduct()
+	// 	// $scope.currentPartial = $scope.selected.which
+	// 	console.log('printing current partial', $scope.currentPartial);
+	// 	var change = function(){
+	// 		scrollService.scrollTo('itemSelect')
+	// 	}
+	//
+	// 	if ($scope.selected.which){
+	// 		$scope.trim = $scope.selected.which
+	// 		setTimeout(change, 20)
+	// 	}
+	//
+	// 	$scope.selected.obj = $scope[$scope.selected.which];
+	// });
+	$scope.backBtn = function(){
 
-		if ($scope.selected.which){
-			$scope.trim = $scope.selected.which
-			setTimeout(change, 20)
-		}
+	}
 
-		$scope.selected.obj = $scope[$scope.selected.which];
-	});
+	$scope.selectCategory = function(item){
+		$scope.componentDonation['category'] = item; $scope.componentDonation['choices'] = $scope[item];
+		$scope.nextButtonAppears = true;
+		$scope.nextPartial = "choiceMade";
+		$scope.nextnextPartial = "quantity";
+		console.log("donated item", item);
+		// $scope.currentPartial = $scope.componentDonation['category'];
+	}
 
-	$scope.$watch('selected.item',function(){
-		var scope_array = [$scope.selected.which, $scope.selected.item, $scope.selected.obj];
-		var typeArr = ['category', 'item', 'price'];
-		var info = {};
+	$scope.selectChoice = function(choice){
+		console.log("choice made", choice);
+		$scope.componentDonation['choiceMade'] = choice;
+		console.log($scope.componentDonation['choiceMade']);
+		$scope.componentDonation['price']=$scope.componentDonation['choices'][choice];
+		console.log($scope.componentDonation);
+		$scope.nextPartial = "quantity";
+		$scope.nextButtonAppears = true;
 
-		for(var idx = 0; idx < typeArr.length; idx++){
-			if (scope_array[idx] && idx < typeArr.length - 1){
-				info[typeArr[idx]] = scope_array[idx];
-			}else if (scope_array[idx]){
-				info[typeArr[idx]] = Number($scope.selected.obj[$scope.selected.item])
+	}
+
+	$scope.nextBtn = function(){
+		$scope.nextButtonAppears = false;
+		console.log($scope.nextPartial);
+		for(key in $scope.componentDonation){
+			if (key == $scope.nextPartial){
+				$scope.nextButtonAppears = true;
+				break;
 			}
 		}
+		$scope.currentPartial = $scope.nextPartial;
 
-		componentOptionsFactory.createComponentProduct(info);
+		console.log($scope.componentDonation);
 
-	});
+	}
+
+	// $scope.$watch('selected.item',function(){
+	// 	var scope_array = [$scope.selected.which, $scope.selected.item, $scope.selected.obj];
+	// 	var typeArr = ['category', 'item', 'price'];
+	//
+	// 	var info = {};
+	//
+	// 	for(var idx = 0; idx < typeArr.length; idx++){
+	// 		if (scope_array[idx] && idx < typeArr.length - 1){
+	// 			info[typeArr[idx]] = scope_array[idx];
+	// 		}else if (scope_array[idx]){
+	// 			info[typeArr[idx]] = Number($scope.selected.obj[$scope.selected.item])
+	// 		}
+	// 	}
+	//
+	// 	componentOptionsFactory.createComponentProduct(info);
+	//
+	// });
 
 	$scope.postComponent = function(){
 		if ($scope.selected.quantity && $scope.selected.quantity <=20 && $scope.selected.quantity > 0){

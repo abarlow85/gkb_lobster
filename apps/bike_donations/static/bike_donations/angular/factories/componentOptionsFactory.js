@@ -23,7 +23,7 @@ angular.module('bikeSelect').factory('componentOptionsFactory', function($http){
 		info["quantity"] = quantity;
 		if (Object.keys(info).length != 0) {
 			$http.post('/componentPost/', info).success(function(response){
-				
+
 				callback(response);
 			});
 		}else{

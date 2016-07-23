@@ -11,6 +11,7 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 
 
 	factory.selectionData = function(callback){
+		console.log("in selectionData");
 		$http.get('/form').success(function(response){
 			bikeType = factory.letterBy(response.bikeType);
 			brand = factory.letterBy(response.brand);
@@ -24,6 +25,7 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 
 	factory.letterBy = function(passObject){
 		var letteredArr = Object.keys(passObject);
+		console.log("letteredArr", letteredArr);
 
 		for (var iOne = 0; iOne < letteredArr.length - 1; iOne++){
 			var min = iOne;
@@ -53,7 +55,7 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 
 	factory.pricedBy = function(passObject){
 		var pricedArr = Object.keys(passObject)
-
+		console.log("pricedArr", pricedArr);
 		function tradeIndexForPrice(index){
 			return (Number(passObject[pricedArr[index]]['price_factor']))
 		}
@@ -88,11 +90,11 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 		this.reset();
 		selectedType = bike;
 		bikeObject.bikeType = bike;
-		
-		
+
+
 		nextOptions = this.getNextOptions()
 		callback(selectedType, nextOptions)
-		
+
 	}
 
 	factory.brandSelection = function(brand, callback){
@@ -154,7 +156,7 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 		for (var brd in brand) {
 			var requisites = brand[brd].requisites;
 			for (var req in requisites) {
-				
+
 				if (requisites[req] == selectedType) {
 					nextOptions.brand.push(brd);
 				}
@@ -164,7 +166,7 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 		for (var cos in cosmetic) {
 			var requisites = cosmetic[cos].requisites;
 			for (var req in requisites) {
-				
+
 				if (requisites[req] == selectedType) {
 					nextOptions.cosmetic.push(cos);
 				}
@@ -174,7 +176,7 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 		for (var frm in frame) {
 			var requisites = frame[frm].requisites;
 			for (var req in requisites) {
-				
+
 				if (requisites[req] == selectedType) {
 					nextOptions.frame.push(frm);
 				}
@@ -184,7 +186,7 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 		for (var feat in features) {
 			var requisites = features[feat].requisites;
 			for (var req in requisites) {
-				
+
 				if (requisites[req] == selectedType) {
 					nextOptions.features.push(feat);
 				}
