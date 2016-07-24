@@ -20,6 +20,7 @@
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/bikeOptionsFactory.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/componentOptionsFactory.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/omniOptionsController.js' %}"></script>
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/navBarController.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/bikeOptionsController.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/componentOptionsController.js' %}"></script>
 
@@ -53,15 +54,24 @@
 
 	<div id = "outerMain">
 
-		<div id = 'navbarController Data Demo'>
+		<div id = 'navbarController Data Demo' ng-controller = 'navBarController'>
 			<h3>navbarController Data Demo</h3>
 			<table>
 				<tr>
-					<td><b>Selection Option</b>
-					<td><b>Availability</b></td>
-					<td><b>Is being currently visited<b></td>
-					<td><b>Selected Option<b></td>
-				<tr>
+					<th><b>Selection Option</b></th>
+					<th><b>Availability</b></th>
+					<th><b>Is being currently visited<b></th>
+					<th><b>Selected Option<b></th>
+				</tr>
+				<tr ng-repeat = '(key, value) in bikeData'>
+					<td>[[key]]</td>
+					<td ng-if = 'value.visited'>Visited</td>
+					<td ng-if = 'value.visited = false'>Not Visited</td>
+					<td ng-if = 'value.current'>Visited</td>
+					<td ng-if = 'value.current = false'>Not Visited</td>
+					<td>[[item.title]</td>
+
+
 			</table>
 
 		</div>

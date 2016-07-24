@@ -251,13 +251,9 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 
 	factory.valueSelect = function(select, option){
-		for (var i = 0; i < 200; i++){
-			console.log('SELECT CHECK CHECK', select)
-		}
 		var dupl = false;
 		if (select != "features"){
 			if (select in assembled_bike){
-				console.log('we are sane at least!')
 				if (assembled_bike[select] == option){
 					dupl = true;
 				}
@@ -266,7 +262,6 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 			bikeData[select][option]["status"] = true;
 			prepCache[select][option] = true;
 		}else{
-			console.log('WE HAVE FEATURE')
 			assembled_bike['features'].push(option)
 		}
 
@@ -288,7 +283,6 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 						prepCache[select][selection] = true;
 					}
 				}else{
-					console.log('WE ARE AND OPTION', option)
 					assembled_bike.price /= bikeData[select][selection]['price_factor']
 					dupl = true;
 					bikeData[select][selection]["status"] = false;
@@ -300,11 +294,9 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 		}
 		if (dupl == false){
 			assembled_bike.price *= bikeData[select][option]['price_factor'];
-		}else{
-			console.log('WE ARE NOT DUPL')
 		}
+
 		if (select == 'bikeType'){
-			console.log('!!!!!!!!!!!!BIKE TYPE CLEAR HOUSE')
 			this.clearHouse()
 		}
 	};
