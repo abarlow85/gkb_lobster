@@ -33,7 +33,41 @@
 
 	<div ng-if="nextName == 'confirm'">
 		<button class="btn btn-default" ng-click="postBike()">Confirm</button>
-		<div ng-repeat="option in confirmBike">
-			<p ng-bind="option"></p>
-		</div>
+		<img src="../static/bike_donations/resources/riding.gif" alt="riding a bike" ng-if="posted">
+		<table class="table table-bordered table-striped">
+			<caption>Please Confirm Selections</caption>
+			<tbody>
+				<tr>
+					<th>Type</th>
+					<td>[[confirmBike.bikeType]]</td>
+					<td><button class="btn btn-warning" ng-click="editJump('bikeType')">Edit</button></td>
+				</tr>
+				<tr ng-if="confirmBike.brand">
+					<th>Brand</th>
+					<td>[[confirmBike.brand]]</td>
+					<td><button class="btn btn-warning" ng-click="editJump('brand')">Edit</button></td>
+				</tr>
+				<tr ng-if="confirmBike.cosmetic">
+					<th>Cosmetic</th>
+					<td>[[confirmBike.cosmetic]]</td>
+					<td><button class="btn btn-warning" ng-click="editJump('cosmetic')">Edit</button></td>
+				</tr>
+				<tr ng-if="confirmBike.frame">
+					<th>Frame</th>
+					<td>[[confirmBike.frame]]</td>
+					<td><button class="btn btn-warning" ng-click="editJump('frame')">Edit</button></td>
+				</tr>
+				<tr>
+					<th>Features</th>
+					<td ng-if="confirmBike.features.length > 0"><p ng-repeat="feature in confirmBike.features" style="padding: 0px; margin: 0px">[[feature]]</p></td>
+					<td ng-if="confirmBike.features.length == 0"><p style="padding: 0px; margin: 0px">None selected</p></td>
+					<td><button class="btn btn-warning" ng-click="editJump('features')">Edit</button></td>
+				</tr>
+				<tr>
+					<th>Quantity</th>
+					<td>[[confirmBike.quantity]]</td>
+					<td><button class="btn btn-warning" ng-click="editJump('quantity')">Edit</button></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>

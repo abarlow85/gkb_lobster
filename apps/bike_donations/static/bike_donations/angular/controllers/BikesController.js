@@ -34,7 +34,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 				$scope.history = []
 				$scope.selected = true
 				$scope.bikeObject[$scope.nextName] = selection
-			
+				// $scope.nextBtn()
 			// console.log($scope.allOptions)
 			
 		});
@@ -115,11 +115,17 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 		console.log("BACK")
 	}
 
+	$scope.editJump = function(option) {
+		$scope.nextOptions = $scope.allOptions[option];
+		$scope.nextName = option;
+	}
+
 	$scope.brandSelection = function(option) {
 		BikeFactory.brandSelection(option, function(selection) {
 			$scope.brandSelect = selection;
 			$scope.selected = true
 			$scope.bikeObject[$scope.nextName] = selection
+			// $scope.nextBtn();
 		});
 
 		
@@ -130,6 +136,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			$scope.cosmeticSelect = selection;
 			$scope.selected = true
 			$scope.bikeObject[$scope.nextName] = selection
+			// $scope.nextBtn();
 
 		});
 
@@ -141,8 +148,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			$scope.frameSelect = selection;
 			$scope.selected = true
 			$scope.bikeObject[$scope.nextName] = selection
-
-
+			// $scope.nextBtn();
 		});
 
 		
@@ -187,7 +193,9 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 	}
 
 	$scope.postBike = function() {
+		$scope.posted = true;
 		BikeFactory.postBike(function(response){
+			$scope.posted = false;
 			$scope.error = response;
 		});
 	}
