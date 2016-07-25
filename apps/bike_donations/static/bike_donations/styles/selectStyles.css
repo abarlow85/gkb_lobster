@@ -1,13 +1,14 @@
 *{
 	padding:0.75em;
 	margin:0;
-	font-family: 'Raleway', sans-serif;}
+	font-family: 'Raleway', sans-serif;
+}
 
 #toMenuATag {
 		position: relative;
 		/*display: block;*/
 		left: 15px;
-		bottom: 10px;
+		bottom: 50px;
 	}
 
 
@@ -17,7 +18,8 @@
 	 width:80px;
 	 height:100px;
 	 right: 210px;
-	 bottom: 60px;
+	 bottom: 100px;
+
  }
 
 #warped>span[class^=w]:nth-of-type(n+0){
@@ -132,6 +134,7 @@
 	display: none;
 	background-color: #116F3A;
 	color: white;
+	height: 180px;
 }
 
 .fa{
@@ -143,7 +146,7 @@
 	height: 200%;
 }
 #bikeSideNav {
-	width: 50px;
+	width: 100px;
 	height: 100%;
 	padding: 0px;
 	z-index: 1;
@@ -153,6 +156,7 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
 }
 
 .sideNav {
@@ -172,7 +176,7 @@
 	padding-bottom: 0px;
 }
 #linkSet {
-	margin-left: -6px;
+	margin-left: 20px;
 
 }
 
@@ -196,7 +200,7 @@
 }
 
 #hamburger {
-	width: 50px;
+	width: 100%;
 
 	margin: 0px;
 	padding: 5px;
@@ -239,7 +243,7 @@
 }
 
 #outerMain{
-	margin-top: 5.1em;
+	/*margin-top: 5.1em;*/
 }
 #header{
 	border-bottom:.2em solid rgb(0, 168, 80);
@@ -247,7 +251,7 @@
 	width: 100%;
 	top:0;
 	display:block;
-	height: 8em;
+	/*height: 2em;*/
 	background: rgba(255,255,255 ,.9);
 	z-index:1;
 }
@@ -311,15 +315,31 @@ table {
 	/*padding: 0;*/
 
 /*}*/
+
+#selectionDiv {
+	height: 60vh;
+	overflow-y: scroll;
+	white-space: nowrap;
+}
+
 .info{
 	color: maroon;
+}
+
+.btn-selection {
+
+	height: 6vw;
+	font-size: 3vw;
+
 }
 .features{
 	display: inline-block;
 }
-.features span {
-	padding: 0px;
+.btn-selection span {
+	padding-bottom: 0px;
+	padding-top: 0.5vw;
 }
+
 
 .commit {
 	padding-top: 0;
@@ -348,8 +368,36 @@ ol {
 li {
 	padding: 0.1em;
 }
+
+#btn-cancel {
+	background: #494849;
+	color: white;
+	height: 5vw;
+	font-size: 2vw;
+}
+
+#btn-cancel:active {
+	background: #303030;
+}
+
+#btn-postBike {
+	background: #27AE61;
+	color: white;
+	height: 5vw;
+	font-size: 2vw;
+}
+
+.btn-edit {
+	background: #303030;
+	color: #58D68D;
+}
+
+.btn-edit:active {
+	background: #494849;
+}
+
 .rider {
-	margin-left: -4em;
+	/*margin-left: -4em;*/
 }
 .blue {
 	color: blue;

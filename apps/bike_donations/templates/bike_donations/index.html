@@ -36,12 +36,6 @@
 
 <style type="text/css" media="screen">
 
-	.selectionDiv {
-		height: 40vh;
-		overflow-y: scroll;
-		white-space: nowrap;
-	}
-
 </style>
 </head>
 
@@ -59,9 +53,8 @@
 			<!-- <img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" /> -->
 			</div>
 			
-			<h4>[[nextName]]</h4>
-
-			<form id="selectionDiv">
+			<h4>[[title]]</h4>
+			<form>
 				{% csrf_token %}
 				<div ng-view="">
 
@@ -86,13 +79,13 @@
 		// for(var i=0; i<x.length; i++){
 		// 	x[i].style.display="none";
 		// }
-		// var array = document.getElementsByClassName("kangroo");
-		// for (var y= 0;  y<array.length; y++) {
-		// 	array[y].style.display = "inline-block";
-		// }
+		var array = document.getElementsByClassName("kangroo");
+		for (var y= 0;  y<array.length; y++) {
+			array[y].style.display = "inline-block";
+		}
 	}
 	function closeNav() {
-		document.getElementById("bikeSideNav").style.width="50px";
+		document.getElementById("bikeSideNav").style.width="100px";
 		document.getElementById("outerMain").style.marginLeft="0";
 		document.getElementById("hamburger").style.display="block";
 		document.getElementById("exout").style.display="none";
