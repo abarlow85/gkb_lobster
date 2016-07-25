@@ -9,6 +9,28 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 
 	$scope.nextName = 'bikeType'
 
+	$scope.selectionTitles = {
+		'bikeType': "Select a Model",
+		'brand' : "Select a Brand",
+		'cosmetic': "Select a Condition",
+		'frame': "Select a Frame",
+		'features' : "Select all features that apply",
+		'quantity' : "Select the quantity you are checking in",
+		'confirm' : "Please review your selections"
+	}
+
+	$scope.navTitles = {
+		'bikeType': "Model",
+		'brand' : "Brand",
+		'cosmetic': "Condition",
+		'frame': "Frame",
+		'features' : "Features ",
+		'quantity' : "Quantity : ",
+		'confirm' : "Confirmation"
+	}
+
+	$scope.title = $scope.selectionTitles[$scope.nextName]
+
 	BikeFactory.selectionData(function(data){
 		$scope.bikeType = data
 	});
@@ -20,11 +42,13 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 
 	$scope.addBikeType = function(option){
 		$scope.bikeObject = {};
-		$scope.typeSelect = ''
-		$scope.brandSelect = ''
-		$scope.cosmeticSelect = ''
-		$scope.frameSelect = ''
-		$scope.featuresSelect = []
+		$scope.typeSelect = '';
+		$scope.brandSelect = '';
+		$scope.cosmeticSelect = '';
+		$scope.frameSelect = '';
+		$scope.featuresSelect = [];
+
+		$scope.featuresVisited = false;
 
 		BikeFactory.addBikeType(option, function(selection, nextOptions) {
 			
@@ -34,7 +58,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 				$scope.history = []
 				$scope.selected = true
 				$scope.bikeObject[$scope.nextName] = selection
-			
+				// $scope.nextBtn()
 			// console.log($scope.allOptions)
 			
 		});
@@ -100,7 +124,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			$scope.selected = false;
 		}
 		
-		console.log($scope.nextName)
+		$scope.title = $scope.selectionTitles[$scope.nextName]
 		
 		
 	}
@@ -115,11 +139,22 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 		console.log("BACK")
 	}
 
+	$scope.editJump = function(option) {
+		$scope.editing = true
+		$scope.nextOptions = $scope.allOptions[option];
+		$scope.nextName = option;
+	}
+
+	$scope.restart = function() {
+		$window.location = '/'
+	}
+
 	$scope.brandSelection = function(option) {
 		BikeFactory.brandSelection(option, function(selection) {
 			$scope.brandSelect = selection;
 			$scope.selected = true
 			$scope.bikeObject[$scope.nextName] = selection
+			// $scope.nextBtn();
 		});
 
 		
@@ -130,6 +165,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			$scope.cosmeticSelect = selection;
 			$scope.selected = true
 			$scope.bikeObject[$scope.nextName] = selection
+			// $scope.nextBtn();
 
 		});
 
@@ -141,8 +177,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			$scope.frameSelect = selection;
 			$scope.selected = true
 			$scope.bikeObject[$scope.nextName] = selection
-
-
+			// $scope.nextBtn();
 		});
 
 		
@@ -187,7 +222,9 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 	}
 
 	$scope.postBike = function() {
+		$scope.posted = true;
 		BikeFactory.postBike(function(response){
+			$scope.posted = false;
 			$scope.error = response;
 		});
 	}
