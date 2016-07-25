@@ -218,6 +218,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			$scope.history.push('features');
 			$scope.confirmBike = bike;
 			$scope.nextName = 'confirm';
+			$scope.title = $scope.selectionTitles[$scope.nextName]
 		});
 	}
 

@@ -1,4 +1,4 @@
-<div id="buttonBox" class="row">
+<div id="buttonBox" class="row" ng-if="nextName != 'confirm'">
 	<div class="col-xs-4">
 		<button id="btn-back" class="btn btn-lg" ng-click="backBtn()" ng-if="nextName != 'bikeType' && nextName !='confirm' && !editing">Back</button>
 	</div>
@@ -58,7 +58,7 @@
 				<tr ng-if="confirmBike.frame">
 					<th>Frame</th>
 					<td>[[confirmBike.frame]]</td>
-					<td><button class="btn btn-edit" ng-click="editJump('frame')">Edit</button></td>
+					<td><button class="btn btn-lg btn-edit" ng-click="editJump('frame')">Edit</button></td>
 				</tr>
 				<tr>
 					<th>Features</th>
@@ -78,7 +78,7 @@
 				<button id="btn-cancel" class="col-xs-12 btn btn-lg" ng-click="restart()">Cancel</button>
 			</div>
 			<div class="col-xs-6 text-center">
-					<button id="btn-postBike" class="col-xs-12 btn btn-lg pull-right" ng-click="postBike()">Confirm and Print</button>
+					<button id="btn-postBike" class="col-xs-12 btn btn-lg pull-right" ng-click="postBike()">Confirm</button>
 			</div>
 		</div>
 		<div class="row text-center">

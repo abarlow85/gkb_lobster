@@ -249,7 +249,9 @@
 
 #outerMain{
 	/*margin-top: 5.1em;*/
+	margin-left: 80px;
 	padding-top: 0px;
+	min-width: 341px;
 }
 #header{
 	border-bottom:.2em solid rgb(0, 168, 80);
@@ -306,6 +308,7 @@
 
 table {
 	width: 100%;
+	font-size: 2vw;
 }
 .commit {
 	padding-left: 20px;
@@ -365,6 +368,8 @@ table {
 
 	height: 6vw;
 	font-size: 3vw;
+	width: 90%;
+	margin-left: 5%;
 
 }
 .features{
@@ -425,6 +430,8 @@ li {
 .btn-edit {
 	background: #303030;
 	color: #58D68D;
+	width: 100%;
+	font-size: 2vw;
 }
 
 .btn-edit:active {
@@ -440,4 +447,5 @@ li {
 
 #selectionDiv button {
 	color: white;
+	
 }
