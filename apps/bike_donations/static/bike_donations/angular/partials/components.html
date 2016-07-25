@@ -43,6 +43,52 @@
 		</div>
 	</div>
 </div>
+
+
+<!--
+<h5>Heelo</h5>[[currentPartial]]
+<div id="buttonBox" class="row">
+	<button class="btn btn-default btn-lg" ng-click="backBtn()" ng-if="currentPartial != 'category'">Back</button>
+	<button class="btn btn-default btn-lg pull-right" ng-click="nextBtn()" ng-if="nextButtonAppears">Next</button>
+	<button class="btn btn-default btn-lg pull-right" ng-click="doneBtn()" ng-if="currentPartial == 'quantity'">Done</button>
+</div>
+<div id = 'categoryPick' class="row" ng-if="currentPartial == 'category'">
+	<h4>Pick a category</h4>
+	<div id="buttongroup" ng-repeat="item in which">
+		<button id=[[item]] class="col-xs-8 btn bikeTypeBtn" ng-click="selectCategory(item)" ng-style="componentDonation['category'] == item ? {'background' : '#116F3A'} : {'background':'#303030'}">[[item]]</button>
+	</div>
+
+</div>
+
+<div id = 'itemSelect' ng-if = "currentPartial == 'choiceMade'" >
+	<div class="row">
+		<div class="col-xs-12">
+			<h4>Pick a [[componentDonation.category]]</h4>
+			<div id="variety" ng-repeat="(key, value) in componentDonation.choices">
+				<button id="trim" class="col-xs-8 btn" ng-click="selectChoice(key)" ng-style="componentDonation['choiceMade']==key ? {'background' : '#116F3A'} : {'background':'#303030'}">[[key]]</button>
+			</div>
+		</div>
+		 <div class="selectBox row">
+			<select ng-if = 'selected.which' size = '6' ng-model='selected.item'>
+				<option ng-repeat = '(key, value) in selected.obj'>[[key]]</option>
+			</select>
+		</div>
+	</div>
+</div>
+
+<div class="selectBox row" ng-if="currentPartial == 'quantity'">
+	<h4>Quantity:  <input ng-model="selected.quantity" type="number" name="quantity" min="1" max="20" ></h4>
+	<div class="row text-center">
+		<button class="btn btn-success btn-lg" ng-click='postComponent()' ng-if = 'selected.item'>Add [[selected.item]]</button>
+	</div>
+	<div class="row text-center">
+		<img ng-if="posting && !error" src="static/bike_donations/resources/GKBwheel.gif" />
+		<p class="text-danger" ng-if="error" ng-bind="error"></p>
+	</div>
+</div>
+
+>>>>>>> 7b142e750a18ddc254c8db5b75139189d6a9d5d>>>
+-->
 	<!-- <div class="selectBox row">
 		<select ng-if = 'selected.which' size = '6' ng-model='selected.item'>
 			<option ng-repeat = '(key, value) in selected.obj'>[[key]]</option>

@@ -95,6 +95,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 			bikeData = {};
 			bikeNovel = false;
 
+			console.log(response)
             for(var object in response){
             	if (object != 'cosmetic') {
                 	bikeData[object] = factory.letterBy(response[object])

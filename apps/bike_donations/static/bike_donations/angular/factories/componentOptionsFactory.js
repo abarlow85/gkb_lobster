@@ -2,7 +2,7 @@ angular.module('bikeSelect').factory('componentOptionsFactory', function($http){
 
 	factory = {};
 	var data = {};
-	componentProduct = {};
+	var componentProduct = {};
 	factory.createComponentProduct = function(info){
 		componentProduct = info;
 	}
@@ -13,7 +13,7 @@ angular.module('bikeSelect').factory('componentOptionsFactory', function($http){
 
 	factory.getAllComponents = function(callback){
 		$http.get('/componentForm').success(function(response){
-			factory.data = response
+			data = response;
 			callback(response)
 		});
 	};

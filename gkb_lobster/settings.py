@@ -131,3 +131,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/login'
+CSRF_FAILURE_VIEW = 'apps.login.views.csrf_failure'

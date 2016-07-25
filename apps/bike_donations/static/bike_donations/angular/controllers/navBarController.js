@@ -10,11 +10,13 @@ angular.module('bikeSelect').controller('navBarController', function($scope, $ro
    	}, true);
 
 	$scope.bikeData = {};
+
  	var currentParam;
  	var typeArr = pageService.getTypeArr();
 
+ 	setBiketype();
+
    	$scope.$on('$routeChangeSuccess', function() {
-   		console.log('we are current param')
    		currentParam = $routeParams.menuItem;
    		$scope.bikeData[currentParam].visited = true;
     	$scope.bikeData[currentParam].current = true;
@@ -22,18 +24,21 @@ angular.module('bikeSelect').controller('navBarController', function($scope, $ro
 	});
 
 
-  	for (var i = 0; i < typeArr.length; i++){
- 		$scope.bikeData[typeArr[i]] = {
-  			'skipped': false,
-  			'visited': false
-  		}
 
-  		if (typeArr[i] == currentParam){
-  			$scope.bikeData[typeArr[i]].current = true;
-  		}else{
-  			true;
-  		}
-  	};
+   	function setBiketype(){
+	  	for (var i = 0; i < typeArr.length; i++){
+	 		$scope.bikeData[typeArr[i]] = {
+	  			'skipped': false,
+	  			'visited': false
+	  		}
+
+	  		if (typeArr[i] == currentParam){
+	  			$scope.bikeData[typeArr[i]].current = true;
+	  		}else{
+	  			true;
+	  		}
+	  	};
+  	}
 
   	function resetBikeDataValues(value, except){
   		console.log('we are in resetbikedata')
