@@ -29,33 +29,36 @@ angular.module('bikeSelect').service('pageService', function($location, $routePa
 	var currentUrl;
 
 	service.detectUrl = function(){
+		console.log('getting called')
 		return currentUrl;
-	}
+	};
 
 	service.getTypeArr = function(wholeThing){
 		var returnArr = Object.keys(typeHead);
+		console.log('we are in type arr', returnArr)
 		
 		if (!wholeThing){
 			return returnArr.slice(0, returnArr.length - 1);
 		}else{
 			return returnArr;
 		}
-	}
+	};
+
 	service.getBikeTypeHead = function(item){
 		if (!item){
 			return typeHead[$routeParams.menuItem]
 		}else{
 			return typeHead[item]
 		}
-	}
+	};
 
 	service.menuInput = function(val){
 		if (val == 'bikeSelectionSelected'){
-			$location.path('/addBike/bikeType')
+			$location.path('/addBike/bikeType');
 		}else if(val == 'componentSelectionSelected'){
-			$location.path('/addComponent/')
+			$location.path('/addComponent/');
 		}
-	}
+	};
 
 	service.getHeaderText = function(){
 		return headerText; 
@@ -81,6 +84,7 @@ angular.module('bikeSelect').service('pageService', function($location, $routePa
 		var urlObj;
 		var element;
 		var atHome = true;
+		console.log('current URLLLLLDSFJ')
 		currentUrl = $location.url();
 
 		for (var i = 0; i < urlInfo.length; i++){

@@ -65,11 +65,11 @@
 				</tr>
 				<tr ng-repeat = '(key, value) in bikeData'>
 					<td>[[key]]</td>
-					<td ng-if = 'value.visited'>Visited</td>
-					<td ng-if = 'value.visited = false'>Not Visited</td>
-					<td ng-if = 'value.current'>Visited</td>
-					<td ng-if = 'value.current = false'>Not Visited</td>
-					<td>[[item.title]</td>
+					<td ng-if = 'value.visited'>Available</td>
+					<td ng-if = 'value.visited == false'>Not available</td>
+					<td ng-if = 'value.current'>Is current</td>
+					<td ng-if = 'value.current == false'>Not Current</td>
+					<td>[[item.title]]</td>
 
 
 			</table>
