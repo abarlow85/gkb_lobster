@@ -3,6 +3,9 @@
 	margin:0;
 	font-family: 'Raleway', sans-serif;
 }
+#buttongroup {
+	color: white;
+}
 
 #toMenuATag {
 		position: relative;
@@ -183,7 +186,7 @@
 #linkSet .kangroo{
 	display : inline-block;
 	padding-left: 1px;
-	
+
 }
 
 .addMargin {
@@ -311,20 +314,6 @@ table {
 	padding-left: 20px;
 	right: 0px;
 }
-/*.notepad {
-	background-image: url("../resources/yellowpaper.jpeg");
-	background-repeat: no-repeat;
-	height: 500px;
-	padding-left: 2.2em;
-	position: fixed;
-	right: 10px;
-	overflow-y: scroll;*/
-	/*word-wrap: break-word;*/
-/*}*/
-/*.notepad p {*/
-	/*padding: 0;*/
-
-/*}*/
 
 #selectionDiv {
 	height: 60vh;
