@@ -25,7 +25,6 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 
 	factory.letterBy = function(passObject){
 		var letteredArr = Object.keys(passObject);
-		console.log("letteredArr", letteredArr);
 
 		for (var iOne = 0; iOne < letteredArr.length - 1; iOne++){
 			var min = iOne;
@@ -55,7 +54,6 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 
 	factory.pricedBy = function(passObject){
 		var pricedArr = Object.keys(passObject)
-		console.log("pricedArr", pricedArr);
 		function tradeIndexForPrice(index){
 			return (Number(passObject[pricedArr[index]]['price_factor']))
 		}

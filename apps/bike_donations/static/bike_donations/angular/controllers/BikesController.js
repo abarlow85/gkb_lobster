@@ -30,7 +30,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			
 				$scope.typeSelect = selection;
 				$scope.allOptions = JSON.parse(JSON.stringify(nextOptions));
-				$scope.remainingOptions = Object.keys(nextOptions)
+				$scope.remainingOptions = $scope.linkRemainingOptions(Object.keys(nextOptions));
 				$scope.history = []
 				$scope.selected = true
 				$scope.bikeObject[$scope.nextName] = selection
@@ -40,21 +40,46 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 		});
 	}
 
+	$scope.linkRemainingOptions = function(options) {
+		var linkedList = {
+
+			'bikeType' : { prev: null, next: options[0] }
+
+		};
+
+		for (var i = 0; i < options.length; i++) {
+			if (i == 0) {
+				console.log(options[i]);
+				linkedList[options[i]] = {prev:'bikeType', next: options[i+1] == undefined ? null : options[i+1] };
+			} else {
+				linkedList[options[i]] = {prev:options[i-1], next: options[i+1] == undefined ? null : options[i+1] };
+			}
+		}
+
+		return linkedList;
+
+
+	}
+
 	$scope.nextBtn = function(){
 		console.log("NEXT")
 
 		$scope.selected = false
-		$scope.history.push($scope.nextName);
-		console.log($scope.remainingOptions);
-		for (var idx in $scope.remainingOptions) {
-			var value = $scope.remainingOptions[idx]
-			$scope.nextOptions = $scope.allOptions[value];
-			$scope.nextName = value;
-			$scope.remainingOptions.splice(0,1);
-			break;
-		}
+		var nextOpt = $scope.remainingOptions[$scope.nextName].next;
+		// $scope.history.push($scope.nextName);
+		// console.log($scope.remainingOptions);
+		$scope.nextOptions = $scope.allOptions[nextOpt];
+		$scope.nextName = nextOpt;
 
-		if ($scope.remainingOptions.length == 0) {
+		// for (var idx in $scope.remainingOptions) {
+		// 	var value = $scope.remainingOptions[idx]
+		// 	$scope.nextOptions = $scope.allOptions[value];
+		// 	$scope.nextName = value;
+		// 	$scope.remainingOptions.splice(0,1);
+		// 	break;
+		// }
+
+		if ($scope.remainingOptions[$scope.nextName].next == null) {
 			$scope.complete = true
 		}
 		for (key in $scope.bikeObject) {
@@ -81,14 +106,13 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 	}
 
 	$scope.backBtn = function() {
+		var prev = $scope.remainingOptions[$scope.nextName].prev
 		$scope.complete = false
 		$scope.selected = true
-		$scope.remainingOptions.unshift($scope.nextName);
-		$scope.nextName = $scope.history.pop();
-		$scope.nextOptions = $scope.allOptions[$scope.nextName];
+		// $scope.remainingOptions.unshift($scope.nextName);
+		$scope.nextOptions = $scope.allOptions[prev];
+		$scope.nextName = prev;
 		console.log("BACK")
-		console.log($scope.history);
-		console.log($scope.remainingOptions)
 	}
 
 	$scope.brandSelection = function(option) {
