@@ -183,6 +183,11 @@
 #linkSet .kangroo{
 	display : inline-block;
 	padding-left: 1px;
+	
+}
+
+.addMargin {
+	margin-left: 100px;
 }
 
 #bike{
@@ -244,22 +249,27 @@
 
 #outerMain{
 	/*margin-top: 5.1em;*/
+	padding-top: 0px;
 }
 #header{
 	border-bottom:.2em solid rgb(0, 168, 80);
 	/*position: fixed;*/
 	width: 100%;
+	padding-top: 0px;
+	padding-bottom: 0px;
 	top:0;
 	display:block;
 	/*height: 2em;*/
 	background: rgba(255,255,255 ,.9);
 	z-index:1;
 }
-#header h2{
+#headerText{
 	color: rgb(0, 168, 80);
 	display: inline-block;
 	vertical-align: top;
 	text-shadow: 0px 2px 2px rgba(0, 0, 0, .2);
+	padding: 0px;
+
 
 }
 .number-box{
@@ -326,6 +336,31 @@ table {
 	color: maroon;
 }
 
+
+#btn-back, #btn-next, #btn-done {
+	width: 100%;
+	height: 5vw;
+	color: white;
+	font-size: 2vw;
+	background: #303030;
+	border: 3px solid #303030;
+
+}
+
+#btn-back {
+	box-shadow: 5px 5px 4px 0px rgba(0,0,0,0.50);
+}
+
+#btn-next {
+	box-shadow: 5px 5px 4px 0px rgba(17,111,58,0.50);
+}
+
+#btn-done {
+	background: #116F3A;
+	border: 3px solid #116F3A;
+	box-shadow: 5px 5px 4px 0px rgba(0,0,0,0.50);
+}
+
 .btn-selection {
 
 	height: 6vw;
@@ -381,7 +416,7 @@ li {
 }
 
 #btn-postBike {
-	background: #27AE61;
+	background: #116F3A;
 	color: white;
 	height: 5vw;
 	font-size: 2vw;

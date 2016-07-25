@@ -19,6 +19,16 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 		'confirm' : "Please review your selections"
 	}
 
+	$scope.navTitles = {
+		'bikeType': "Model",
+		'brand' : "Brand",
+		'cosmetic': "Condition",
+		'frame': "Frame",
+		'features' : "Features ",
+		'quantity' : "Quantity : ",
+		'confirm' : "Confirmation"
+	}
+
 	$scope.title = $scope.selectionTitles[$scope.nextName]
 
 	BikeFactory.selectionData(function(data){
@@ -48,7 +58,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 				$scope.history = []
 				$scope.selected = true
 				$scope.bikeObject[$scope.nextName] = selection
-				$scope.nextBtn()
+				// $scope.nextBtn()
 			// console.log($scope.allOptions)
 			
 		});
@@ -144,7 +154,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			$scope.brandSelect = selection;
 			$scope.selected = true
 			$scope.bikeObject[$scope.nextName] = selection
-			$scope.nextBtn();
+			// $scope.nextBtn();
 		});
 
 		
@@ -155,7 +165,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			$scope.cosmeticSelect = selection;
 			$scope.selected = true
 			$scope.bikeObject[$scope.nextName] = selection
-			$scope.nextBtn();
+			// $scope.nextBtn();
 
 		});
 
@@ -167,7 +177,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			$scope.frameSelect = selection;
 			$scope.selected = true
 			$scope.bikeObject[$scope.nextName] = selection
-			$scope.nextBtn();
+			// $scope.nextBtn();
 		});
 
 		
