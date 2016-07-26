@@ -12,7 +12,7 @@
 
 
 	<div id = 'categoryPick' class="row" ng-if="currentPartial == 'category'">
-		<div id="buttongroup" class="row" ng-repeat="item in which">
+		<div id="buttongroup" class="row" ng-repeat="item in which | orderBy: item">
 			<button id=[[item]] class="col-xs-12 btn btn-selection" ng-click="selectCategory(item)" ng-style="componentDonation['category'] == item ? {'background' : '#116F3A'} : {'background':'#303030'}">[[item]]</button>
 		</div>
 	</div>

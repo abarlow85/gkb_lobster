@@ -38,23 +38,6 @@ def form_data(request):
 	}
 	return JsonResponse(context)
 
-
-# def serialize_selections(query_set):
-# 	data = {}
-
-# 	for obj in query_set:
-# 		if type(obj) == BikeOption:
-# 			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor}
-# 		else:
-# 			requisites = []
-# 			for req in obj.requisites.values():
-# 				requisites.append(req['option'])
-
-
-# 			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor, 'requisites':requisites}
-
-# 	return data
-
 def serialize_selections(query_set):
 	bikeType = []
 	data = {}
@@ -123,7 +106,7 @@ def donateBike_post(request):
 		if form.is_valid():
 			price = getBikePrice(optionsArray, featuresoption)
 			if float(price) > 100.00:
-				parsed_json["djangoPrice"] = price
+				parsed_json["djangoPrice"] = int(float(price))
 			else:
 				parsed_json["djangoPrice"] = "Program"
 
@@ -180,7 +163,7 @@ def component_post(request):
 
 			if newComponent['status'] == 200:
 				request.session['customSku'] = newComponent['bikeAdded']['customSku']
-				request.session['price'] = format(parsed_json['price'], '.2f')
+				request.session['price'] = int(parsed_json['price'])
 				request.session['type'] = None
 				request.session['brand'] = itemSelect.option
 				return JsonResponse({'status' : True})

@@ -12,7 +12,6 @@ angular.module('bikeSelect').factory('componentOptionsFactory', function($http){
 
 	factory.getAllComponents = function(callback){
 		$http.get('/componentForm').success(function(response){
-			console.log("printing response",response);
 			factory.data = response
 			callback(response)
 		});
@@ -27,7 +26,6 @@ angular.module('bikeSelect').factory('componentOptionsFactory', function($http){
 				callback(response);
 			});
 		}else{
-			console.log("no component product in factory");
 		}
 	}
 

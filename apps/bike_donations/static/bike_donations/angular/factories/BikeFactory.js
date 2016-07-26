@@ -11,7 +11,6 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 
 
 	factory.selectionData = function(callback){
-		console.log("in selectionData");
 		$http.get('/form').success(function(response){
 			bikeType = factory.letterBy(response.bikeType);
 			brand = factory.letterBy(response.brand);
@@ -126,7 +125,6 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 					$window.location = "/print/"
 			}
 			else {
-				console.log("Ohhh a failure")
 				callback(response.error)
 			}
 		});
@@ -193,7 +191,6 @@ angular.module('bikeSelect').factory('BikeFactory', function($http, $window){
 
 		for (var key in nextOptions) {
 			if (nextOptions[key].length == 0) {
-				console.log(key, 'has 0');
 				delete nextOptions[key];
 			}
 		}

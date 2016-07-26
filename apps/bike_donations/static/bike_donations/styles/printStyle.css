@@ -6,9 +6,9 @@
 }
 
 .btn {
-	height: 10vw;
+	height: 8vw;
 	width: 60vw;
-	font-size: 4vw;
+	font-size: 3.5vw;
 }
 
 
@@ -33,6 +33,12 @@
 h4 {
 	color: #00A850;
 	display: inline-block;
+	padding: 0px;
+	margin: 0px;
+}
+
+h5 {
+	padding: 0px;
 }
 
 @media print {
@@ -44,18 +50,21 @@ h4 {
 	}
 
 	body {
-		height: 56mm;
+		height: 45mm;
 		width: 56mm;
 	}
 	.btn, #labelBackBtn {
 		display: none;
 	}
 	#label {
-		height: 56mm;
+		height: 45mm;
 		width: 56mm;
 		/*margin: -20px;*/
 		/*padding: 0px;*/
 		text-align: center;
+	}
+	#scaleFont {
+		font-size: 1.5vw;
 	}
 
 }
