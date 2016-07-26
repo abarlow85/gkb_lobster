@@ -19,16 +19,6 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 		'confirm' : "Please review your selections"
 	}
 
-	$scope.navTitles = {
-		'bikeType': "Model",
-		'brand' : "Brand",
-		'cosmetic': "Condition",
-		'frame': "Frame",
-		'features' : "Features ",
-		'quantity' : "Quantity : ",
-		'confirm' : "Confirmation"
-	}
-
 	$scope.title = $scope.selectionTitles[$scope.nextName]
 
 	BikeFactory.selectionData(function(data){
