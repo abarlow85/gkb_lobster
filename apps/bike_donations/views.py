@@ -162,8 +162,11 @@ def component_post(request):
 		descriptionString = parsed_json['item'] + " " + parsed_json['category']
 		itemType = parsed_json['category']
 
+
 		parsed_json['item'] = itemSelect.id
 		parsed_json['category'] = categorySelect.id
+		parsed_json['price'] = itemSelect.price
+
 		quantity = 1
 		if "quantity" in parsed_json:
 			parsed_json["quantity"] = int(parsed_json["quantity"])
