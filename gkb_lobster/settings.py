@@ -141,7 +141,11 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
+    '/apps/bike_donations/static',
+    '/apps/donation_menu/static',
+    '/apps/get_inventory/static',
+    '/apps/login/static',
+
 )
 
 LOGIN_URL = '/login'
