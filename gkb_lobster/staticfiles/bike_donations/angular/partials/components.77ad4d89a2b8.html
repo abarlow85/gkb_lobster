@@ -1,0 +1,70 @@
+
+<div id="buttonBox" class="row">
+	<div class="col-xs-4">
+		<button id="btn-back" class="btn btn-lg" ng-click="backBtn()" ng-if="currentPartial != 'category' && currentPartial != 'confirmation' && !editing">Back</button>
+	</div>
+	<div class="col-xs-4 pull-right">
+		<button id="btn-next" class="btn btn-lg pull-right" ng-click="nextBtn()" ng-if="nextButtonAppears && currentPartial != 'quantity' && !editing">Next</button>
+		<button id="btn-done" class="btn btn-lg pull-right" ng-click="doneBtn()" ng-if="currentPartial == 'quantity' || editing">Done</button>
+	</div>
+</div>
+<div id="selectionDiv">
+
+
+	<div id = 'categoryPick' class="row" ng-if="currentPartial == 'category'">
+		<div id="buttongroup" class="row" ng-repeat="item in which | orderBy: item">
+			<button id=[[item]] class="col-xs-12 btn btn-selection" ng-click="selectCategory(item)" ng-style="componentDonation['category'] == item ? {'background' : '#116F3A'} : {'background':'#303030'}">[[item]]</button>
+		</div>
+	</div>
+
+	<div id = 'itemSelect' class="row" ng-if="currentPartial == 'item'">
+			<div id="variety" class="row" ng-repeat="(key, value) in componentDonation.choices">
+				<button id=[[key]] class="col-xs-12 btn btn-selection" ng-click="selectChoice(key)" ng-style="componentDonation['item']==key ? {'background' : '#116F3A'} : {'background':'#303030'}">[[key]]</button>
+			</div>
+
+	</div>
+
+	<div class="selectBox row" ng-if="currentPartial == 'quantity'">
+
+		<label for='quantity' class="control-label input-lg"><u>Quantity:</u></label>
+		<select name='quantity' class="form-control input-lg" ng-model="componentDonation.quantity" ng-options="num for num in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]" ng-init="componentDonation.quantity = 1"></select>
+	</div>
+
+	<div ng-if="currentPartial == 'confirmation'">
+		<table class="table table-striped table-bordered">
+			<tbody>
+				<tr>
+					<th>Category</th>
+					<td>[[componentDonation.category]]</td>
+					<td></td>
+				</tr>
+				<tr>
+					<th>Item</th>
+					<td>[[componentDonation.item]]</td>
+					<td><button class="btn btn-edit" ng-click="editJump('item')">Edit</button></td>
+				</tr>
+				<tr>
+					<th>Quantity</th>
+					<td>[[componentDonation.quantity]]</td>
+					<td><button class="btn btn-edit" ng-click="editJump('quantity')">Edit</button></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="row" ng-if="!posted">
+			<div class="col-xs-6">
+				<button id="btn-cancel" class="col-xs-12 btn btn-lg" ng-click="restart()">Cancel</button>
+			</div>
+			<div class="col-xs-6 text-center">
+					<button id="btn-postBike" class="col-xs-12 btn btn-lg pull-right" ng-click="postComponent()">Confirm</button>
+			</div>
+		</div>
+		<div class="row text-center">
+			<div class="col-xs-6 col-xs-offset-3">
+				<img src="../static/bike_donations/resources/GKBwheel.gif" alt="riding a bike" ng-if="posted">
+				<h4 ng-if="error && !posted" class="text-danger" ng-bind="error"></h4>
+			</div>
+		</div>
+
+	</div>
+</div>
