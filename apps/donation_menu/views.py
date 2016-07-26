@@ -21,7 +21,7 @@ class Home(LoginRequiredMixin, View):
 class Bike(LoginRequiredMixin, View):
 
 	def get(self,request):
-		request.session['selection'] = 'bikeOptionsController'
+		request.session['selection'] = 'BikesController'
 		request.session['selectionTitle'] = 'Add a bike'
 		return HttpResponseRedirect('/')
 

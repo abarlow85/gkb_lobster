@@ -1,6 +1,6 @@
 angular.module('bikeSelect', ['ngRoute'])
-	.config(['$interpolateProvider', '$httpProvider','$routeProvider','$locationProvider',
-		function($interpolateProvider, $httpProvider, $routeProvider, $locationProvider){
+	.config(['$interpolateProvider', '$httpProvider','$routeProvider',
+		function($interpolateProvider, $httpProvider, $routeProvider){
 			$routeProvider
 				.when('/addBike', {
 		 			templateUrl: 'static/bike_donations/angular/partials/addBike.html'
@@ -8,11 +8,6 @@ angular.module('bikeSelect', ['ngRoute'])
 		 		.when('/addComponent',{
 		 			templateUrl: 'static/bike_donations/angular/partials/components.html'
 		 		})
-
-		 	// $locationProvider.html5Mode({
-  		// 		enabled: true,
-  		// 		requireBase: false
-		 	// });
 
 			$interpolateProvider.startSymbol('[[').endSymbol(']]');
 

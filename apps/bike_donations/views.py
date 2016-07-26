@@ -24,7 +24,7 @@ def home(request):
 
 	if 'selection' not in request.session:
 		return HttpResponseRedirect('/menu')
-		
+
 	return render(request, 'bike_donations/index.html')
 
 @login_required()
@@ -39,12 +39,30 @@ def form_data(request):
 	return JsonResponse(context)
 
 
+# def serialize_selections(query_set):
+# 	data = {}
+
+# 	for obj in query_set:
+# 		if type(obj) == BikeOption:
+# 			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor}
+# 		else:
+# 			requisites = []
+# 			for req in obj.requisites.values():
+# 				requisites.append(req['option'])
+
+
+# 			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor, 'requisites':requisites}
+
+# 	return data
+
 def serialize_selections(query_set):
+	bikeType = []
 	data = {}
+
 
 	for obj in query_set:
 		if type(obj) == BikeOption:
-			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor}
+			bikeType.append(obj.option)
 		else:
 			requisites = []
 			for req in obj.requisites.values():
@@ -52,8 +70,10 @@ def serialize_selections(query_set):
 
 
 			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor, 'requisites':requisites}
+	if len(bikeType) == 0:
+		return data
 
-	return data
+	return bikeType
 
 @login_required()
 def donateBike_post(request):
@@ -92,7 +112,7 @@ def donateBike_post(request):
 			parsed_json["quantity"] = int(parsed_json["quantity"])
 			quantity = parsed_json["quantity"]
 		else:
-			quantity = 1
+			parsed_json["quantity"] = 1
 
 		parsed_json["features"]=[obj.id for obj in featuresoption]
 		parsed_json["cosmetic"]=cosmeticoption.id
@@ -112,6 +132,7 @@ def donateBike_post(request):
 			print ("Not valid", form.errors.as_json())
 		descriptionString = str(bikeoption.option + " " + request.session['brand'] + " " + cosmeticoption.option)
 		bikePrice = parsed_json['djangoPrice']
+		quantity = parsed_json["quantity"]
 		lightspeed = LightspeedApi()
 
 		#let's not return pythonDictionary, instead let's return
@@ -141,13 +162,15 @@ def component_post(request):
 		descriptionString = parsed_json['item'] + " " + parsed_json['category']
 		itemType = parsed_json['category']
 
+
 		parsed_json['item'] = itemSelect.id
 		parsed_json['category'] = categorySelect.id
+		parsed_json['price'] = float(itemSelect.price)
 		quantity = 1
 		if "quantity" in parsed_json:
 			parsed_json["quantity"] = int(parsed_json["quantity"])
 			quantity = parsed_json["quantity"]
-		
+
 
 		form = componentForm(parsed_json)
 
@@ -157,7 +180,7 @@ def component_post(request):
 
 			if newComponent['status'] == 200:
 				request.session['customSku'] = newComponent['bikeAdded']['customSku']
-				request.session['price'] = parsed_json['price']
+				request.session['price'] = format(parsed_json['price'], '.2f')
 				request.session['type'] = None
 				request.session['brand'] = itemSelect.option
 				return JsonResponse({'status' : True})
@@ -192,7 +215,7 @@ def print_label(request):
 
 	if request.session['price'] == "Program":
 		label['Program'] = True
-	else: 
+	else:
 		label['price'] = request.session['price']
 
 	if request.session['type'] is not None:
@@ -210,15 +233,14 @@ def serialize_componentFactor(query_set):
 	for obj in query_set:
 		category = str(obj.requisites)
 		if  category in comp:
-	
+
 			comp[category].append({"item":obj.option,"price":obj.price})
 		else:
 			comp[category] = [{"item":obj.option,"price":obj.price}]
-		
+
 	return comp
 
 @login_required()
 def loggingout(request):
 	logout(request)
 	return HttpResponseRedirect('/login')
-
