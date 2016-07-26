@@ -15,8 +15,6 @@
 		<div id="buttongroup" class="row" ng-repeat="item in which">
 			<button id=[[item]] class="col-xs-12 btn btn-selection" ng-click="selectCategory(item)" ng-style="componentDonation['category'] == item ? {'background' : '#116F3A'} : {'background':'#303030'}">[[item]]</button>
 		</div>
-
-
 	</div>
 
 	<div id = 'itemSelect' class="row" ng-if="currentPartial == 'item'">
@@ -28,8 +26,8 @@
 
 	<div class="selectBox row" ng-if="currentPartial == 'quantity'">
 
-
-		<select class="form-control input-lg" ng-model="componentDonation.quantity" ng-options="num for num in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]" ng-init="componentDonation.quantity = 1"></select>
+		<label for='quantity' class="control-label input-lg"><u>Quantity:</u></label>
+		<select name='quantity' class="form-control input-lg" ng-model="componentDonation.quantity" ng-options="num for num in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]" ng-init="componentDonation.quantity = 1"></select>
 	</div>
 
 	<div ng-if="currentPartial == 'confirmation'">
@@ -53,7 +51,7 @@
 			</tbody>
 		</table>
 
-		<div class="row">
+		<div class="row" ng-if="!posted">
 			<div class="col-xs-6">
 				<button id="btn-cancel" class="col-xs-12 btn btn-lg" ng-click="restart()">Cancel</button>
 			</div>
@@ -62,8 +60,8 @@
 			</div>
 		</div>
 		<div class="row text-center">
-			<div class="col-xs-6 pull-right">
-				<img src="../static/bike_donations/resources/riding.gif" alt="riding a bike" ng-if="posted">
+			<div class="col-xs-6 col-xs-offset-3">
+				<img src="../static/bike_donations/resources/GKBwheel.gif" alt="riding a bike" ng-if="posted">
 				<h4 ng-if="error && !posted" class="text-danger" ng-bind="error"></h4>
 			</div>
 		</div>

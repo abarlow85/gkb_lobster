@@ -1,8 +1,5 @@
 angular.module('login').controller('loginController', function($scope, $window){
-  console.log("loginSelection", $scope.loginSelection);
-  $scope.secretWord = "";
   $scope.buttonClicked = function(string){
-    console.log("button clicked", string);
     if (string == "Staff"){
       $scope.loginSelection = "Staff";
     }

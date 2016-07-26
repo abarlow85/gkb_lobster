@@ -73,7 +73,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<div class="row">
+		<div class="row" ng-if="!posted">
 			<div class="col-xs-6">
 				<button id="btn-cancel" class="col-xs-12 btn btn-lg" ng-click="restart()">Cancel</button>
 			</div>
@@ -82,8 +82,8 @@
 			</div>
 		</div>
 		<div class="row text-center">
-			<div class="col-xs-6 pull-right">
-				<img src="../static/bike_donations/resources/riding.gif" alt="riding a bike" ng-if="posted">
+			<div class="col-xs-6 col-xs-offset-3">
+				<img src="../static/bike_donations/resources/GKBwheel.gif" alt="riding a bike" ng-if="posted">
 				<h4 ng-if="error && !posted" class="text-danger" ng-bind="error"></h4>
 			</div>
 		</div>

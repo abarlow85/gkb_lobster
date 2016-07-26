@@ -30,8 +30,6 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 	boolService.forceSelect('component');
 
 	componentOptionsFactory.getAllComponents(function(response){
-		console.log('init response')
-		console.log(response)
 		 $scope.x = response
 		for (var obj in response){
 			$scope.which.push(obj)
@@ -47,22 +45,6 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 		}
 	});
 
-
-	// $scope.$watch('selected.which',function(){
-	// 	componentOptionsFactory.clearComponentProduct()
-	// 	// $scope.currentPartial = $scope.selected.which
-	// 	console.log('printing current partial', $scope.currentPartial);
-	// 	var change = function(){
-	// 		scrollService.scrollTo('itemSelect')
-	// 	}
-	//
-	// 	if ($scope.selected.which){
-	// 		$scope.trim = $scope.selected.which
-	// 		setTimeout(change, 20)
-	// 	}
-	//
-	// 	$scope.selected.obj = $scope[$scope.selected.which];
-	// });
 	$scope.backBtn = function(){
 		$scope.nextButtonAppears = true;
 		$scope.formIndex--;
@@ -97,7 +79,6 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 		$scope.nextButtonAppears = true;
 		$scope.componentDonation.item = null;
 		$scope.componentDonation.quantity = null;
-		console.log("donated item", item);
 
 	}
 
@@ -109,7 +90,7 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 	$scope.nextBtn = function(){
 		$scope.nextButtonAppears = false;
 		for(key in $scope.componentDonation){
-			if (key == $scope.partials[$scope.formIndex + 1]){
+			if (key == $scope.partials[$scope.formIndex + 1] && $scope.componentDonation[key] != null){
 				$scope.nextButtonAppears = true;
 				break;
 			}
@@ -121,32 +102,12 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 
 	$scope.sideBarStatus = function(status) {
 		$scope.sideNavStatusComp = status;
-		console.log(status);
 	}
-
-	// $scope.$watch('selected.item',function(){
-	// 	var scope_array = [$scope.selected.which, $scope.selected.item, $scope.selected.obj];
-	// 	var typeArr = ['category', 'item', 'price'];
-	//
-	// 	var info = {};
-	//
-	// 	for(var idx = 0; idx < typeArr.length; idx++){
-	// 		if (scope_array[idx] && idx < typeArr.length - 1){
-	// 			info[typeArr[idx]] = scope_array[idx];
-	// 		}else if (scope_array[idx]){
-	// 			info[typeArr[idx]] = Number($scope.selected.obj[$scope.selected.item])
-	// 		}
-	// 	}
-	//
-	// 	componentOptionsFactory.createComponentProduct(info);
-	//
-	// });
 
 	$scope.postComponent = function(){
 		$scope.posted = true;
 		$scope.error = false;
 		componentOptionsFactory.sendComponentToServer(function(response){
-			console.log(response);
 			$scope.posted = false;
 			if (response.status == true) {
 				$window.location = "/print/"
