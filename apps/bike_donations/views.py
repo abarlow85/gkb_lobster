@@ -24,7 +24,7 @@ def home(request):
 
 	if 'selection' not in request.session:
 		return HttpResponseRedirect('/menu')
-		
+
 	return render(request, 'bike_donations/index.html')
 
 @login_required()
@@ -165,13 +165,12 @@ def component_post(request):
 
 		parsed_json['item'] = itemSelect.id
 		parsed_json['category'] = categorySelect.id
-		parsed_json['price'] = itemSelect.price
-
+		parsed_json['price'] = float(itemSelect.price)
 		quantity = 1
 		if "quantity" in parsed_json:
 			parsed_json["quantity"] = int(parsed_json["quantity"])
 			quantity = parsed_json["quantity"]
-		
+
 
 		form = componentForm(parsed_json)
 
@@ -181,7 +180,7 @@ def component_post(request):
 
 			if newComponent['status'] == 200:
 				request.session['customSku'] = newComponent['bikeAdded']['customSku']
-				request.session['price'] = parsed_json['price']
+				request.session['price'] = format(parsed_json['price'], '.2f')
 				request.session['type'] = None
 				request.session['brand'] = itemSelect.option
 				return JsonResponse({'status' : True})
@@ -216,7 +215,7 @@ def print_label(request):
 
 	if request.session['price'] == "Program":
 		label['Program'] = True
-	else: 
+	else:
 		label['price'] = request.session['price']
 
 	if request.session['type'] is not None:
@@ -234,15 +233,14 @@ def serialize_componentFactor(query_set):
 	for obj in query_set:
 		category = str(obj.requisites)
 		if  category in comp:
-	
+
 			comp[category].append({"item":obj.option,"price":obj.price})
 		else:
 			comp[category] = [{"item":obj.option,"price":obj.price}]
-		
+
 	return comp
 
 @login_required()
 def loggingout(request):
 	logout(request)
 	return HttpResponseRedirect('/login')
-

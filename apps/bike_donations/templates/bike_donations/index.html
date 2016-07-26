@@ -49,11 +49,21 @@
 
 		<div id = "outerMain">
 			<div id = "header" class="row">
+
 				<h2 id="headerText" class="col-xs-8">{{request.session.selectionTitle}}</h2>
 			<!-- <img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" /> -->
 			</div>
-			
-			<h4>[[title]]</h4>
+
+			<h4>
+				<span><i ng-if="nextName == 'bikeType' || currentPartial =='category'" class="fa fa-plus-square-o fa-3x" aria-hidden="true"></i>
+				<i ng-if="currentPartial == 'item'" class="fa fa-tags fa-3x" aria-hidden="true"></i>
+				<i ng-if="nextName == 'brand'" class="fa fa-trademark fa-3x" aria-hidden="true"></i>
+				<i ng-if="nextName == 'cosmetic'" class="fa fa-diamond fa-3x" aria-hidden="true"></i>
+				<i ng-if="nextName == 'frame'" class="fa fa-bicycle fa-3x" aria-hidden="true"></i>
+				<i ng-if="nextName == 'features'" class="fa fa-cogs fa-3x" aria-hidden="true"></i>
+				<i ng-if="nextName == 'quantity' || currentPartial == 'quantity'" class="fa fa-hashtag fa-3x" aria-hidden="true"></i>
+				<i ng-if="nextName == 'confirm' || currentPartial == 'confirmation'" class="fa fa-sign-out fa-3x" aria-hidden="true"></i>  </span>
+				  [[title]]</h4>
 			<form>
 				{% csrf_token %}
 				<div ng-view="">
@@ -66,8 +76,8 @@
 <script>
 
 	function openNav() {
-		document.getElementById("bikeSideNav").style.width="275px";
-		document.getElementById("outerMain").style.marginLeft="275px";
+		document.getElementById("bikeSideNav").style.width="300px";
+		document.getElementById("outerMain").style.marginLeft="300px";
 		document.getElementById("outerMain").style.paddingTop="0.75em";
 		document.getElementById("header").style.paddingTop="0.75em";
 		document.getElementById("header").style.paddingBottom="0.75em";

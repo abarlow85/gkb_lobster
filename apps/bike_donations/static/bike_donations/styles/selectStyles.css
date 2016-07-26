@@ -3,6 +3,9 @@
 	margin:0;
 	font-family: 'Raleway', sans-serif;
 }
+/*#buttongroup {
+	color: white;
+}*/
 
 #toMenuATag {
 		position: relative;
@@ -10,6 +13,9 @@
 		left: 15px;
 		bottom: 50px;
 	}
+#itemSelect {
+	color: white;
+}
 
 
 #warped {
@@ -183,7 +189,7 @@
 #linkSet .kangroo{
 	display : inline-block;
 	padding-left: 1px;
-	
+
 }
 
 .kangroo span {
@@ -318,20 +324,6 @@ table {
 	padding-left: 20px;
 	right: 0px;
 }
-/*.notepad {
-	background-image: url("../resources/yellowpaper.jpeg");
-	background-repeat: no-repeat;
-	height: 500px;
-	padding-left: 2.2em;
-	position: fixed;
-	right: 10px;
-	overflow-y: scroll;*/
-	/*word-wrap: break-word;*/
-/*}*/
-/*.notepad p {*/
-	/*padding: 0;*/
-
-/*}*/
 
 #selectionDiv {
 	height: 60vh;
@@ -376,6 +368,7 @@ table {
 	margin-left: 5%;
 
 }
+
 .features{
 	display: inline-block;
 }
@@ -383,7 +376,6 @@ table {
 	padding-bottom: 0px;
 	padding-top: 0.5vw;
 }
-
 
 .commit {
 	padding-top: 0;
@@ -395,7 +387,7 @@ th {
 
 h4 {
 	color: #00A850;
-	display: inline-block;
+	/*display: inline-block;*/
 }
 .checkmark {
 	height: 8%;
@@ -451,5 +443,5 @@ li {
 
 #selectionDiv button {
 	color: white;
-	
+
 }
