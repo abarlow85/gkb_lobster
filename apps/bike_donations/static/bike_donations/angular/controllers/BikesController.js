@@ -107,6 +107,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 		$scope.selected = true
 		$scope.nextOptions = $scope.allOptions[prev];
 		$scope.nextName = prev;
+		$scope.title = $scope.selectionTitles[$scope.nextName]
 	}
 
 	$scope.editJump = function(option) {
