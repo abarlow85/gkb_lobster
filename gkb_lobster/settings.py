@@ -137,18 +137,17 @@ USE_TZ = True
 
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-print STATIC_ROOT
+
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'apps/bike_donations/static'),
-    os.path.join(BASE_DIR, 'apps/get_inventory/static'),
-    os.path.join(BASE_DIR, 'apps/donation_menu/static'),
-    os.path.join(BASE_DIR, 'apps/login/static'),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'apps/bike_donations/static'),
+#     os.path.join(BASE_DIR, 'apps/get_inventory/static'),
+#     os.path.join(BASE_DIR, 'apps/donation_menu/static'),
+#     os.path.join(BASE_DIR, 'apps/login/static'),
+# ]
 
-print STATICFILES_DIRS
 
 LOGIN_URL = '/login'
 CSRF_FAILURE_VIEW = 'apps.login.views.csrf_failure'
