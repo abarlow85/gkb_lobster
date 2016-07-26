@@ -138,15 +138,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
-# STATICFILES_DIRS = (
-#     '/apps/bike_donations/static',
-#     '/apps/donation_menu/static',
-#     '/apps/get_inventory/static',
-#     '/apps/login/static',
+STATICFILES_DIRS = [
 
-# )
+]
 
 LOGIN_URL = '/login'
 CSRF_FAILURE_VIEW = 'apps.login.views.csrf_failure'
