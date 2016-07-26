@@ -47,7 +47,7 @@
 		<div id="outerMain" class="row">
 			<div ng-controller = 'omniOptionsController'>
 				<div id = "header" class="row">
-					<h2 class="col-xs-8">{{request.session.selectionTitle}}</h2>
+					<h2 id = 'headerText' class="col-xs-8">{{request.session.selectionTitle}}</h2>
 					<input ng-model = 'omniLink' type = 'hidden' ng-init = "inputVal = getRedirect('{{request.session.selection}}')">
 				</div>
 			</div>
