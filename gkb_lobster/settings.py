@@ -140,13 +140,13 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
-STATICFILES_DIRS = (
-    '/apps/bike_donations/static',
-    '/apps/donation_menu/static',
-    '/apps/get_inventory/static',
-    '/apps/login/static',
+# STATICFILES_DIRS = (
+#     '/apps/bike_donations/static',
+#     '/apps/donation_menu/static',
+#     '/apps/get_inventory/static',
+#     '/apps/login/static',
 
-)
+# )
 
 LOGIN_URL = '/login'
 CSRF_FAILURE_VIEW = 'apps.login.views.csrf_failure'
