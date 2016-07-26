@@ -1,0 +1,90 @@
+<div id="buttonBox" class="row" ng-if="nextName != 'confirm'">
+	<div class="col-xs-4">
+		<button id="btn-back" class="btn btn-lg" ng-click="backBtn()" ng-if="nextName != 'bikeType' && nextName !='confirm' && !editing">Back</button>
+	</div>
+	<div class="col-xs-4 pull-right">
+		<button id="btn-done" class="btn btn-lg pull-right" ng-click="doneBtn()" ng-if="complete && nextName != 'confirm'">Done</button>
+		<button id="btn-next" class="btn btn-lg" ng-click="nextBtn()" ng-if="selected==true && !editing">Next</button>
+	</div>
+</div>
+	<div id="selectionDiv">
+
+		<div id="bikeType" class="row" ng-if="nextName == 'bikeType'" ng-repeat="bike in bikeType">
+			<button id=[[bike]] class="col-xs-12 btn btn-selection" ng-click="addBikeType(bike)" ng-style="typeSelect == bike ? {'background' : '#116F3A'} : {'background':'#303030'}">[[bike]]</button>
+		</div>
+
+		<div id="brand" class="row" ng-if="nextName == 'brand'" ng-repeat="option in nextOptions">
+		<button id=[[option]] class="col-xs-12 btn btn-success btn-selection" ng-click="brandSelection(option)" ng-style="brandSelect == option ? {'background' : '#116F3A'} : {'background':'#303030'}">[[option]]</button>
+		</div>
+
+		<div id="cosmetic" class="row" ng-if="nextName == 'cosmetic'" ng-repeat="option in nextOptions">
+		<button id=[[option]] class="col-xs-12 btn btn-selection" ng-click="cosmeticSelection(option)" ng-style="cosmeticSelect == option ? {'background' : '#116F3A'} : {'background':'#303030'}">[[option]]</button>
+		</div>
+
+		<div id="frame" class="row" ng-if="nextName == 'frame'" ng-repeat="option in nextOptions">
+		<button id=[[option]] class="col-xs-12 btn btn-selection" ng-click="frameSelection(option)" ng-style="frameSelect == option ? {'background' : '#116F3A'} : {'background':'#303030'}">[[option]]</button>
+		</div>
+
+		<div id="features" class="row" ng-if="nextName == 'features'" ng-repeat="option in nextOptions">
+		<button id=[[option]] class="col-xs-12 btn btn-selection" ng-click="featureSelection(option)"  ng-style = "isInSelections(option) ? {'background' : '#116F3A'} : {'background':'#303030'}"><span class="glyphicon glyphicon-ok-circle pull-left" ng-if="isInSelections(option)"></span>[[option]]</button>
+		</div>
+
+		<div id="quantity" class="col-xs-12 form-group text-center" ng-if="nextName == 'quantity'">
+			<label for='quantity' class="control-label input-lg"><u>Quantity:</u></label>
+			<select class="form-control input-lg" ng-model="bikeObject.quantity" ng-options="num for num in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]" ng-init="bikeObject.quantity = 1">
+			</select>
+
+		</div>
+	
+
+	<div ng-if="nextName == 'confirm'">
+		<table class="table table-bordered table-striped">
+			<tbody>
+				<tr>
+					<th>Type</th>
+					<td>[[confirmBike.bikeType]]</td>
+					<td></td>
+				</tr>
+				<tr ng-if="confirmBike.brand">
+					<th>Brand</th>
+					<td>[[confirmBike.brand]]</td>
+					<td><button class="btn btn-edit" ng-click="editJump('brand')">Edit</button></td>
+				</tr>
+				<tr ng-if="confirmBike.cosmetic">
+					<th>Cosmetic</th>
+					<td>[[confirmBike.cosmetic]]</td>
+					<td><button class="btn btn-edit" ng-click="editJump('cosmetic')">Edit</button></td>
+				</tr>
+				<tr ng-if="confirmBike.frame">
+					<th>Frame</th>
+					<td>[[confirmBike.frame]]</td>
+					<td><button class="btn btn-lg btn-edit" ng-click="editJump('frame')">Edit</button></td>
+				</tr>
+				<tr ng-if="allOptions.features">
+					<th>Features</th>
+					<td ng-if="confirmBike.features.length > 0"><p ng-repeat="feature in confirmBike.features" style="padding: 0px; margin: 0px">[[feature]]</p></td>
+					<td ng-if="confirmBike.features.length == 0"><p style="padding: 0px; margin: 0px">None selected</p></td>
+					<td><button class="btn btn-edit" ng-click="editJump('features')">Edit</button></td>
+				</tr>
+				<tr>
+					<th>Quantity</th>
+					<td>[[confirmBike.quantity]]</td>
+					<td><button class="btn btn-edit" ng-click="editJump('quantity')">Edit</button></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="row" ng-if="!posted">
+			<div class="col-xs-6">
+				<button id="btn-cancel" class="col-xs-12 btn btn-lg" ng-click="restart()">Cancel</button>
+			</div>
+			<div class="col-xs-6 text-center">
+					<button id="btn-postBike" class="col-xs-12 btn btn-lg pull-right" ng-click="postBike()">Confirm</button>
+			</div>
+		</div>
+		<div class="row text-center">
+			<div class="col-xs-6 col-xs-offset-3">
+				<img src="../static/bike_donations/resources/GKBwheel.gif" alt="riding a bike" ng-if="posted">
+				<h4 ng-if="error && !posted" class="text-danger" ng-bind="error"></h4>
+			</div>
+		</div>
+	</div>
