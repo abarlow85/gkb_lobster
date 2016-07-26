@@ -1,0 +1,8 @@
+{
+  "name": "gkb_donations",
+  "dependencies": {
+    "angular": "1.4.9",
+    "angular-route": "1.4.9",
+    "bootstrap": "3.3.6"
+  }
+}
