@@ -139,16 +139,14 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-print STATIC_ROOT
-
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'apps/bike_donations/static'),
-#     os.path.join(BASE_DIR, 'apps/get_inventory/static'),
-#     os.path.join(BASE_DIR, 'apps/donation_menu/static'),
-#     os.path.join(BASE_DIR, 'apps/login/static'),
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'apps/bike_donations/static'),
+    os.path.join(BASE_DIR, 'apps/get_inventory/static'),
+    os.path.join(BASE_DIR, 'apps/donation_menu/static'),
+    os.path.join(BASE_DIR, 'apps/login/static'),
+]
 
 
 LOGIN_URL = '/login'
