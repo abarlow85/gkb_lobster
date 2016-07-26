@@ -80,7 +80,6 @@ celerybeat-schedule
 
 # virtualenv
 test/
-venv/
 ENV/
 
 # Spyder project settings
@@ -90,4 +89,3 @@ ENV/
 .ropeproject
 
 node_modules/
-bower_components/
