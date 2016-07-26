@@ -1,5 +1,5 @@
 angular.module('bikeSelect').controller('BikesController', function($scope, $location, $window, BikeFactory){
-	
+
 	var location = document.getElementById('controllerSelect')
 	if (location.getAttribute('ng-controller') == 'BikesController') {
 		$location.path('/addBike');
@@ -40,7 +40,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 		$scope.featuresVisited = false;
 
 		BikeFactory.addBikeType(option, function(selection, nextOptions) {
-			
+
 				$scope.typeSelect = selection;
 				$scope.allOptions = JSON.parse(JSON.stringify(nextOptions));
 				$scope.remainingOptions = $scope.linkRemainingOptions(Object.keys(nextOptions));
@@ -48,7 +48,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 				$scope.selected = true
 				$scope.bikeObject[$scope.nextName] = selection
 				// $scope.nextBtn()
-			
+
 		});
 	}
 
@@ -97,7 +97,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			$scope.featuresVisited = true;
 			$scope.selected = false;
 		}
-		
+
 		$scope.title = $scope.selectionTitles[$scope.nextName]
 	}
 
@@ -107,6 +107,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 		$scope.selected = true
 		$scope.nextOptions = $scope.allOptions[prev];
 		$scope.nextName = prev;
+		$scope.title = $scope.selectionTitles[$scope.nextName]
 	}
 
 	$scope.editJump = function(option) {
@@ -125,7 +126,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 			$scope.selected = true
 			$scope.bikeObject[$scope.nextName] = selection
 			// $scope.nextBtn();
-		});	
+		});
 	}
 
 	$scope.cosmeticSelection = function(option) {
@@ -174,7 +175,7 @@ angular.module('bikeSelect').controller('BikesController', function($scope, $loc
 	$scope.doneBtn = function() {
 
 		$scope.bikeObject['features'] = $scope.featuresSelect;
-		
+
 		BikeFactory.completeBike($scope.bikeObject, function(bike) {
 			$scope.history.push('features');
 			$scope.confirmBike = bike;
