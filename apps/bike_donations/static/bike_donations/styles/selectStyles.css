@@ -186,6 +186,10 @@
 	
 }
 
+.kangroo span {
+	padding-left: 1px;
+}
+
 .addMargin {
 	margin-left: 100px;
 }
