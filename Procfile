@@ -1,1 +1,1 @@
-web: gunicorn gkb_lobster.wsgi
+web: gunicorn gkb_lobster.wsgi --log-file -

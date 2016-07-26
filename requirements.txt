@@ -2,3 +2,5 @@ django==1.9.7
 requests==2.10
 django-cors-headers==1.1.0
 gunicorn==19.6.0
+dj-database-url==0.4.1
+whitenoise==3.2

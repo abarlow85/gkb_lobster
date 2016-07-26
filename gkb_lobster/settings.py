@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -85,12 +86,16 @@ WSGI_APPLICATION = 'gkb_lobster.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+db_from_env = dj_database_url.config(conn_max_age=500)
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+DATABASES['default'].update(db_from_env)
 
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -139,15 +144,17 @@ USE_TZ = True
 
 
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles/')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    # os.path.join(BASE_DIR, 'apps/bike_donations/static'),
-    # os.path.join(BASE_DIR, 'apps/get_inventory/static'),
-    # os.path.join(BASE_DIR, 'apps/donation_menu/static'),
-    # os.path.join(BASE_DIR, 'apps/login/static'),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'apps/bike_donations/static'),
+#     os.path.join(BASE_DIR, 'apps/get_inventory/static'),
+#     os.path.join(BASE_DIR, 'apps/donation_menu/static'),
+#     os.path.join(BASE_DIR, 'apps/login/static'),
+# ]
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 LOGIN_URL = '/login'
