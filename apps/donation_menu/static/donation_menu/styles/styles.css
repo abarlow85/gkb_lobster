@@ -17,9 +17,10 @@ body {
 }
 #header img{
 	/*border-radius: 50%;*/
-	height:10vw;
-	margin-bottom:3.5%;
-	/*width: 10%;*/
+	/*height:10vw;*/
+	margin-top:-.145em;
+	margin-left:-.145em;
+	/*width:15vw;*/
 
 }
 h1{
