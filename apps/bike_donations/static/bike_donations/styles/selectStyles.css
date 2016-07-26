@@ -383,7 +383,7 @@ th {
 
 h4 {
 	color: #00A850;
-	display: inline-block;
+	/*display: inline-block;*/
 }
 .checkmark {
 	height: 8%;

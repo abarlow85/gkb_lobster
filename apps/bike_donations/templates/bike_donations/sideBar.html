@@ -64,7 +64,7 @@
 				<p class="kangroo" ng-if="sideNavStatus" ng-bind="navTitles.quantity">[[bikeObject.quantity]]</p>
 				<p class="kangroo" ng-if="sideNavStatusComp">Quantity: [[componentDonation.quantity]]</p>
 			</div>
-			<div class="linkGroup" ng-if="allOptions" ng-style="nextName == 'confirm' ? {'color': '#116F3A'} : {'color': '#303030'}">
+			<div class="linkGroup" ng-if="allOptions || componentDonation.choices" ng-style="nextName == 'confirm' || currentPartial == 'confirmation' || editing ? {'color': '#116F3A'} : {'color': '#303030'}">
 				<h5 id="bike"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i> </h5>
 				<p class="kangroo" ng-if="sideNavStatus" ng-bind="navTitles.confirm"></p>
 			</div>
