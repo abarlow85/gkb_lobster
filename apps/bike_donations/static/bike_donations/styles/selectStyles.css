@@ -3,9 +3,9 @@
 	margin:0;
 	font-family: 'Raleway', sans-serif;
 }
-#buttongroup {
+/*#buttongroup {
 	color: white;
-}
+}*/
 
 #toMenuATag {
 		position: relative;
@@ -13,6 +13,9 @@
 		left: 15px;
 		bottom: 50px;
 	}
+#itemSelect {
+	color: white;
+}
 
 
 #warped {
@@ -361,6 +364,7 @@ table {
 	margin-left: 5%;
 
 }
+
 .features{
 	display: inline-block;
 }
@@ -436,5 +440,5 @@ li {
 
 #selectionDiv button {
 	color: white;
-	
+
 }

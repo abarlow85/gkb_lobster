@@ -8,10 +8,24 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 		$location.path('/addComponent');
 	}
 
+	$scope.partials = ['category', 'item', 'quantity', 'confirmation']
 	$scope.which = [];
 	$scope.bikeOptions
-	$scope.currentPartial = 'category';
-	$scope.previousPartial = 'category';
+	$scope.currentPartial = $scope.partials[0];
+	$scope.formIndex = 0;
+	$scope.componentDonation = {};
+	$scope.selected = {};
+	$scope.selected.quantity = 1;
+	$scope.nextButtonAppears = false;
+
+	$scope.selectionTitles = {
+		'category': "Select a Category",
+		'item' : "Select an Item",
+		'quantity' : "Select the quantity you are checking in",
+		'confirmation' : "Please review your selections"
+	}
+	$scope.title = $scope.selectionTitles['category'];
+
 
 	boolService.forceSelect('component');
 
@@ -32,11 +46,7 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 			}
 		}
 	});
-	$scope.componentDonation = {};
-	$scope.selected = {};
-	$scope.selected.quantity = 1;
-	$scope.nextButtonAppears = false;
-	$scope.nextPartial = "";
+
 
 	// $scope.$watch('selected.which',function(){
 	// 	componentOptionsFactory.clearComponentProduct()
@@ -54,42 +64,64 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 	// 	$scope.selected.obj = $scope[$scope.selected.which];
 	// });
 	$scope.backBtn = function(){
-
+		$scope.nextButtonAppears = true;
+		$scope.formIndex--;
+		$scope.currentPartial = $scope.partials[$scope.formIndex];
+		$scope.title = $scope.selectionTitles[$scope.currentPartial];
 	}
 
+	$scope.doneBtn = function(){
+		componentOptionsFactory.createComponentProduct($scope.componentDonation);
+		if(!$scope.editing){
+			$scope.formIndex++;
+			$scope.currentPartial = $scope.partials[$scope.formIndex];
+		}
+		else {
+			$scope.currentPartial = 'confirmation';
+		}
+		$scope.title = $scope.selectionTitles[$scope.currentPartial];
+	}
+
+	$scope.editJump = function(option){
+		$scope.editing = true;
+		$scope.currentPartial = option;
+		$scope.title = $scope.selectionTitles[$scope.currentPartial];
+	}
+
+	$scope.restart = function(){
+		$window.location = '/';
+	}
 	$scope.selectCategory = function(item){
-		$scope.componentDonation['category'] = item; $scope.componentDonation['choices'] = $scope[item];
+		$scope.componentDonation['category'] = item;
+		$scope.componentDonation['choices'] = $scope[item];
 		$scope.nextButtonAppears = true;
-		$scope.nextPartial = "choiceMade";
-		$scope.nextnextPartial = "quantity";
+		$scope.componentDonation.item = null;
+		$scope.componentDonation.quantity = null;
 		console.log("donated item", item);
-		// $scope.currentPartial = $scope.componentDonation['category'];
+
 	}
 
 	$scope.selectChoice = function(choice){
-		console.log("choice made", choice);
-		$scope.componentDonation['choiceMade'] = choice;
-		console.log($scope.componentDonation['choiceMade']);
-		$scope.componentDonation['price']=$scope.componentDonation['choices'][choice];
-		console.log($scope.componentDonation);
-		$scope.nextPartial = "quantity";
+		$scope.componentDonation['item'] = choice;
 		$scope.nextButtonAppears = true;
-
 	}
 
 	$scope.nextBtn = function(){
 		$scope.nextButtonAppears = false;
-		console.log($scope.nextPartial);
 		for(key in $scope.componentDonation){
-			if (key == $scope.nextPartial){
+			if (key == $scope.partials[$scope.formIndex + 1]){
 				$scope.nextButtonAppears = true;
 				break;
 			}
 		}
-		$scope.currentPartial = $scope.nextPartial;
+		$scope.formIndex++;
+		$scope.currentPartial = $scope.partials[$scope.formIndex];
+		$scope.title = $scope.selectionTitles[$scope.currentPartial];
+	}
 
-		console.log($scope.componentDonation);
-
+	$scope.sideBarStatus = function(status) {
+		$scope.sideNavStatusComp = status;
+		console.log(status);
 	}
 
 	// $scope.$watch('selected.item',function(){
@@ -111,21 +143,17 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 	// });
 
 	$scope.postComponent = function(){
-		if ($scope.selected.quantity && $scope.selected.quantity <=20 && $scope.selected.quantity > 0){
-			$scope.posting = true
-			$scope.error = false
+		$scope.posted = true;
+		$scope.error = false;
+		componentOptionsFactory.sendComponentToServer(function(response){
+			console.log(response);
+			$scope.posted = false;
+			if (response.status == true) {
+				$window.location = "/print/"
+			} else {
+				$scope.error = response.error
+			}
+		})
+	};
 
-			componentOptionsFactory.sendComponentToServer($scope.selected.quantity, function(response){
-				console.log(response);
-				if (response.status == true) {
-					$window.location = "/print/"
-				} else {
-					$scope.error = response.error
-				}
-			});
-		}else{
-			console.log("quantity exceeded");
-		}
-
-	}
 });

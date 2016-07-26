@@ -39,7 +39,7 @@ class LightspeedApi(object):
 			else:
 				finalResult = {'status': response.status_code, 'error': errorsDictionary[response.status_code]}
 		else:
-			finalResult = {'status': response.status_code, 'content':response.content}	
+			finalResult = {'status': response.status_code, 'content':response.content}
 
 		return finalResult
 
