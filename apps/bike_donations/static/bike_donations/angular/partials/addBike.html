@@ -60,7 +60,7 @@
 					<td>[[confirmBike.frame]]</td>
 					<td><button class="btn btn-lg btn-edit" ng-click="editJump('frame')">Edit</button></td>
 				</tr>
-				<tr>
+				<tr ng-if="allOptions.features">
 					<th>Features</th>
 					<td ng-if="confirmBike.features.length > 0"><p ng-repeat="feature in confirmBike.features" style="padding: 0px; margin: 0px">[[feature]]</p></td>
 					<td ng-if="confirmBike.features.length == 0"><p style="padding: 0px; margin: 0px">None selected</p></td>
