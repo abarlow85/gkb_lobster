@@ -3,8 +3,9 @@
 <head>
 	{% load staticfiles %}
 	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Find a Donation</title>
-
+	
 	<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
 
 	<link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.css' %}">
@@ -16,21 +17,19 @@
 
 	<link href="https://fonts.googleapis.com/css?family=Raleway:400,600" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/font-awesome-4.6.3/css/font-awesome.min.css' %}">
+	
 
 	<link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'get_inventory/styles/style.css' %}">
 	<script src="{% static 'get_inventory/angular/app.js' %}"></script>
 	<script src="{% static 'get_inventory/angular/inventoryController.js' %}"></script>
 	<script src="{% static 'get_inventory/angular/inventoryFactory.js' %}"></script>
-	
-
-	
 </head>
 <body>
 	<div class="container">
 		<div id = "header-inv-page" class="row">
 			<h2 class="col-xs-8">Find a Donation</h2>
-			
+			<img class="img-responsive pull-right" src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
 		</div>
 		<div class="row">
 			<div class="row">
@@ -49,7 +48,7 @@
 				</div>
 			</form>
 			<div class="row text-center">
-				
+				<img src="{% static 'bike_donations/resources/GKBwheel.gif' %}" alt="riding a bike" ng-if="searching">
 				
 			</div>
 			<div class="row">
@@ -80,6 +79,7 @@
 				</div>
 				<div class="row text-center">
 					<h2 ng-if="notFound" ng-bind="notFound"></h2>
+					<img ng-if="deleting" src="{% static 'bike_donations/resources/GKBwheel.gif' %}">
 				</div>
 			</div>
 		</div>
