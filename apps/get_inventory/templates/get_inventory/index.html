@@ -12,7 +12,7 @@
 	<div class="container">
 		<div id = "header-inv-page" class="row">
 			<h2 class="col-xs-8">Find a Donation</h2>
-			<img class="img-responsive pull-right" src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
+			
 		</div>
 		<div class="row">
 			<div class="row">
@@ -31,7 +31,7 @@
 				</div>
 			</form>
 			<div class="row text-center">
-				<img src="{% static 'bike_donations/resources/GKBWheel.gif' %}" alt="riding a bike" ng-if="searching">
+				
 				
 			</div>
 			<div class="row">
@@ -62,7 +62,6 @@
 				</div>
 				<div class="row text-center">
 					<h2 ng-if="notFound" ng-bind="notFound"></h2>
-					<img ng-if="deleting" src="{% static 'bike_donations/resources/GKBWheel.gif' %}">
 				</div>
 			</div>
 		</div>
