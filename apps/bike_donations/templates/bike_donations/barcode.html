@@ -11,29 +11,34 @@
 	<title>Print Label</title>
 </head>
 <body>
+	<div id="wrapper">
+		<div id="label">
+			<img id="barcode"
+				jsbarcode-format="upc"
+				jsbarcode-value="{{customSku}}"
+				jsbarcode-height="40"
+				jsbarcode-width="2"
+			></img>
 
-	<div id="label">
-		<img id="barcode"
-			jsbarcode-format="upc"
-			jsbarcode-value="{{customSku}}"
-			jsbarcode-height="40"
-			jsbarcode-width="2"
-		></img>
-
-		<h2 id="cost">
-			{% if Program %}
-				Program
-			{% elif price%}
-				${{price}}
-			{% endif %}
-		</h2>
-
-	    <h2 class="bike-info">{{type}}</h2>
-	    <h2 id="scaleFont" class="bike-info">{{brand}}</h2>
-	    <button class="btn btn-success btn-lg" onclick="window.print()">Print Label</button>
+			<h2 id="cost">
+				{% if Program %}
+					Program
+				{% elif price%}
+					${{price}}
+				{% endif %}
+			</h2>
+			{% if brand|length < 14 %}
+		    	<h2 class="bike-info">{{type}}</h2>
+		    {% endif %}
+		    <h2 id="scaleFont" class="bike-info">{{brand}}</h2>
+		    
+		</div>
 	</div>
+
+	
 	
 	<div id="labelBackBtn" class="text-center">
+		<button class="btn btn-success btn-lg" onclick="window.print()">Print Label</button>
 		<div class="row">
 			<button id="helpBtn" class="btn btn-info btn-lg">Help! The label is not printing</button>
 		</div>

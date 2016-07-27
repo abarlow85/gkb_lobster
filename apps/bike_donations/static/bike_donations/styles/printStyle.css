@@ -13,10 +13,10 @@
 
 
 #label {
-		height: 100%;
-		width: 100%;
-		padding: 0px;
-		text-align: center;
+	height: 100%;
+	width: 100%;
+	padding: 0px;
+	text-align: center;
 }
 
 #cost, .bike-info {
@@ -62,9 +62,6 @@ h5 {
 		/*margin: -20px;*/
 		/*padding: 0px;*/
 		text-align: center;
-	}
-	#scaleFont {
-		font-size: 1.5vw;
 	}
 
 }
