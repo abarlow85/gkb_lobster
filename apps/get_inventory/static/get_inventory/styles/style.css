@@ -1,3 +1,15 @@
+#header-inv-page{
+	border-bottom:.2em solid rgb(0, 168, 80);
+	margin-top: -30px;
+}
+#header-inv-page h2{
+	/*display: inline-block;*/
+	color: rgb(0, 168, 80);
+	vertical-align: bottom;
+	margin-top: 70px;
+
+}
+
 .btn {
 	font-family: 'Verdana';
 	background: #116F3A;
