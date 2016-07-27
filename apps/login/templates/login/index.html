@@ -42,9 +42,11 @@
         </div>
 
         {% if error %}
-        <h4 ng-if = "!loginSelection" class="centered text-danger">
-          {{error}}
-        </h4>
+        <div class="row text-center">
+          <h4 ng-if = "!loginSelection" class="text-danger">
+            {{error}}
+          </h4>
+        </div>
         {% endif %}
 
 
